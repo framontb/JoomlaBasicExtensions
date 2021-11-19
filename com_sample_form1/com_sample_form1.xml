@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.1.0" method="upgrade">
+
+	<name>com_sample_form1</name>
+	<version>1.0.0</version>
+	<description>Sample form 1</description>
+	
+	<administration>
+	</administration>
+
+	<files folder="site">
+		<filename>sample_form1.php</filename>
+		<filename>sample_form.xml</filename>
+	</files>
+</extension>
