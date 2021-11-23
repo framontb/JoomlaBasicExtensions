@@ -1,5 +1,7 @@
 # JoomlaBasicExtensions
 
+[API Guides](https://docs.joomla.org/API_Guides)
+
 ## Form examples
 
 ### com_sample_form1

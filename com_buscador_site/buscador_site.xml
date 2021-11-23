@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.1.0" method="upgrade">
+
+    <name>com_buscador_site</name>
+    <version>1.0.0</version>
+    <description>Buscador Site</description>
+
+	<install> <!-- Runs on install -->
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall> <!-- Runs on uninstall -->
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+
+    <administration>
+		<files folder="admin">
+			<!-- SQL files section -->
+			<folder>sql</folder>
+        </files>
+    </administration>
+
+    <files folder="site">
+        <filename>buscador_site.php</filename>
+        <filename>controller.php</filename>
+        <folder>views</folder>
+        <folder>models</folder>
+    </files>
+</extension>
