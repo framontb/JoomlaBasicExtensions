@@ -9,16 +9,13 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 ?>
 
 <form action="index.php?option=com_buscador_site&view=buscador" method="post" id="adminForm" name="adminForm">
-    <div class="btn-wrapper input-append">
-        <input type="text" name="filter[search]" id="filter_search" value="" class="js-stools-search-string" placeholder="Search">
-        <button type="submit" class="btn hasTooltip" title="" aria-label="Search" data-original-title="Search">
-            <span class="icon-search" aria-hidden="true"></span>
-        </button>
-    </div>
+    <?php 
+        // Search and filter tools
+        echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
+    ?>
     <table class="table table-striped table-hover">
         <thead>
         <tr>

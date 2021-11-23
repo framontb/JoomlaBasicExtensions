@@ -16,6 +16,19 @@ defined('_JEXEC') or die('Restricted access');
  */
 class Buscador_siteModelBuscador extends JModelList
 {
+
+    public function __construct($config = array())
+    {
+        if (empty($config['filter_fields']))
+        {
+            $config['filter_fields'] = array(
+                'greeting'
+            );
+        }
+
+        parent::__construct($config);
+    }
+
 	/**
 	 * Method to build an SQL query to load the list data.
 	 *
