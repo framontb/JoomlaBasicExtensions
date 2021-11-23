@@ -20,28 +20,6 @@
     </fields>
     <fields name="list">
         <field
-            name="fullordering"
-            type="list"
-            label="COM_RAMCLASIFICADO_LIST_FULL_ORDERING"
-            description="COM_RAMCLASIFICADO_LIST_FULL_ORDERING_DESC"
-            onchange="this.form.submit();"
-            default="name ASC"
-            >
-            <option value="">JGLOBAL_SORT_BY</option>
-            <option value="name ASC">COM_RAMCLASIFICADO_ORDERING_ASC</option>
-            <option value="name DESC">COM_RAMCLASIFICADO_ORDERING_DESC</option>
-            <option value="profession ASC">COM_RAMCLASIFICADO_ORDERING_ASC</option>
-            <option value="profession DESC">COM_RAMCLASIFICADO_ORDERING_DESC</option>
-            <option value="id ASC">JGRID_HEADING_ID_ASC</option>
-            <option value="id DESC">JGRID_HEADING_ID_DESC</option>
-            <option value="published ASC">COM_RAMCLASIFICADO_PUBLISHED_ASC</option>
-            <option value="published DESC">COM_RAMCLASIFICADO_PUBLISHED_DESC</option>
-            <option value="author ASC">COM_RAMCLASIFICADO_AUTHOR_ASC</option>
-            <option value="author DESC">COM_RAMCLASIFICADO_AUTHOR_DESC</option>
-            <option value="created ASC">COM_RAMCLASIFICADO_CREATED_ASC</option>
-            <option value="created DESC">COM_RAMCLASIFICADO_CREATED_DESC</option>
-        </field>
-        <field
             name="limit"
             type="limitbox"
             class="input-mini"
