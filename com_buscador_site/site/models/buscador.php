@@ -22,7 +22,9 @@ class Buscador_siteModelBuscador extends JModelList
         if (empty($config['filter_fields']))
         {
             $config['filter_fields'] = array(
-                'greeting'
+                'name',
+                'profession',
+                'specialty'
             );
         }
 
@@ -50,7 +52,7 @@ class Buscador_siteModelBuscador extends JModelList
         if (!empty($search))
         {
             $like = $db->quote('%' . $search . '%');
-            $query->where('bs.greeting LIKE ' . $like);
+            $query->where('bs.name LIKE ' . $like);
         }
 
 		return $query;

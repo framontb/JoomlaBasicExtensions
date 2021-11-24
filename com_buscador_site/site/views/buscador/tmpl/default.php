@@ -23,8 +23,14 @@ defined('_JEXEC') or die('Restricted Access');
             <th width="2%">
                 <?php echo JHtml::_('grid.checkall'); ?>
             </th>
-            <th width="60%">
+            <th width="20%">
                 <?php echo JText::_('NAME') ;?>
+            </th>
+            <th width="20%">
+                <?php echo JText::_('PROFESSION') ;?>
+            </th>
+            <th width="20%">
+                <?php echo JText::_('SPECIALTY') ;?>
             </th>
             <th width="5%">
                 <?php echo JText::_('PUBLISHED'); ?>
@@ -55,7 +61,13 @@ defined('_JEXEC') or die('Restricted Access');
                             <?php echo JHtml::_('grid.id', $i, $row->id); ?>
                         </td>
                         <td>
-                            <?php echo $row->greeting; ?>
+                            <?php echo $row->name; ?>
+                        </td>
+                        <td>
+                            <?php echo $row->profession; ?>
+                        </td>
+                        <td>
+                            <?php echo $row->specialty; ?>
                         </td>
                         <td align="center">
                             <?php echo JHtml::_('jgrid.published', $row->published, $i, 'buscador.', true, 'cb'); ?>
