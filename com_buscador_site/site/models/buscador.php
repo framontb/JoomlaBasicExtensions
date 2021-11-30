@@ -48,13 +48,27 @@ class Buscador_siteModelBuscador extends JModelList
 
         // Filter: like / search
         $search = $this->getState('filter.search');
-
         if (!empty($search))
         {
             $like = $db->quote('%' . $search . '%');
             $query->where('bs.name LIKE ' . $like);
         }
 
+        // Filter: profession
+        $profession = $this->getState('filter.profession');
+        if (!empty($profession))
+        {
+            $like_profession = $db->quote($profession);
+            $query->where('bs.profession LIKE ' . $like_profession);
+        }
+
+        // Filter: specialty
+        $specialty = $this->getState('filter.specialty');
+        if (!empty($specialty))
+        {
+            $like_pspecialty = $db->quote($specialty);
+            $query->where('bs.specialty LIKE ' . $like_pspecialty);
+        }
 		return $query;
 	}
 }

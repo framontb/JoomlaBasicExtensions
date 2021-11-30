@@ -9,6 +9,22 @@
             class="js-stools-search-string"
         />
         <field
+            name="profession"
+            header="Please select a profession"
+            type="sql"
+            label="Select a profession"
+            query="SELECT DISTINCT profession AS value, profession AS text FROM #__buscador_site"
+            onchange="this.form.submit();"
+        />
+        <field
+            name="specialty"
+            header="Please select a specialty"
+            type="sql"
+            label="Select a specialty"
+            query="SELECT DISTINCT specialty AS value, specialty AS text FROM #__buscador_site"
+            onchange="this.form.submit();"
+        />
+        <field
             name="published"
             type="status"
             label="JOPTION_SELECT_PUBLISHED"
