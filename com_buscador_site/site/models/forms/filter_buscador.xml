@@ -14,16 +14,19 @@
             type="sql"
             label="Select a profession"
             query="SELECT DISTINCT profession AS value, profession AS text FROM #__buscador_site"
-            onchange="this.form.submit();"
         />
-        <field
-            name="specialty"
+        <field 
+            name="specialty" 
+            type="list"
             header="Please select a specialty"
-            type="sql"
-            label="Select a specialty"
-            query="SELECT DISTINCT specialty AS value, specialty AS text FROM #__buscador_site"
+            default="" 
+            label="Select an specialty" 
+            class="select_specialty"
             onchange="this.form.submit();"
-        />
+            description="">
+            <option value="">Please Select Specialty</option>
+        </field>  
+
         <field
             name="published"
             type="status"

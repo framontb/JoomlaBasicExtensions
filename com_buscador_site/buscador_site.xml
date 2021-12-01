@@ -28,5 +28,6 @@
         <filename>controller.php</filename>
         <folder>views</folder>
         <folder>models</folder>
+        <folder>controllers</folder>
     </files>
 </extension>

@@ -44,5 +44,21 @@ class Buscador_siteViewBuscador extends JViewLegacy
 
         // Display the template
         parent::display($tpl);
+
+        // Set properties of the html document
+        $this->setDocument();
+    }
+
+    /**
+     * Method to set up the html document properties
+     *
+     * @return void
+     */
+    protected function setDocument() 
+    {
+        $document = JFactory::getDocument();
+        $document->addScript(JURI::root() . $this->script);
+        $document->addScript(JURI::root() . "/components/com_buscador_site"
+                                          . "/views/buscador/ajaxSpecialties.js");
     }
 }

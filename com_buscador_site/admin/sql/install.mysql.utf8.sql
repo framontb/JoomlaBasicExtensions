@@ -14,6 +14,7 @@ CREATE TABLE `#__buscador_site` (
 
 INSERT INTO `#__buscador_site` (`name`,`profession`,`specialty`) VALUES
 ('Ramon','teleco','telemática'),
+('Blanca','teleco','comunicaciones'),
 ('Dani','teleco','telemática'),
 ('Pepe','farma','dispensar'),
 ('Raul','empresario','emprendimiento'),
