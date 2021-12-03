@@ -26,7 +26,7 @@ class Buscador_siteViewBuscador extends JViewLegacy
      */
     function display($tpl = null)
     {
-        $context = "ramclasificado.list.site.ramclasificado";
+        // $context = "buscador_site.list.site.buscador_site";
         // Get data from the model
         $this->items		 = $this->get('Items');
         $this->pagination	 = $this->get('Pagination');
@@ -59,6 +59,6 @@ class Buscador_siteViewBuscador extends JViewLegacy
         $document = JFactory::getDocument();
         $document->addScript(JURI::root() . $this->script);
         $document->addScript(JURI::root() . "/components/com_buscador_site"
-                                          . "/views/buscador/ajaxSpecialties.js");
+                                          . "/views/buscador/buscador.js");
     }
 }

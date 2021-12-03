@@ -54,6 +54,7 @@ class Buscador_siteModelAjax extends JModelItem
         $query = $db->getQuery(true);
 
         // Create the base select statement.
+        // https://docs.joomla.org/Selecting_data_using_JDatabase/es#loadColumn.28.29
         $query->select('DISTINCT specialty')
                 ->from($db->quoteName('#__buscador_site','bs'))
                 ->where($db->quoteName('profession') . " = " . $db->quote($profession));

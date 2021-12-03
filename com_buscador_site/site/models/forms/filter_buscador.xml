@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-    <fields name="filter">
+    <fields name="filter" 
+        addfieldpath="components/com_buscador_site/models/fields">
         <field
             name="search"
             type="text"
             label="COM_BANNERS_SEARCH_IN_TITLE"
             hint="JSEARCH_FILTER"
             class="js-stools-search-string"
+            default=""
         />
         <field
             name="profession"
             header="Please select a profession"
             type="sql"
+            default="" 
             label="Select a profession"
             query="SELECT DISTINCT profession AS value, profession AS text FROM #__buscador_site"
         />
+
         <field 
             name="specialty" 
-            type="list"
-            header="Please select a specialty"
-            default="" 
-            label="Select an specialty" 
-            class="select_specialty"
-            onchange="this.form.submit();"
-            description="">
-            <option value="">Please Select Specialty</option>
-        </field>  
+            type="specialty" 
+            label="Select a specialty"
+	    />
 
         <field
             name="published"

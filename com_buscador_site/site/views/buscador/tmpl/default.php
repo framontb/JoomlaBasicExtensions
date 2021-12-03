@@ -11,10 +11,22 @@
 defined('_JEXEC') or die('Restricted Access');
 ?>
 
+
 <form action="index.php?option=com_buscador_site&view=buscador" method="post" id="adminForm" name="adminForm">
+    <button  id="filter_clear" class="btn waves-effect waves-light red"  type="Button"> Reset </button>
+    <input type="submit" value="Submit">
     <?php 
         // Search and filter tools
-        echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
+        // Load search tools
+        //echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
+
+        // Manually render filter form fields in layout
+        // https://joomla.stackexchange.com/questions/23516/manually-render-filter-form-fields-in-layout
+        //echo $this->filterForm->renderField('published', 'filter'); 
+        echo $this->filterForm->renderField('search', 'filter'); 
+        echo $this->filterForm->renderField('profession', 'filter'); 
+        echo $this->filterForm->renderField('specialty', 'filter'); 
+        echo $this->filterForm->renderField('limit', 'list'); 
     ?>
     <table class="table table-striped table-hover">
         <thead>
@@ -80,4 +92,6 @@ defined('_JEXEC') or die('Restricted Access');
             <?php endif; ?>
         </tbody>
     </table>
+    <input type="hidden" name="task" />
+	<?php echo JHtml::_('form.token'); ?>
 </form>

@@ -1,7 +1,18 @@
 jQuery(document).ready(function() {
     jQuery('#filter_profession').change(populateSelectSpecialties);
+    jQuery('#filter_clear').click(filter_clear);
 
-    function populateSelectSpecialties(){
+    // Reset button
+    function filter_clear() 
+    {
+        jQuery('#filter_search').attr('value','');
+        jQuery('#filter_profession').attr('value','');
+        jQuery('#filter_specialty').empty().append('<option value>All</option>');
+    }
+
+    // Ajax for Specialties
+    function populateSelectSpecialties()
+    {
 
         var profession = jQuery(this).find(':selected').val(),
         dataString = "&profession=" + profession;
@@ -15,7 +26,7 @@ jQuery(document).ready(function() {
                 dataType : 'JSON',
                 cache    : true,
                 success  : function(data) {            
-                    var output = '';
+                    var output = '<option value>All</option>';
                     jQuery.each(data.data, function(i,s){
                         var newOption = s;
     
@@ -32,6 +43,7 @@ jQuery(document).ready(function() {
         else
         {
             console.log("You have to select at least sth");
+            jQuery('#filter_specialty').empty().append('<option value>All</option>');
         }
     }
 });
