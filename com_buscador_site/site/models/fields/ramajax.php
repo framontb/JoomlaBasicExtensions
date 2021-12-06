@@ -43,22 +43,11 @@ class JFormFieldRamajax extends JFormField {
 
         // Get Specialties
         $ajaxModel = JModelLegacy::getInstance('Ajax', 'Buscador_siteModel');
-        $slavesFromDb = array();
-        if ($ajaxModel->existMasterField($masterFieldName,$masterFieldValue)) 
-        {
-            $slavesFromDb = $ajaxModel->getSlaveValues($masterFieldName,$masterFieldValue,$slaveFieldName);
-        }
+        $slaveOptions = "";
+        if (!$ajaxModel->existMasterField($masterFieldName,$masterFieldValue)) {$masterFieldValue ='';}
+        $slaveOptions = $ajaxModel->getSlaveOptions($masterFieldName,$masterFieldValue,$slaveFieldName,$slaveFieldValue);
 
-        // Build options
-        $options  = '<option value>All</option>';
-        foreach ($slavesFromDb as $slaveDb) 
-        {
-            $selected = ($slaveFieldValue ==  $slaveDb)?'selected="selected"':'';
-            $slaveDbTranslated = JText::_($slaveDb);
-            $options .= "<option value='$slaveDb' $selected>$slaveDbTranslated</option>";
-        }
-        
         // Build select
-        return '<select id="'.$this->id.'" name="'.$this->name.'">'.$options.'</select>';
+        return '<select id="'.$this->id.'" name="'.$this->name.'">'.$slaveOptions.'</select>';
     }
 }

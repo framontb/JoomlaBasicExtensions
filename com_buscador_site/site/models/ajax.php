@@ -107,4 +107,59 @@ class Buscador_siteModelAjax extends JModelItem
         return $column;
     }
 
+    /**
+     * Method to get the slave message when the primary is empty
+     * 
+     * It will be assigned no value in getSlaveOptions, so it matches for All specialties
+     *
+     * @param       string  $masterField
+     * @return      array   list of Slave Values
+     */
+    public function getSlaveEmptyValue(String $masterFieldName,String $slaveFieldName)
+    {
+        // Initialize variables.
+        $db    = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $slaveFieldTable = $this->getSlaveTable($slaveFieldName);
+
+        $query->select($slaveFieldName)
+                ->from($db->quoteName($slaveFieldTable))
+                ->where($db->quoteName($masterFieldName) . " = ''");
+
+        // Reset the query using our newly populated query object.
+        $db->setQuery($query);
+        $result= $db->loadResult();
+        
+        return $result;
+    }
+
+    /**
+     * Method to get all slave Options that match for a masterField
+     *
+     * @param       string  $masterField
+     * @return      array   list of Slave Values
+     */
+    public function getSlaveOptions(
+        String $masterFieldName,
+        String $masterFieldValue,
+        String $slaveFieldName,
+        String $slaveFieldValue='')
+    {
+        // Get default Option
+        $slaveEmpty   = $this->getSlaveEmptyValue($masterFieldName,$slaveFieldName);
+        $options  = '<option value>'.JText::_($slaveEmpty).'</option>';
+
+        // Get the other Options
+        if ($this->existMasterField($masterFieldName,$masterFieldValue)){
+            $slavesFromDb = $this->getSlaveValues($masterFieldName,$masterFieldValue,$slaveFieldName);
+            foreach ($slavesFromDb as $slaveDb) 
+            {
+                $selected = ($slaveFieldValue ==  $slaveDb)?'selected="selected"':'';
+                $slaveDbTranslated = JText::_($slaveDb);
+                $options .= "<option value='$slaveDb' $selected>$slaveDbTranslated</option>";
+            }
+        }
+
+        return $options;
+    }
 }
