@@ -19,9 +19,9 @@ class Buscador_siteControllerAjax extends JControllerLegacy
             $model = $this->getModel('ajax');
 
             # master/slave field Variables
-            $masterFieldName    = 'profession';            
+            $masterFieldName    = 'profession';         
+            $slaveFieldName     = JFactory::getApplication()->input->get('slaveFieldName','','WORD');
             $masterFieldValue   = JFactory::getApplication()->input->get($masterFieldName,'','WORD');
-            $slaveFieldName     = 'specialty';            
 
             # If empty $masterFieldValue, or $masterFieldValue not in bd => nothing to do
             if (empty($masterFieldValue) or (!$model->existMasterField($masterFieldName,$masterFieldValue))) 
