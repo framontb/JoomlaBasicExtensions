@@ -46,7 +46,7 @@ class JFormFieldRamajax extends JFormField {
         $slavesFromDb = array();
         if ($ajaxModel->existMasterField($masterFieldName,$masterFieldValue,$masterFieldTable)) 
         {
-            $slavesFromDb = $ajaxModel->getSlaveFields($masterFieldName,$masterFieldValue,$slaveFieldName,$slaveFieldTable);
+            $slavesFromDb = $ajaxModel->getSlaveValues($masterFieldName,$masterFieldValue,$slaveFieldName,$slaveFieldTable);
         }
 
         // Build options

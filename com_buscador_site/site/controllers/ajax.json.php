@@ -11,7 +11,7 @@ use \Joomla\CMS\Response\JsonResponse;
 
 class Buscador_siteControllerAjax extends JControllerLegacy
 {
-    public function specialties()
+    public function getSlaveValues()
     {
         try
         {
@@ -21,7 +21,8 @@ class Buscador_siteControllerAjax extends JControllerLegacy
             # master field Variables
             $masterFieldName    = 'profession';            
             $masterFieldValue   = JFactory::getApplication()->input->get($masterFieldName,'','WORD');
-            $masterFieldTable   = '#__buscador_site_profession_list';
+            # $masterFieldTable   = '#__buscador_site_profession_list';
+            $masterFieldTable   = $model->getMasterTable($masterFieldName);
 
             # slave field Variables
             $slaveFieldName     = 'specialty';            
@@ -35,7 +36,7 @@ class Buscador_siteControllerAjax extends JControllerLegacy
             # Otherwise => find slaveField
             else 
             {
-                $specialties = $model->getSlaveFields($masterFieldName,$masterFieldValue,$slaveFieldName,$slaveFieldTable);
+                $specialties = $model->getSlaveValues($masterFieldName,$masterFieldValue,$slaveFieldName,$slaveFieldTable);
             }
 
             #$json = json_encode($specialties);

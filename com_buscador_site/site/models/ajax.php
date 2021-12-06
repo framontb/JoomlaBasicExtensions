@@ -16,6 +16,43 @@ defined('_JEXEC') or die('Restricted access');
  */
 class Buscador_siteModelAjax extends JModelItem
 {
+    public array $masterTable;
+    public array $slaveTable;
+
+    public function __construct()
+    {
+        # Master Field tables
+        $this->masterTable['profession'] = '#__buscador_site_profession_list';
+
+        # Slave Field tables
+        $this->slaveTable['specialty'] = '#__buscador_site_profession_specialty_map';
+
+        parent::__construct();
+    }
+
+    public function getMasterTable(String $masterFieldName)
+    {
+        try {
+            return $this->masterTable[$masterFieldName];
+        }
+		catch (Exception $e)
+		{
+			throw new Exception(implode("\n", $e->getCode(), $e->getMessage()), 500);
+		}
+    }
+
+    public function getSlaveTable(String $slaveFieldName)
+    {
+        try {
+            return $this->slaveTable[$slaveFieldName];
+        }
+		catch (Exception $e)
+		{
+			echo JText::sprintf('ERROR_NO_SLAVE_TABLE_DECLARED_AT_MODEL', $e->getCode(), $e->getMessage()) . '<br />';
+
+			return;
+		}
+    }
 
     /**
      * Method to validate that a masterField is in the table
@@ -46,9 +83,9 @@ class Buscador_siteModelAjax extends JModelItem
      * Method to get all slave Fields that match for a masterField
      *
      * @param       string  $masterField
-     * @return      array   list of Slave Fields
+     * @return      array   list of Slave Values
      */
-    public function getSlaveFields(
+    public function getSlaveValues(
         String $masterFieldName,
         String $masterFieldValue,
         String $slaveFieldName,

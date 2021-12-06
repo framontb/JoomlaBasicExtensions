@@ -22,7 +22,7 @@ jQuery(document).ready(function() {
         {
             jQuery.ajax({
                 type     : 'GET',
-                url      : 'index.php?option=com_buscador_site&task=ajax.specialties&format=json',
+                url      : 'index.php?option=com_buscador_site&task=ajax.getSlaveValues&format=json',
                 data     : dataString,
                 dataType : 'JSON',
                 cache    : true,
