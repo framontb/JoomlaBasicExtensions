@@ -18,38 +18,37 @@ JFormHelper::loadFieldClass('list');
  * @since  0.0.1
  */
 class JFormFieldSpecialty extends JFormField {
-	
-	protected $type = 'Specialty';
+    
+    protected $type = 'Specialty';
 
-	// getLabel() left out
+    // getLabel() left out
 
-	public function getInput() {
-        $app        = JFactory::getApplication();
-        $db         = JFactory::getDBO();
-
+    public function getInput() {
         // Get State
+        $app        = JFactory::getApplication();
         $filters    = $app->getUserStateFromRequest($this->context . '.filter', 'filter', array(), 'array');
         $profession_filter = $filters['profession'];;
         $specialty_filter  = $filters['specialty'];
         // dump($filters,'$filters');
 
-        // Get specialties
-		$query = $db->getQuery(true);
-		$query->select('DISTINCT bs.specialty');
-		$query->from('#__buscador_site as bs');
-		$query->where('bs.profession = '.$db->quote($profession_filter));
-		$db->setQuery((string) $query);
-		$specialties_db = $db->loadColumn();
+        // Get Specialties
+        $ajaxModel = JModelLegacy::getInstance('Ajax', 'Buscador_siteModel');
+        $specialties_db = array();
+        if ($ajaxModel->existProfession($profession_filter)) 
+        {
+            $specialties_db = $ajaxModel->getSpecialtiesByProfession($profession_filter);
+        }
 
         // Build options
         $options  = '<option value>All</option>';
         foreach ($specialties_db as $specialty_db) 
         {
             $selected = ($specialty_filter ==  $specialty_db)?'selected="selected"':'';
-            $options .= "<option value='$specialty_db' $selected>$specialty_db</option>";
+            $specialty_db_tranlated = JText::_($specialty_db);
+            $options .= "<option value='$specialty_db' $selected>$specialty_db_tranlated</option>";
         }
-		
+        
         // Build select
-		return '<select id="'.$this->id.'" name="'.$this->name.'">'.$options.'</select>';
-	}
+        return '<select id="'.$this->id.'" name="'.$this->name.'">'.$options.'</select>';
+    }
 }

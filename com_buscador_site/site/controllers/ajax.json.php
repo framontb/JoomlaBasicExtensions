@@ -11,49 +11,31 @@ use \Joomla\CMS\Response\JsonResponse;
 
 class Buscador_siteControllerAjax extends JControllerLegacy
 {
-    public function capitals()
-    {
-        try
-        {
-            $country = JFactory::getApplication()->input->get('country','UK',"WORD");
-
-            if      ($country == 'UK')      $capital = 'London';
-            elseif  ($country == 'Spain')   $capital = 'Madrid';
-            else                            $capital = "I don't know";
-
-            $capital_json = json_encode($capital);
-            $response = new JsonResponse($capital_json);
-            echo $response;
-        }
-        catch(Exception $e)
-        {
-            echo new JsonResponse($e);
-        }
-    }
-
     public function specialties()
     {
         try
         {
-            # Variables
-            $input_field        = 'profession';
-            $default_value      = '';
-            $field_validation   = "WORD";
-            
-            $profession = JFactory::getApplication()->input->get($input_field, $default_value, $field_validation);
-
             # Get the model
             $model = $this->getModel('ajax');
 
-            # If empty $profession, or $profession not in bd => nothing to do
-            if (empty($profession) or (!$model->existProfession($profession))) 
+            # master field Variables
+            $masterFieldName    = 'profession';            
+            $masterFieldValue   = JFactory::getApplication()->input->get($masterFieldName,'','WORD');
+            $masterFieldTable   = '#__buscador_site_profession_list';
+
+            # slave field Variables
+            $slaveFieldName     = 'specialty';            
+            $slaveFieldTable    = '#__buscador_site_profession_specialty_map';
+
+            # If empty $masterFieldValue, or $masterFieldValue not in bd => nothing to do
+            if (empty($masterFieldValue) or (!$model->existMasterField($masterFieldName,$masterFieldValue,$masterFieldTable))) 
             {
                 $specialties = [];
             }
-            # Otherwise => find specialties
+            # Otherwise => find slaveField
             else 
             {
-                $specialties = $model->getSpecialtiesByProfession($profession);
+                $specialties = $model->getSlaveFields($masterFieldName,$masterFieldValue,$slaveFieldName,$slaveFieldTable);
             }
 
             #$json = json_encode($specialties);

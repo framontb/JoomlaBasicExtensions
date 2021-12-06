@@ -16,13 +16,17 @@
             type="sql"
             default="" 
             label="Select a profession"
-            query="SELECT DISTINCT profession AS value, profession AS text FROM #__buscador_site"
+            query="SELECT profession AS value, profession AS text FROM #__buscador_site_profession_list"
         />
 
         <field 
             name="specialty" 
-            type="specialty" 
+            type="ramajax" 
             label="Select a specialty"
+            masterFieldName="profession"
+            masterFieldTable="#__buscador_site_profession_list"
+            slaveFieldName="specialty"
+            slaveFieldTable="#__buscador_site_profession_specialty_map"
 	    />
 
         <field

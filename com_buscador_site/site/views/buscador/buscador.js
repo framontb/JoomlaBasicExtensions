@@ -1,5 +1,5 @@
 jQuery(document).ready(function() {
-    jQuery('#filter_profession').change(populateSelectSpecialties);
+    jQuery('#filter_profession').change({mainFieldName:"profession"}, populateSelectSpecialties);
     jQuery('#filter_clear').click(filter_clear);
 
     // Reset button
@@ -11,13 +11,14 @@ jQuery(document).ready(function() {
     }
 
     // Ajax for Specialties
-    function populateSelectSpecialties()
+    function populateSelectSpecialties(event)
     {
 
-        var profession = jQuery(this).find(':selected').val(),
-        dataString = "&profession=" + profession;
+        // alert(event.data.mainFieldName);
+        var mainFieldValue = jQuery(this).find(':selected').val(),
+        dataString = "&"+event.data.mainFieldName+"=" + mainFieldValue;
         // alert(dataString);
-        if(profession != '')
+        if(mainFieldValue != '')
         {
             jQuery.ajax({
                 type     : 'GET',

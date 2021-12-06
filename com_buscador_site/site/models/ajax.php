@@ -16,13 +16,14 @@ defined('_JEXEC') or die('Restricted access');
  */
 class Buscador_siteModelAjax extends JModelItem
 {
+
     /**
-     * Method to validate that a profession is in the table
+     * Method to validate that a masterField is in the table
      *
-     * @param       string  $profession
-     * @return      boolean  true if profession is in the table
+     * @param       string  $masterField
+     * @return      boolean  true if masterField is in the table
      */
-    public function existProfession(String $profession)
+    public function existMasterField(String $masterFieldName, String $masterFieldValue, String $masterFieldTable)
     {
         // Initialize variables.
         $db    = JFactory::getDbo();
@@ -30,8 +31,8 @@ class Buscador_siteModelAjax extends JModelItem
 
         // Create the base select statement.
         $query->select('count(*)')
-                ->from($db->quoteName('#__buscador_site','bs'))
-                ->where($db->quoteName('profession') . " = " . $db->quote($profession));
+                ->from($db->quoteName($masterFieldTable))
+                ->where($db->quoteName($masterFieldName) . " = " . $db->quote($masterFieldValue));
 
         // Reset the query using our newly populated query object.
         $db->setQuery($query);
@@ -42,12 +43,16 @@ class Buscador_siteModelAjax extends JModelItem
     }
 
     /**
-     * Method to get all Specialties that match for a profession
+     * Method to get all slave Fields that match for a masterField
      *
-     * @param       string  $profession
-     * @return      array   list of Specialties
+     * @param       string  $masterField
+     * @return      array   list of Slave Fields
      */
-    public function getSpecialtiesByProfession(String $profession)
+    public function getSlaveFields(
+        String $masterFieldName,
+        String $masterFieldValue,
+        String $slaveFieldName,
+        String $slaveFieldTable)
     {
         // Initialize variables.
         $db    = JFactory::getDbo();
@@ -55,9 +60,9 @@ class Buscador_siteModelAjax extends JModelItem
 
         // Create the base select statement.
         // https://docs.joomla.org/Selecting_data_using_JDatabase/es#loadColumn.28.29
-        $query->select('DISTINCT specialty')
-                ->from($db->quoteName('#__buscador_site','bs'))
-                ->where($db->quoteName('profession') . " = " . $db->quote($profession));
+        $query->select($slaveFieldName)
+                ->from($db->quoteName($slaveFieldTable))
+                ->where($db->quoteName($masterFieldName) . " = " . $db->quote($masterFieldValue));
 
         // Reset the query using our newly populated query object.
         $db->setQuery($query);
@@ -65,5 +70,5 @@ class Buscador_siteModelAjax extends JModelItem
         
         return $column;
     }
-    
+
 }
