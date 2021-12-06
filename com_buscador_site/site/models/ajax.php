@@ -37,7 +37,7 @@ class Buscador_siteModelAjax extends JModelItem
         }
 		catch (Exception $e)
 		{
-			throw new Exception(implode("\n", $e->getCode(), $e->getMessage()), 500);
+			throw new Exception(implode("ERROR_MASTER_TABLE\n", $e->getCode(), $e->getMessage()), 500);
 		}
     }
 
@@ -48,9 +48,7 @@ class Buscador_siteModelAjax extends JModelItem
         }
 		catch (Exception $e)
 		{
-			echo JText::sprintf('ERROR_NO_SLAVE_TABLE_DECLARED_AT_MODEL', $e->getCode(), $e->getMessage()) . '<br />';
-
-			return;
+			throw new Exception(implode("ERROR_SLAVE_TABLE\n", $e->getCode(), $e->getMessage()), 500);
 		}
     }
 
@@ -60,11 +58,12 @@ class Buscador_siteModelAjax extends JModelItem
      * @param       string  $masterField
      * @return      boolean  true if masterField is in the table
      */
-    public function existMasterField(String $masterFieldName, String $masterFieldValue, String $masterFieldTable)
+    public function existMasterField(String $masterFieldName, String $masterFieldValue)
     {
         // Initialize variables.
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
+        $masterFieldTable = $this->getMasterTable($masterFieldName);
 
         // Create the base select statement.
         $query->select('count(*)')
@@ -88,12 +87,12 @@ class Buscador_siteModelAjax extends JModelItem
     public function getSlaveValues(
         String $masterFieldName,
         String $masterFieldValue,
-        String $slaveFieldName,
-        String $slaveFieldTable)
+        String $slaveFieldName)
     {
         // Initialize variables.
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
+        $slaveFieldTable = $this->getSlaveTable($slaveFieldName);
 
         // Create the base select statement.
         // https://docs.joomla.org/Selecting_data_using_JDatabase/es#loadColumn.28.29

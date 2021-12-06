@@ -18,25 +18,20 @@ class Buscador_siteControllerAjax extends JControllerLegacy
             # Get the model
             $model = $this->getModel('ajax');
 
-            # master field Variables
+            # master/slave field Variables
             $masterFieldName    = 'profession';            
             $masterFieldValue   = JFactory::getApplication()->input->get($masterFieldName,'','WORD');
-            # $masterFieldTable   = '#__buscador_site_profession_list';
-            $masterFieldTable   = $model->getMasterTable($masterFieldName);
-
-            # slave field Variables
             $slaveFieldName     = 'specialty';            
-            $slaveFieldTable    = '#__buscador_site_profession_specialty_map';
 
             # If empty $masterFieldValue, or $masterFieldValue not in bd => nothing to do
-            if (empty($masterFieldValue) or (!$model->existMasterField($masterFieldName,$masterFieldValue,$masterFieldTable))) 
+            if (empty($masterFieldValue) or (!$model->existMasterField($masterFieldName,$masterFieldValue))) 
             {
                 $specialties = [];
             }
             # Otherwise => find slaveField
             else 
             {
-                $specialties = $model->getSlaveValues($masterFieldName,$masterFieldValue,$slaveFieldName,$slaveFieldTable);
+                $specialties = $model->getSlaveValues($masterFieldName,$masterFieldValue,$slaveFieldName);
             }
 
             #$json = json_encode($specialties);

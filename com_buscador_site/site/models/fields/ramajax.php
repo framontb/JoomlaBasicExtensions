@@ -44,9 +44,9 @@ class JFormFieldRamajax extends JFormField {
         // Get Specialties
         $ajaxModel = JModelLegacy::getInstance('Ajax', 'Buscador_siteModel');
         $slavesFromDb = array();
-        if ($ajaxModel->existMasterField($masterFieldName,$masterFieldValue,$masterFieldTable)) 
+        if ($ajaxModel->existMasterField($masterFieldName,$masterFieldValue)) 
         {
-            $slavesFromDb = $ajaxModel->getSlaveValues($masterFieldName,$masterFieldValue,$slaveFieldName,$slaveFieldTable);
+            $slavesFromDb = $ajaxModel->getSlaveValues($masterFieldName,$masterFieldValue,$slaveFieldName);
         }
 
         // Build options
