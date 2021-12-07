@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.1.0" method="upgrade">
 
-    <name>com_buscador_site</name>
+    <name>Ramajax</name>
     <version>1.0.0</version>
-    <description>Buscador Site</description>
+    <description>Ramón Ajax: set up Dynamic combo select in your custom component populated via Ajax</description>
 
     <install> <!-- Runs on install -->
         <sql>
@@ -17,16 +17,18 @@
     </uninstall>
 
     <administration>
+        <menu link='index.php?option=com_ramajax'>Ramajax</menu>
         <files folder="admin">
+            <filename>ramajax.php</filename>
             <!-- SQL files section -->
             <folder>sql</folder>
         </files>
     </administration>
 
     <files folder="site">
-        <filename>buscador_site.php</filename>
+        <filename>ramajax.php</filename>
         <filename>controller.php</filename>
-        <folder>views</folder>
+        <folder>assets</folder>
         <folder>models</folder>
         <folder>controllers</folder>
     </files>
