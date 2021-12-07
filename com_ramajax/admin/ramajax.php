@@ -1,15 +1,27 @@
-Write some help...
+<?php
+/**
+ * Ramajax
+ * @version      $Id$
+ * @package      ramajax
+ * @copyright    Copyright (C) 2021 framontb. All rights reserved.
+ * @license      GNU/GPL
+ * @link         https://github.com/framontb/JoomlaBasicExtensions
+ */
 
-<header> Check if componente com_ramajax is working:</header>
-<p>Access the folowing URL:</p>
-http://joomla_clasificados/index.php?option=com_ramajax&task=ajax.getSlaveValues&format=json&masterFieldName=league&slaveFieldName=team&league=NBA
+// No direct access to this file
+defined('_JEXEC') or die('Restricted access');
 
-You should see this message:
+// Access check: is this user allowed to access the backend of this component?
+if (!JFactory::getUser()->authorise('core.manage', 'com_ramajax'))
+{
+	throw new Exception(JText::_('JERROR_ALERTNOAUTHOR'));
+}
 
-{"success":true,"message":null,"messages":null,"data":["Phoenix Suns","Los Angeles Lakers","Golden State Warriors"]}
+// Get an instance of the controller prefixed by Ramclasificado
+$controller = JControllerLegacy::getInstance('Ramajax');
 
+// Perform the Request task
+$controller->execute(JFactory::getApplication()->input->get('task'));
 
-How to improve this component:
-
-1. Instead of hardconding the tables inside the model, use a bd.
-2. Create a form to enter the combo specifications
+// Redirect if set by the controller
+$controller->redirect();

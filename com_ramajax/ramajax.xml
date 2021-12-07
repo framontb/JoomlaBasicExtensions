@@ -19,9 +19,14 @@
     <administration>
         <menu link='index.php?option=com_ramajax'>Ramajax</menu>
         <files folder="admin">
+            <!-- Admin Main File Copy Section -->
             <filename>ramajax.php</filename>
+            <filename>controller.php</filename>
+            <filename>access.xml</filename>
             <!-- SQL files section -->
             <folder>sql</folder>
+            <!-- tables files section -->
+            <folder>views</folder>
         </files>
     </administration>
 
