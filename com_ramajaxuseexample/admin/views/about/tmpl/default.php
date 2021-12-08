@@ -2,7 +2,7 @@
 /**
  * Ramajax
  * @version      $Id$
- * @package      ramajax
+ * @package      ramajaxuseexample
  * @copyright    Copyright (C) 2021 framontb. All rights reserved.
  * @license      GNU/GPL
  * @link         https://github.com/framontb/JoomlaBasicExtensions

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.1.0" method="upgrade">
 
-    <name>com_buscador_site</name>
+    <name>Ramajax Use Example</name>
     <version>1.0.0</version>
-    <description>Buscador Site</description>
+    <description>Use Example for component Ramajax</description>
 
     <install> <!-- Runs on install -->
         <sql>
@@ -17,18 +17,24 @@
     </uninstall>
 
     <administration>
-        <menu link='index.php?option=com_buscador_site'>Buscador Site</menu>
+        <menu link='index.php?option=com_ramajaxuseexample'>Ramajax Use Example</menu>
         <files folder="admin">
+            <!-- Admin Main File Copy Section -->
+            <filename>ramajaxuseexample.php</filename>
+            <filename>controller.php</filename>
+            <filename>access.xml</filename>
             <!-- SQL files section -->
             <folder>sql</folder>
+            <!-- tables files section -->
+            <folder>views</folder>
         </files>
     </administration>
 
     <files folder="site">
-        <filename>buscador_site.php</filename>
+        <filename>ramajaxuseexample.php</filename>
         <filename>controller.php</filename>
-        <folder>views</folder>
         <folder>models</folder>
+        <folder>views</folder>
         <folder>controllers</folder>
     </files>
 </extension>

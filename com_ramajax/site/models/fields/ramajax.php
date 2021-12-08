@@ -42,10 +42,17 @@ class JFormFieldRamajax extends JFormField {
         $slaveFieldValue = $filters[$slaveFieldName];
         $slaveFieldTable = (string) $this->element['slaveFieldTable'];
 
+        # RAM DEBUG
+        #return "<p>$masterFieldName</br>$masterFieldValue</br>$masterFieldTable</p>";
+
         // Get Specialties
-        $ajaxModel = JModelLegacy::getInstance('Ajax', 'Ramajax');
+        JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_ramajax/models');
+        $ajaxModel = JModelLegacy::getInstance('Ajax', 'RamajaxModel');
+
         $slaveOptions = "";
-        if (!$ajaxModel->existMasterField($masterFieldName,$masterFieldValue)) {$masterFieldValue ='';}
+        if (empty($masterFieldValue )) {$masterFieldValue="";}
+        if (empty($slaveFieldValue )) {$slaveFieldValue="";}
+        if (!$ajaxModel->existMasterField($masterFieldName,$masterFieldValue)) {$masterFieldValue ='';}  
         $slaveOptions = $ajaxModel->getSlaveOptions($masterFieldName,$masterFieldValue,$slaveFieldName,$slaveFieldValue);
 
         // Build select
