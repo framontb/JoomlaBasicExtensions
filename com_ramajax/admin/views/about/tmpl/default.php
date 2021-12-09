@@ -69,6 +69,7 @@ $uriRoot =  $uri->root();
             <li>add two fields to your Form (the main field and the slave field). 
                 The main select with type <b>sql</b> 
                 and the slave of type <b>ramajax</b></li>
+            <li>be sure <b>jQuery</b> is in your view</li>
             <li>declare the javascript <b>/assets/js/ramajax.js</b> in your view</li>
             <li>add a tiny <b>js</b> script to your view to invoque the ajax call 
             on change event of main field</li>
@@ -82,7 +83,21 @@ $uriRoot =  $uri->root();
     <ul>
         <li>Add a table to avoid hardconding info in the model</li>
         <li>Add a Form to add new pairs of master-slave combo selects</li>
-        <li>Add more javascript and FormFields for new html elements</li>
+        <li>Add more javascript and FormFields for new html elements (check boxes)</li>
+        <li>Add translations<li>
     </ul>
 
+    <h2>Troubleshooting</h2>
+    <ul>
+        <li>Activating "Global Configuration > System > Debug System = YES" will leave logs in the file: "/var/www/html/administrator/logs/com_ramajax.log.php"</li>
+        <li>You can add more logs easily, just watch the site entry poing for the com_ramajax.</li>
+    </ul>
+
+    <h2>TODO</h2>
+    <ul>
+        <li>Example for com_ramajaxuseexample</li>
+        <li>Add third filter</li>
+        <li>Error managing for ajax.</li>
+        <li>Table for the component data instead of hardcoding in model</li>
+    </ul>
 </div>

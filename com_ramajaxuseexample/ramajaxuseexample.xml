@@ -35,6 +35,5 @@
         <filename>controller.php</filename>
         <folder>models</folder>
         <folder>views</folder>
-        <folder>controllers</folder>
     </files>
 </extension>

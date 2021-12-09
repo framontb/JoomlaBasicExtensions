@@ -12,26 +12,52 @@ use \Joomla\CMS\Response\JsonResponse;
 
 class RamajaxControllerAjax extends JControllerLegacy
 {
-    // Get the slave raw values from the database
+    // Properties
+    private String $masterFieldName;
+    private String $slaveFieldName;
+    private String $masterFieldValue;
+    private $model;
+
+    /**
+     * Constructor class
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        # Get the model
+        $this->model = $this->getModel('ajax');
+
+        # master/slave field Variables
+        $this->masterFieldName    = JFactory::getApplication()->input->get('masterFieldName','','STRING');        
+        $this->slaveFieldName     = JFactory::getApplication()->input->get('slaveFieldName','','STRING');
+        $this->masterFieldValue   = JFactory::getApplication()->input->get($this->masterFieldName,'','STRING');
+
+        # If empty $masterFieldValue, or $masterFieldValue not in bd => nothing to do
+        if (empty($this->masterFieldValue) or (!$this->model->existMasterField($this->masterFieldName, $this->masterFieldValue))) 
+        {
+            $this->masterFieldValue = "";
+        }
+
+        # RAM DEBUG
+        if (JDEBUG) { 
+            JLog::add('$this->masterFieldValue : '.$this->masterFieldName.' = '.$this->masterFieldValue, JLog::INFO, 'com_ramajax');
+            JLog::add('$this->slaveFieldName : '.$this->slaveFieldName, JLog::INFO, 'com_ramajax');
+        }
+    }
+
+    /**
+     * Get the slave raw values from the database
+     */
     public function getSlaveValues()
     {
         try
         {
-            # Get the model
-            $model = $this->getModel('ajax');
+            $slaveValues = $this->model->getSlaveValues(
+                $this->masterFieldName,
+                $this->masterFieldValue,
+                $this->slaveFieldName);
 
-            # master/slave field Variables
-            $masterFieldName    = JFactory::getApplication()->input->get('masterFieldName','','WORD');        
-            $slaveFieldName     = JFactory::getApplication()->input->get('slaveFieldName','','WORD');
-            $masterFieldValue   = JFactory::getApplication()->input->get($masterFieldName,'','WORD');
-
-            # If empty $masterFieldValue, or $masterFieldValue not in bd => nothing to do
-            if (empty($masterFieldValue) or (!$model->existMasterField($masterFieldName,$masterFieldValue))) 
-            {
-                $masterFieldValue = "";
-            }
-
-            $slaveValues = $model->getSlaveValues($masterFieldName,$masterFieldValue,$slaveFieldName);
             $response = new JsonResponse($slaveValues);
             echo $response;
         }
@@ -41,26 +67,18 @@ class RamajaxControllerAjax extends JControllerLegacy
         }
     }
 
-    // Get the slave Options from the database
+    /**
+     * Get the slave Options from the database
+     */
     public function getSlaveOptions()
     {
         try
         {
-            # Get the model
-            $model = $this->getModel('ajax');
+            $slaveOptions = $this->model->getSlaveOptions(
+                $this->masterFieldName,
+                $this->masterFieldValue,
+                $this->slaveFieldName);
 
-            # master/slave field Variables
-            $masterFieldName    = JFactory::getApplication()->input->get('masterFieldName','','WORD');        
-            $slaveFieldName     = JFactory::getApplication()->input->get('slaveFieldName','','WORD');
-            $masterFieldValue   = JFactory::getApplication()->input->get($masterFieldName,'','WORD');
-
-            # If empty $masterFieldValue, or $masterFieldValue not in bd => reset
-            if (empty($masterFieldValue) or (!$model->existMasterField($masterFieldName,$masterFieldValue))) 
-            {
-                $masterFieldValue = "";
-            }
-
-            $slaveOptions = $model->getSlaveOptions($masterFieldName,$masterFieldValue,$slaveFieldName);
             $response = new JsonResponse($slaveOptions);
             echo $response;
         }
