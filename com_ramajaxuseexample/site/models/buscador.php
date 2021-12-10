@@ -23,7 +23,8 @@ class RamajaxuseexampleModelBuscador extends JModelList
         {
             $config['filter_fields'] = array(
                 'league',
-                'team'
+                'team',
+                'player'
             );
         }
 
@@ -43,7 +44,7 @@ class RamajaxuseexampleModelBuscador extends JModelList
 
 		// Create the base select statement.
 		$query->select('*')
-                ->from($db->quoteName('#__ramajax_league_team_map','bs'));
+                ->from($db->quoteName('#__ramajax_use_example','bs'));
 
         // Filter: league
         $league = $this->getState('filter.league');
@@ -60,6 +61,15 @@ class RamajaxuseexampleModelBuscador extends JModelList
             $like_team = $db->quote($team);
             $query->where('bs.team LIKE ' . $like_team);
         }
+
+        // Filter: team
+        $player= $this->getState('filter.player');
+        if (!empty($player))
+        {
+            $like_player = $db->quote($player);
+            $query->where('bs.player LIKE ' . $like_player);
+        }
+
 		return $query;
 	}
 }

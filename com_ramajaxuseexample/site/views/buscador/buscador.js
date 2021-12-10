@@ -6,4 +6,12 @@ jQuery(document).ready(function() {
             slaveSelectId:"#filter_team"
         }, 
         populateSlaveSelectFromOptions);
+
+    jQuery('#filter_team').change(
+        {
+            mainFieldName:"team",
+            slaveFieldName:"player",
+            slaveSelectId:"#filter_player"
+        }, 
+        populateSlaveSelectFromOptions);
 });

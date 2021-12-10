@@ -17,15 +17,22 @@ defined('_JEXEC') or die('Restricted Access');
     <?php 
         echo $this->filterForm->renderField('league', 'filter'); 
         echo $this->filterForm->renderField('team', 'filter'); 
+        echo $this->filterForm->renderField('player', 'filter'); 
     ?>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
-            <th width="40%">
+            <th width="30%">
                 <?php echo JText::_('LEAGUE') ;?>
             </th>
-            <th width="60%">
+            <th width="30%">
                 <?php echo JText::_('TEAM') ;?>
+            </th>
+            <th width="30%">
+                <?php echo JText::_('PLAYER') ;?>
+            </th>
+            <th width="10%">
+                <?php echo JText::_('WAGE') ;?>
             </th>
         </tr>
         </thead>
@@ -39,6 +46,12 @@ defined('_JEXEC') or die('Restricted Access');
                         </td>
                         <td>
                             <?php echo $row->team; ?>
+                        </td>
+                        <td>
+                            <?php echo $row->player; ?>
+                        </td>
+                        <td>
+                            <?php echo $row->wage; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

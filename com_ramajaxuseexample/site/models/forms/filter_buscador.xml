@@ -21,5 +21,15 @@
             slaveFieldName="team"
             slaveFieldTable="#__ramajax_league_team_map"
 	    />
+
+        <field 
+            name="player" 
+            type="ramajax" 
+            label="Select a player"
+            masterFieldName="team"
+            masterFieldTable="#__ramajax_league_team_map"
+            slaveFieldName="player"
+            slaveFieldTable="#__ramajax_use_example"
+	    />
     </fields>
 </form>

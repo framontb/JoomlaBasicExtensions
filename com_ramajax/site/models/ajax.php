@@ -22,11 +22,12 @@ class RamajaxModelAjax extends JModelItem
 
     public function __construct()
     {
-        # Master Field tables
-        $this->masterTable['league'] = '#__ramajax_league_list';
+        # FIELD TABLES
+        $this->masterTable['league']    = '#__ramajax_league_list';
+        $this->slaveTable['team']       = '#__ramajax_league_team_map';
 
-        # Slave Field tables
-        $this->slaveTable['team'] = '#__ramajax_league_team_map';
+        $this->masterTable['team']      = '#__ramajax_league_team_map';
+        $this->slaveTable['player']     = '#__ramajax_use_example';
 
         parent::__construct();
     }
