@@ -24,7 +24,7 @@ $uriRoot =  $uri->root();
 </style>
 
 <div class="ram">
-    <h2>Features</h2>
+<h2>Features</h2>
     <p>
         This utility makes life easy for developers 
         who wants to set up dynamic combo selects in his views.
@@ -35,7 +35,10 @@ $uriRoot =  $uri->root();
         to create the "slave" select.
     </p>
 
-    <h2>Check if Ramajax is working</h2>
+<h2>How it works</h2>
+    <p>Explain the code</p>
+
+<h2>Check if Ramajax is working</h2>
 
     <p>
     Ramajax component comes with some data configured, so you can check if it is working.
@@ -58,7 +61,7 @@ $uriRoot =  $uri->root();
     </xmp>
     </p>
 
-    <h2>How to use it</h2>
+<h2>How to use it</h2>
     <p>
         After install com_ramajax, and check it's working properly, you will need:
         <ol>
@@ -76,28 +79,29 @@ $uriRoot =  $uri->root();
         </ol>
     </p>
 
-    <h2>See it in the component example</h2>
+<h2>See it in the component example</h2>
     <p>Example: com_ramajax_example</p>
 
-    <h2>How to improve the component</h2>
+<h2>How to improve the component</h2>
     <ul>
-        <li>Add a table to avoid hardconding info in the model</li>
-        <li>Add a Form to add new pairs of master-slave combo selects</li>
+        <li>Add an Options Form to add new pairs of master-slave combo selects (ramajax field)</li>
         <li>Add more javascript and FormFields for new html elements (check boxes)</li>
         <li>Add translations<li>
     </ul>
 
-    <h2>Troubleshooting</h2>
+<h2>Troubleshooting</h2>
     <ul>
         <li>Activating "Global Configuration > System > Debug System = YES" will leave logs in the file: "/var/www/html/administrator/logs/com_ramajax.log.php"</li>
         <li>You can add more logs easily, just watch the site entry poing for the com_ramajax.</li>
     </ul>
 
-    <h2>TODO</h2>
+<h2>TODO</h2>
     <ul>
-        <li>Example for com_ramajaxuseexample</li>
-        <li>Add third filter</li>
+        <li>First time a ramajax field loads, it saves the tables in __ramajax_field_tables</li>
         <li>Error managing for ajax.</li>
-        <li>Table for the component data instead of hardcoding in model</li>
+        <li>Translations</li>
+        <li>Check if in the Example's view, puttin $this->setDocument before display, loads the javascript so I can use it in the 
+            ramajax field
+        </li>
     </ul>
 </div>
