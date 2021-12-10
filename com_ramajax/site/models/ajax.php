@@ -17,22 +17,19 @@ defined('_JEXEC') or die('Restricted access');
  */
 class RamajaxModelAjax extends JModelItem
 {
-    public array $Table;
-
-    public function __construct()
-    {
-        # FIELD TABLES
-        $this->tables['league'] = '#__ramajax_league_list';
-        $this->tables['team']   = '#__ramajax_league_team_map';
-        $this->tables['player'] = '#__ramajax_use_example';
-
-        parent::__construct();
-    }
-
     public function getFieldTable(String $FieldName)
     {
         try {
-            return $this->tables[$FieldName];
+            $db    = JFactory::getDbo();
+            $query = $db->getQuery(true);
+            $query->select($db->quoteName('table'))
+                ->from($db->quoteName('#__ramajax_field_tables'))
+                ->where($db->quoteName('field') . " = " . $db->quote($FieldName));
+            
+                // Reset the query using our newly populated query object.
+            $db->setQuery($query);
+            $tableDb    = $db->loadResult();
+            return $tableDb;
         }
         catch (Exception $e)
         {
