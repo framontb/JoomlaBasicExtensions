@@ -17,41 +17,27 @@ defined('_JEXEC') or die('Restricted access');
  */
 class RamajaxModelAjax extends JModelItem
 {
-    public array $masterTable;
-    public array $slaveTable;
+    public array $Table;
 
     public function __construct()
     {
         # FIELD TABLES
-        $this->masterTable['league']    = '#__ramajax_league_list';
-        $this->slaveTable['team']       = '#__ramajax_league_team_map';
-
-        $this->masterTable['team']      = '#__ramajax_league_team_map';
-        $this->slaveTable['player']     = '#__ramajax_use_example';
+        $this->tables['league'] = '#__ramajax_league_list';
+        $this->tables['team']   = '#__ramajax_league_team_map';
+        $this->tables['player'] = '#__ramajax_use_example';
 
         parent::__construct();
     }
 
-    public function getMasterTable(String $masterFieldName)
+    public function getFieldTable(String $FieldName)
     {
         try {
-            return $this->masterTable[$masterFieldName];
+            return $this->tables[$FieldName];
         }
-		catch (Exception $e)
-		{
-			throw new Exception(implode("ERROR_MASTER_TABLE\n", $e->getCode(), $e->getMessage()), 500);
-		}
-    }
-
-    public function getSlaveTable(String $slaveFieldName)
-    {
-        try {
-            return $this->slaveTable[$slaveFieldName];
+        catch (Exception $e)
+        {
+            throw new Exception(implode("ERROR_TABLE\n", $e->getCode(), $e->getMessage()), 500);
         }
-		catch (Exception $e)
-		{
-			throw new Exception(implode("ERROR_SLAVE_TABLE\n", $e->getCode(), $e->getMessage()), 500);
-		}
     }
 
     /**
@@ -65,7 +51,7 @@ class RamajaxModelAjax extends JModelItem
         // Initialize variables.
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
-        $masterFieldTable = $this->getMasterTable($masterFieldName);
+        $masterFieldTable = $this->getFieldTable($masterFieldName);
 
         // Create the base select statement.
         $query->select('count(*)')
@@ -94,7 +80,7 @@ class RamajaxModelAjax extends JModelItem
         // Initialize variables.
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
-        $slaveFieldTable = $this->getSlaveTable($slaveFieldName);
+        $slaveFieldTable = $this->getFieldTable($slaveFieldName);
 
         // Create the base select statement.
         // https://docs.joomla.org/Selecting_data_using_JDatabase/es#loadColumn.28.29
@@ -122,7 +108,7 @@ class RamajaxModelAjax extends JModelItem
         // Initialize variables.
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
-        $slaveFieldTable = $this->getSlaveTable($slaveFieldName);
+        $slaveFieldTable = $this->getFieldTable($slaveFieldName);
 
         $query->select($slaveFieldName)
                 ->from($db->quoteName($slaveFieldTable))
