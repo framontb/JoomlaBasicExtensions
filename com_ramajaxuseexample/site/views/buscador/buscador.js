@@ -4,7 +4,6 @@
 // }
 
 jQuery(document).ready(function() {
-
     // ajax request for team
     jQuery('#filter_league').change(
         {

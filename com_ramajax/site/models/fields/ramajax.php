@@ -11,7 +11,23 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-JFormHelper::loadFieldClass('list');
+// Add Logger - RAM DEBUG
+use Joomla\CMS\Log\Log;
+if (JDEBUG) {
+    JLog::addLogger(
+        array(
+            // Sets file name
+            'text_file' => 'com_ramajax.log.php'
+        ),
+        // Sets messages of all log levels to be sent to the file.
+        JLog::ALL,
+        // The log category/categories which should be recorded in this file.
+        // In this case, it's just the one category from our extension.
+        // We still need to put it inside an array.
+        array('com_ramajax')
+    );
+    JLog::add('************** JFormFieldRamajax *****************', JLog::INFO, 'com_ramajax');
+}
 
 /**
  * Ramajax Form Field class for dynamic ajax combo select
@@ -28,7 +44,10 @@ class JFormFieldRamajax extends JFormField {
     {
         // Get State
         $app        = JFactory::getApplication();
-        $filters    = $app->getUserStateFromRequest($this->context . '.filter', 'filter', array(), 'array');
+        $filters    = $app->getUserStateFromRequest('filter', 'filter', array(), 'array');
+
+        // Ramajax Field
+        $ramajaxName  = (string) $this->element['name'];
 
         // Get the name and table of the master field from the Form,
         // and the value selected by the user from the Request
@@ -54,6 +73,13 @@ class JFormFieldRamajax extends JFormField {
         if (empty($slaveFieldValue )) {$slaveFieldValue="";}
         if (!$ajaxModel->existMasterField($masterFieldName,$masterFieldValue)) {$masterFieldValue ='';}  
         $slaveOptions = $ajaxModel->getSlaveOptions($masterFieldName,$masterFieldValue,$slaveFieldName,$slaveFieldValue);
+
+        // RAM DEBUG
+        if (JDEBUG) {
+            JLog::add('===> $ramajaxName = '.$ramajaxName . " <===", JLog::INFO, 'com_ramajax');
+            JLog::add($masterFieldName. ' = '.$masterFieldValue, JLog::INFO, 'com_ramajax');
+            JLog::add($slaveFieldName. ' = '.$slaveFieldValue, JLog::INFO, 'com_ramajax');
+        }
 
         // Build select
         return '<select id="'.$this->id.'" name="'.$this->name.'">'.$slaveOptions.'</select>';

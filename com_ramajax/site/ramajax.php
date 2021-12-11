@@ -1,9 +1,9 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 
+// Add Logger
 use Joomla\CMS\Log\Log;
 if (JDEBUG) {
-    // Add Logger
     JLog::addLogger(
         array(
             // Sets file name
