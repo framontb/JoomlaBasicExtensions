@@ -36,6 +36,15 @@ defined('_JEXEC') or die('Restricted Access');
             </th>
         </tr>
         </thead>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    <p>Footer</p>
+                    <?php echo $this->pagination->getListFooter(); ?>
+                    <?php echo $this->filterForm->renderField('limit', 'list');  ?>
+                </td>
+            </tr>
+        </tfoot>
         <tbody>
             <?php if (!empty($this->items)) : ?>
                 <?php foreach ($this->items as $i => $row) : ?>

@@ -1,3 +1,8 @@
+// window.onload = function () { 
+//     jQuery('#filter_league').val().change();
+//     //dom not only ready, but everything is loaded
+// }
+
 jQuery(document).ready(function() {
 
     // ajax request for team
