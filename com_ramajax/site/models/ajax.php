@@ -17,24 +17,49 @@ defined('_JEXEC') or die('Restricted access');
  */
 class RamajaxModelAjax extends JModelItem
 {
-    public function getFieldTable(String $FieldName)
+    /**
+     * Buffer for Ramajax definition data
+     *  [
+     *      name                = "player" 
+     *      type                = "ramajax" 
+     *      masterFieldName     = "team"
+     *      masterFieldTable    = "#__ramajax_league_team_map"
+     *      slaveFieldName      = "player"
+     *      slaveFieldTable     = "#__ramajax_use_example"
+	 *   ]
+     */
+    public array $ramajaxDefinition;
+
+    public $existMasterField;
+
+    // Constructor
+    public function __construct($properties = null) 
     {
-        try {
+        $this->ramajaxDefinition = array();
+        $this->existMasterField = null;
+
+        parent::__construct($properties);
+    }
+
+    /**
+     * Gets the Ramajax definition from DB or Buffer Property
+     * 
+     * Buffering data (in $this->ramajaxDefinition) saves queries to DB
+     */
+    public function getRamajaxDefinition(String $ramajaxName)
+    {
+        if (empty($this->ramajaxDefinition))
+        {
             $db    = JFactory::getDbo();
             $query = $db->getQuery(true);
-            $query->select($db->quoteName('table'))
-                ->from($db->quoteName('#__ramajax_field_tables'))
-                ->where($db->quoteName('field') . " = " . $db->quote($FieldName));
-            
-                // Reset the query using our newly populated query object.
+            $query->select('*')
+                ->from($db->quoteName('#__ramajax_definition_tables'))
+                ->where($db->quoteName('name') . " = " . $db->quote($ramajaxName));
             $db->setQuery($query);
-            $tableDb    = $db->loadResult();
-            return $tableDb;
+            $this->ramajaxDefinition  = $db->loadAssoc();
         }
-        catch (Exception $e)
-        {
-            throw new Exception(implode("ERROR_TABLE\n", $e->getCode(), $e->getMessage()), 500);
-        }
+
+        return $this->ramajaxDefinition ;
     }
 
     /**
@@ -43,24 +68,27 @@ class RamajaxModelAjax extends JModelItem
      * @param       string  $masterField
      * @return      boolean  true if masterField is in the table
      */
-    public function existMasterField(String $masterFieldName, String $masterFieldValue)
+    public function existMasterField(String $ramajaxName, String $masterFieldValue)
     {
         // Initialize variables.
-        $db    = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $masterFieldTable = $this->getFieldTable($masterFieldName);
+        $ramdef  = $this->getRamajaxDefinition($ramajaxName);
 
         // Create the base select statement.
+        $db    = JFactory::getDbo();
+        $query = $db->getQuery(true);
         $query->select('count(*)')
-                ->from($db->quoteName($masterFieldTable))
-                ->where($db->quoteName($masterFieldName) . " = " . $db->quote($masterFieldValue));
+                ->from($db->quoteName($ramdef['masterFieldTable']))
+                ->where($db->quoteName($ramdef['masterFieldName']) . " = " . $db->quote($masterFieldValue));
 
         // Reset the query using our newly populated query object.
         $db->setQuery($query);
         $count = $db->loadResult();
-        
-        if ($count > 0) return True;
-        else return False;
+
+        if ($count > 0) $this->existMasterField = True;
+        else $this->existMasterField =  False;
+
+
+        return $this->existMasterField;
     }
 
     /**
@@ -70,20 +98,19 @@ class RamajaxModelAjax extends JModelItem
      * @return      array   list of Slave Values
      */
     public function getSlaveValues(
-        String $masterFieldName,
-        String $masterFieldValue,
-        String $slaveFieldName)
+        String $ramajaxName,
+        String $masterFieldValue)
     {
-        // Initialize variables.
-        $db    = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $slaveFieldTable = $this->getFieldTable($slaveFieldName);
+        // Get Ramajax definition
+        $ramdef  = $this->getRamajaxDefinition($ramajaxName);
 
         // Create the base select statement.
         // https://docs.joomla.org/Selecting_data_using_JDatabase/es#loadColumn.28.29
-        $query->select($slaveFieldName)
-                ->from($db->quoteName($slaveFieldTable))
-                ->where($db->quoteName($masterFieldName) . " = " . $db->quote($masterFieldValue));
+        $db    = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select($ramdef['slaveFieldName'])
+                ->from($db->quoteName($ramdef['slaveFieldTable']))
+                ->where($db->quoteName($ramdef['masterFieldName']) . " = " . $db->quote($masterFieldValue));
 
         // Reset the query using our newly populated query object.
         $db->setQuery($query);
@@ -100,18 +127,17 @@ class RamajaxModelAjax extends JModelItem
      * @param       string  $masterField
      * @return      array   list of Slave Values
      */
-    public function getSlaveEmptyValue(String $masterFieldName,String $slaveFieldName)
+    public function getSlaveEmptyValue(String $ramajaxName)
     {
         // Initialize variables.
+        $ramdef  = $this->getRamajaxDefinition($ramajaxName);
+
+        // DB query
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
-        $slaveFieldTable = $this->getFieldTable($slaveFieldName);
-
-        $query->select($slaveFieldName)
-                ->from($db->quoteName($slaveFieldTable))
-                ->where($db->quoteName($masterFieldName) . " = ''");
-
-        // Reset the query using our newly populated query object.
+        $query->select($ramdef['slaveFieldName'])
+                ->from($db->quoteName($ramdef['slaveFieldTable']))
+                ->where($db->quoteName($ramdef['masterFieldName']) . " = ''");
         $db->setQuery($query);
         $result= $db->loadResult();
         
@@ -125,18 +151,20 @@ class RamajaxModelAjax extends JModelItem
      * @return      array   list of Slave Values
      */
     public function getSlaveOptions(
-        String $masterFieldName,
+        String $ramajaxName,
         String $masterFieldValue,
-        String $slaveFieldName,
         String $slaveFieldValue='')
     {
+        // Initialize variables.
+        $ramdef  = $this->getRamajaxDefinition($ramajaxName);
+
         // Get default Option
-        $slaveEmpty   = $this->getSlaveEmptyValue($masterFieldName,$slaveFieldName);
+        $slaveEmpty   = $this->getSlaveEmptyValue($ramajaxName);
         $options  = '<option value>'.JText::_($slaveEmpty).'</option>';
 
         // Get the other Options
-        if ($this->existMasterField($masterFieldName,$masterFieldValue)){
-            $slavesFromDb = $this->getSlaveValues($masterFieldName,$masterFieldValue,$slaveFieldName);
+        if ($this->existMasterField($ramajaxName,$masterFieldValue)){
+            $slavesFromDb = $this->getSlaveValues($ramajaxName,$masterFieldValue);
             foreach ($slavesFromDb as $slaveDb) 
             {
                 $selected = ($slaveFieldValue ==  $slaveDb)?'selected="selected"':'';

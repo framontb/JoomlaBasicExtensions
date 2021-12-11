@@ -1,6 +1,9 @@
 -- DROP TABLES --
 DROP TABLE IF EXISTS `#__ramajax_field_tables`;
+DROP TABLE IF EXISTS `#__ramajax_definition_tables`;
 
+
+-- ******************************* OLD FASHION****************************** --
 -- CREATE TABLE --
 CREATE TABLE `#__ramajax_field_tables` (
     `id`       		INT(11)         NOT NULL AUTO_INCREMENT,
@@ -17,6 +20,28 @@ INSERT INTO `#__ramajax_field_tables` (`field`,`table`) VALUES
 ('league',  '#__ramajax_league_list'),
 ('team',    '#__ramajax_league_team_map'),
 ('player',  '#__ramajax_use_example');
+
+-- ******************************** NEW FASHION ***************************** --
+
+-- CREATE TABLE --
+CREATE TABLE `#__ramajax_definition_tables` (
+    `name`              VARCHAR(120)    NOT NULL DEFAULT '',
+    `type`              VARCHAR(120)    NOT NULL DEFAULT '',
+    `masterFieldName`   VARCHAR(120)    NOT NULL DEFAULT '',
+    `masterFieldTable`  VARCHAR(120)    NOT NULL DEFAULT '',
+    `slaveFieldName`    VARCHAR(120)    NOT NULL DEFAULT '',
+    `slaveFieldTable`   VARCHAR(120)    NOT NULL DEFAULT '',
+    PRIMARY KEY (`name`)
+)
+	ENGINE =InnoDB
+	AUTO_INCREMENT =0
+	DEFAULT CHARSET =utf8;
+
+-- INSERT VALUES --
+INSERT INTO `#__ramajax_definition_tables` 
+(`name`,`type`,`masterFieldName`,`masterFieldTable`,`slaveFieldName`,`slaveFieldTable`) VALUES
+('team','ramajax','league','#__ramajax_league_list','team','#__ramajax_league_team_map'),
+('player','ramajax','team','#__ramajax_league_team_map','player','#__ramajax_use_example');
 
 -- ************************ EXAMPLES *************************** --
 

@@ -34,7 +34,7 @@ class RamajaxControllerAjax extends JControllerLegacy
         $this->masterFieldValue   = JFactory::getApplication()->input->get($this->masterFieldName,'','STRING');
 
         # If empty $masterFieldValue, or $masterFieldValue not in bd => nothing to do
-        if (empty($this->masterFieldValue) or (!$this->model->existMasterField($this->masterFieldName, $this->masterFieldValue))) 
+        if (empty($this->masterFieldValue) or (!$this->model->existMasterField($this->slaveFieldName, $this->masterFieldValue))) 
         {
             $this->masterFieldValue = "";
         }
@@ -54,9 +54,8 @@ class RamajaxControllerAjax extends JControllerLegacy
         try
         {
             $slaveValues = $this->model->getSlaveValues(
-                $this->masterFieldName,
-                $this->masterFieldValue,
-                $this->slaveFieldName);
+                $this->slaveFieldName,
+                $this->masterFieldValue);
 
             $response = new JsonResponse($slaveValues);
             echo $response;
@@ -75,9 +74,8 @@ class RamajaxControllerAjax extends JControllerLegacy
         try
         {
             $slaveOptions = $this->model->getSlaveOptions(
-                $this->masterFieldName,
-                $this->masterFieldValue,
-                $this->slaveFieldName);
+                $this->slaveFieldName,
+                $this->masterFieldValue);
 
             $response = new JsonResponse($slaveOptions);
             echo $response;
