@@ -70,7 +70,7 @@ class JFormFieldRamajax extends JFormField {
         if (empty($masterFieldValue )) {$masterFieldValue="";}
         if (empty($slaveFieldValue )) {$slaveFieldValue="";}
         if (!$ajaxModel->existMasterField($slaveFieldName,$masterFieldValue)) {$masterFieldValue ='';}  
-        $slaveOptions = $ajaxModel->getSlaveOptions($masterFieldName,$masterFieldValue,$slaveFieldName,$slaveFieldValue);
+        $slaveOptions = $ajaxModel->getSlaveOptions($slaveFieldName,$masterFieldValue,$slaveFieldValue);
 
         // RAM DEBUG
         if (JDEBUG) {
