@@ -12,6 +12,9 @@
 // Observe here task=ajax.getSlaveOptions
 function populateSlaveSelectFromOptions(event)
 {
+    // Empty slave field before filling it
+    jQuery(event.data.slaveSelectId).empty();
+
     // alert(event.data.mainFieldName);
     var mainFieldValue = jQuery(this).find(':selected').val();
     dataString  = '&masterFieldName='+event.data.mainFieldName
@@ -28,7 +31,10 @@ function populateSlaveSelectFromOptions(event)
             jQuery(event.data.slaveSelectId).empty().append(data.data);
         },
         error    : function(){console.log("Ajax failed");}
-    }); 
+    });
+
+    // Cascade changes
+    jQuery(event.data.slaveSelectId).change();
 }
 
 // Populates the indicated slave select (see slaveSelectId in the event)
@@ -40,6 +46,8 @@ function populateSlaveSelectFromOptions(event)
 // Like "All" example
 function populateSlaveSelectFromValues(event)
 {
+    // Empty slave field before filling it
+    jQuery(event.data.slaveSelectId).empty();
 
     // alert(event.data.mainFieldName);
     var mainFieldValue = jQuery(this).find(':selected').val();
@@ -68,5 +76,8 @@ function populateSlaveSelectFromValues(event)
         error: function(){
             console.log("Ajax failed");
         }
-    }); 
+    });
+
+    // Cascade changes
+    jQuery(event.data.slaveSelectId).change();
 }
