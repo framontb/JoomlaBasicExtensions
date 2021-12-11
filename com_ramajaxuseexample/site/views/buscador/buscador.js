@@ -22,9 +22,9 @@ jQuery(document).ready(function() {
     jQuery('#filter_clear').click(filter_clear);
 
     // Reset function
+    // Because changes cascade, we only need to reset the first element of the chain
     function filter_clear() 
     {
-        jQuery('#filter_team').empty().append('<option value>ALL</option>');
-        jQuery('#filter_player').empty().append('<option value>ALL</option>');
+        jQuery('#filter_league').val("").change();
     }
 });
