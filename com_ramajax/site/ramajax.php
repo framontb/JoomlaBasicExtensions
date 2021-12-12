@@ -16,7 +16,7 @@ if (JDEBUG) {
         // We still need to put it inside an array.
         array('com_ramajax')
     );
-    JLog::add('************** BEGIN COM_RAMAJAX *****************', JLog::INFO, 'com_ramajax');
+    JLog::add('*********** BEGIN COM_RAMAJAX **************', JLog::INFO, 'com_ramajax');
 }
 
 

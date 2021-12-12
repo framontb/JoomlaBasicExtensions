@@ -7,8 +7,7 @@ jQuery(document).ready(function() {
     // ajax request for team
     jQuery('#filter_league').change(
         {
-            mainFieldName:"league",
-            slaveFieldName:"team",
+            ramajaxName:"team",
             slaveSelectId:"#filter_team"
         }, 
         populateSlaveSelectFromOptions);
@@ -16,8 +15,7 @@ jQuery(document).ready(function() {
     // ajax request for player
     jQuery('#filter_team').change(
         {
-            mainFieldName:"team",
-            slaveFieldName:"player",
+            ramajaxName:"player",
             slaveSelectId:"#filter_player"
         }, 
         populateSlaveSelectFromOptions);

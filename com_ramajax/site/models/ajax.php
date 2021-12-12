@@ -10,6 +10,24 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
+// RAM DEBUG
+use Joomla\CMS\Log\Log;
+if (JDEBUG) {
+    JLog::addLogger(
+        array(
+            // Sets file name
+            'text_file' => 'com_ramajax.log.php'
+        ),
+        // Sets messages of all log levels to be sent to the file.
+        JLog::ALL,
+        // The log category/categories which should be recorded in this file.
+        // In this case, it's just the one category from our extension.
+        // We still need to put it inside an array.
+        array('com_ramajax')
+    );
+    JLog::add('******** COM_RAMAJAX > MODEL: AJAX.PHP **********', JLog::INFO, 'com_ramajax');
+}
+
 /**
  * Ajax Model
  *
@@ -48,6 +66,9 @@ class RamajaxModelAjax extends JModelItem
      */
     public function getRamajaxDefinition(String $ramajaxName)
     {
+        // RAM DEBUG
+        if (JDEBUG) JLog::add('getRamajaxDefinition > $ramajaxName = '.$ramajaxName, JLog::INFO, 'com_ramajax');
+
         if (empty($this->ramajaxDefinition))
         {
             $db    = JFactory::getDbo();
@@ -70,23 +91,28 @@ class RamajaxModelAjax extends JModelItem
      */
     public function existMasterField(String $ramajaxName, String $masterFieldValue)
     {
-        // Initialize variables.
-        $ramdef  = $this->getRamajaxDefinition($ramajaxName);
+        // RAM DEBUG
+        if (JDEBUG) JLog::add('existMasterField > $ramajaxName = '.$ramajaxName, JLog::INFO, 'com_ramajax');
 
-        // Create the base select statement.
-        $db    = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select('count(*)')
-                ->from($db->quoteName($ramdef['masterFieldTable']))
-                ->where($db->quoteName($ramdef['masterFieldName']) . " = " . $db->quote($masterFieldValue));
+        if (is_null($this->existMasterField))
+        {
+            // Initialize variables.
+            $ramdef  = $this->getRamajaxDefinition($ramajaxName);
 
-        // Reset the query using our newly populated query object.
-        $db->setQuery($query);
-        $count = $db->loadResult();
+            // Create the base select statement.
+            $db    = JFactory::getDbo();
+            $query = $db->getQuery(true);
+            $query->select('count(*)')
+                    ->from($db->quoteName($ramdef['masterFieldTable']))
+                    ->where($db->quoteName($ramdef['masterFieldName']) . " = " . $db->quote($masterFieldValue));
 
-        if ($count > 0) $this->existMasterField = True;
-        else $this->existMasterField =  False;
+            // Reset the query using our newly populated query object.
+            $db->setQuery($query);
+            $count = $db->loadResult();
 
+            if ($count > 0) $this->existMasterField = True;
+            else $this->existMasterField =  False;
+        }
 
         return $this->existMasterField;
     }

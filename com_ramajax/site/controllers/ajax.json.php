@@ -10,11 +10,29 @@
 
 use \Joomla\CMS\Response\JsonResponse;
 
+// RAM DEBUG
+use Joomla\CMS\Log\Log;
+if (JDEBUG) {
+    JLog::addLogger(
+        array(
+            // Sets file name
+            'text_file' => 'com_ramajax.log.php'
+        ),
+        // Sets messages of all log levels to be sent to the file.
+        JLog::ALL,
+        // The log category/categories which should be recorded in this file.
+        // In this case, it's just the one category from our extension.
+        // We still need to put it inside an array.
+        array('com_ramajax')
+    );
+}
+// RAM DEBUG
+if (JDEBUG) JLog::add('******** COM_RAMAJAX > RamajaxControllerAjax **********', JLog::INFO, 'com_ramajax');
+
 class RamajaxControllerAjax extends JControllerLegacy
 {
     // Properties
-    private String $masterFieldName;
-    private String $slaveFieldName;
+    private String $ramajaxName;
     private String $masterFieldValue;
     private $model;
 
@@ -28,21 +46,17 @@ class RamajaxControllerAjax extends JControllerLegacy
         # Get the model
         $this->model = $this->getModel('ajax');
 
-        # master/slave field Variables
-        $this->masterFieldName    = JFactory::getApplication()->input->get('masterFieldName','','STRING');        
-        $this->slaveFieldName     = JFactory::getApplication()->input->get('slaveFieldName','','STRING');
-        $this->masterFieldValue   = JFactory::getApplication()->input->get($this->masterFieldName,'','STRING');
+        # master/slave field Variables      
+        $this->ramajaxName     = JFactory::getApplication()->input->get('ramajaxName','','STRING');
+        $this->masterFieldValue = JFactory::getApplication()->input->get('masterFieldValue','','STRING');
+
+// RAM DEBUG
+if (JDEBUG) JLog::add('RamajaxControllerAjax > $this->ramajaxName = '.$this->ramajaxName, JLog::INFO, 'com_ramajax');
 
         # If empty $masterFieldValue, or $masterFieldValue not in bd => nothing to do
-        if (empty($this->masterFieldValue) or (!$this->model->existMasterField($this->slaveFieldName, $this->masterFieldValue))) 
+        if (empty($this->masterFieldValue) or (!$this->model->existMasterField($this->ramajaxName, $this->masterFieldValue))) 
         {
             $this->masterFieldValue = "";
-        }
-
-        # RAM DEBUG
-        if (JDEBUG) { 
-            JLog::add('$this->masterFieldValue : '.$this->masterFieldName.' = '.$this->masterFieldValue, JLog::INFO, 'com_ramajax');
-            JLog::add('$this->slaveFieldName : '.$this->slaveFieldName, JLog::INFO, 'com_ramajax');
         }
     }
 
@@ -54,7 +68,7 @@ class RamajaxControllerAjax extends JControllerLegacy
         try
         {
             $slaveValues = $this->model->getSlaveValues(
-                $this->slaveFieldName,
+                $this->ramajaxName,
                 $this->masterFieldValue);
 
             $response = new JsonResponse($slaveValues);
@@ -74,7 +88,7 @@ class RamajaxControllerAjax extends JControllerLegacy
         try
         {
             $slaveOptions = $this->model->getSlaveOptions(
-                $this->slaveFieldName,
+                $this->ramajaxName,
                 $this->masterFieldValue);
 
             $response = new JsonResponse($slaveOptions);

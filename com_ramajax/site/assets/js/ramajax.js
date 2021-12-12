@@ -15,11 +15,10 @@ function populateSlaveSelectFromOptions(event)
     // Empty slave field before filling it
     jQuery(event.data.slaveSelectId).empty();
 
-    // alert(event.data.mainFieldName);
-    var mainFieldValue = jQuery(this).find(':selected').val();
-    dataString  = '&masterFieldName='+event.data.mainFieldName
-    dataString += '&slaveFieldName='+event.data.slaveFieldName
-    dataString += "&"+event.data.mainFieldName+"=" + mainFieldValue;
+    // Ajax request
+    var masterFieldValue = jQuery(this).find(':selected').val();
+    dataString = 'ramajaxName='+event.data.ramajaxName
+    dataString += '&masterFieldValue=' + masterFieldValue;
 
     jQuery.ajax({
         type     : 'GET',
@@ -49,13 +48,10 @@ function populateSlaveSelectFromValues(event)
     // Empty slave field before filling it
     jQuery(event.data.slaveSelectId).empty();
 
-    // alert(event.data.mainFieldName);
-    var mainFieldValue = jQuery(this).find(':selected').val();
-    dataString  = '&masterFieldName='+event.data.mainFieldName
-    dataString += '&slaveFieldName='+event.data.slaveFieldName
-    dataString += "&"+event.data.mainFieldName+"=" + mainFieldValue;
-
-    // alert(dataString);
+    // Ajax request
+    var masterFieldValue = jQuery(this).find(':selected').val();
+    dataString = 'ramajaxName='+event.data.ramajaxName
+    dataString += '&masterFieldValue=' + masterFieldValue;
 
     jQuery.ajax({
         type     : 'GET',

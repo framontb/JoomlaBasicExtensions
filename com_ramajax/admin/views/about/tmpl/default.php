@@ -43,7 +43,7 @@ $uriRoot =  $uri->root();
     <p>
     Ramajax component comes with some data configured, so you can check if it is working.
     </br>You can access this URL to check if the ajax server is working: 
-    <a target="_blank" href="<?php echo $uriRoot ?>index.php?option=com_ramajax&task=ajax.getSlaveValues&format=json&masterFieldName=league&slaveFieldName=team&league=NBA">CHECK AJAX</a>
+    <a target="_blank" href="<?php echo $uriRoot ?>index.php?option=com_ramajax&task=ajax.getSlaveValues&format=json&ramajaxName=team&masterFieldValue=NBA">CHECK AJAX</a>
     </p>
 
     <p> You should see a text like this in your browser:

@@ -1,25 +1,5 @@
 -- DROP TABLES --
-DROP TABLE IF EXISTS `#__ramajax_field_tables`;
 DROP TABLE IF EXISTS `#__ramajax_definition_tables`;
-
-
--- ******************************* OLD FASHION****************************** --
--- CREATE TABLE --
-CREATE TABLE `#__ramajax_field_tables` (
-    `id`       		INT(11)         NOT NULL AUTO_INCREMENT,
-    `field`         VARCHAR(120)    NOT NULL DEFAULT '',
-    `table`         VARCHAR(120)    NOT NULL DEFAULT '',
-    PRIMARY KEY (`id`)
-)
-	ENGINE =InnoDB
-	AUTO_INCREMENT =0
-	DEFAULT CHARSET =utf8;
-
--- INSERT VALUES --
-INSERT INTO `#__ramajax_field_tables` (`field`,`table`) VALUES
-('league',  '#__ramajax_league_list'),
-('team',    '#__ramajax_league_team_map'),
-('player',  '#__ramajax_use_example');
 
 -- ******************************** NEW FASHION ***************************** --
 
