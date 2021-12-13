@@ -44,7 +44,7 @@ class RamajaxModelAjax extends JModelItem
      *      masterFieldTable    = "#__ramajax_league_team_map"
      *      slaveFieldName      = "player"
      *      slaveFieldTable     = "#__ramajax_use_example"
-	 *   ]
+     *   ]
      */
     public array $ramajaxDefinition;
 
@@ -70,14 +70,19 @@ class RamajaxModelAjax extends JModelItem
         if (JDEBUG) JLog::add('getRamajaxDefinition > $ramajaxName = '.$ramajaxName, JLog::INFO, 'com_ramajax');
 
         if (empty($this->ramajaxDefinition))
-        {
+        {  
             $db    = JFactory::getDbo();
             $query = $db->getQuery(true);
             $query->select('*')
                 ->from($db->quoteName('#__ramajax_definition_tables'))
                 ->where($db->quoteName('name') . " = " . $db->quote($ramajaxName));
             $db->setQuery($query);
-            $this->ramajaxDefinition  = $db->loadAssoc();
+            $result = $db->loadAssoc();
+
+            if (!empty($result))
+            {
+                $this->ramajaxDefinition  = $result;
+            }
         }
 
         return $this->ramajaxDefinition ;
@@ -108,7 +113,17 @@ class RamajaxModelAjax extends JModelItem
 
             // Reset the query using our newly populated query object.
             $db->setQuery($query);
-            $count = $db->loadResult();
+            try {
+                $count = $db->loadResult();
+            }
+            catch (Exception $e)
+            {
+                JFactory::getApplication()->enqueueMessage(
+                    JText::sprintf('existMasterField error: '.$ramdef['masterFieldName'], $e->getCode(), $e->getMessage()),
+                    'warning');
+                return False;
+            }
+            
 
             if ($count > 0) $this->existMasterField = True;
             else $this->existMasterField =  False;
@@ -140,7 +155,17 @@ class RamajaxModelAjax extends JModelItem
 
         // Reset the query using our newly populated query object.
         $db->setQuery($query);
-        $column= $db->loadColumn();
+        try 
+        {
+            $column= $db->loadColumn();
+        }
+        catch (Exception $e)
+        {
+            JFactory::getApplication()->enqueueMessage(
+                JText::sprintf('getSlaveValues error: '.$ramdef['slaveFieldName'], $e->getCode(), $e->getMessage()),
+                'warning');
+            return array();
+        }
         
         return $column;
     }
@@ -165,7 +190,18 @@ class RamajaxModelAjax extends JModelItem
                 ->from($db->quoteName($ramdef['slaveFieldTable']))
                 ->where($db->quoteName($ramdef['masterFieldName']) . " = ''");
         $db->setQuery($query);
-        $result= $db->loadResult();
+        try 
+        {
+            $result= $db->loadResult();
+        }
+        catch (Exception $e)
+        {
+            JFactory::getApplication()->enqueueMessage(
+                JText::sprintf('getSlaveEmptyValue error: '.$ramdef['slaveFieldName'], $e->getCode(), $e->getMessage()),
+                'warning');
+            return False;
+        }
+        
         
         return $result;
     }
@@ -200,5 +236,69 @@ class RamajaxModelAjax extends JModelItem
         }
 
         return $options;
+    }
+
+    /**
+     * Get the ramajax field state in db:
+     * 
+     * Used in model > fields > ramajax.php
+     *      -1 conflict detected
+     *       0 all is OK, ramajax field provisioned
+     *       1 ramajax field not provisined jet
+     */
+    public function getRamajaxStateDb(array $ramDefForm)
+    {
+        $ramDefDb = $this->getRamajaxDefinition($ramDefForm['ramajaxName']);
+
+        // No such field ramajax in DB => need provision
+        if (empty($ramDefDb)) {return 1;}
+        
+        // Detect Conflict
+        if (
+            $ramDefForm['masterFieldName']  != $ramDefDb['masterFieldName']     ||
+            $ramDefForm['masterFieldTable'] != $ramDefDb['masterFieldTable']    ||
+            $ramDefForm['slaveFieldName']   != $ramDefDb['slaveFieldName']      ||
+            $ramDefForm['slaveFieldTable']  != $ramDefDb['slaveFieldTable']
+        )
+        {return -1;}
+
+        // Else
+        return 0;
+    }
+
+    /**
+     * Store a ramajax Field in the DB
+     * 
+     */
+    public function storeRamajaxInDb(array $ramDefForm)
+    {
+        // Get a db connection.
+        $db = JFactory::getDbo();
+
+        // Create a new query object.
+        $query = $db->getQuery(true);
+
+        // Insert columns.
+        $columns = array('name', 'type', 'masterFieldName', 'masterFieldTable','slaveFieldName','slaveFieldTable');
+
+        // Insert values.
+        $values = array(
+            $db->quote($ramDefForm['ramajaxName']), 
+            $db->quote($ramDefForm['type']), 
+            $db->quote($ramDefForm['masterFieldName']), 
+            $db->quote($ramDefForm['masterFieldTable']), 
+            $db->quote($ramDefForm['slaveFieldName']), 
+            $db->quote($ramDefForm['slaveFieldTable'])
+        );
+
+        // Prepare the insert query.
+        $query
+            ->insert($db->quoteName('#__ramajax_definition_tables'))
+            ->columns($db->quoteName($columns))
+            ->values(implode(',', $values));
+
+        // Set the query using our newly populated query object and execute it.
+        $db->setQuery($query);
+        $db->execute();
     }
 }

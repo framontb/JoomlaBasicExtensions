@@ -65,10 +65,6 @@ $uriRoot =  $uri->root();
     <p>
         After install com_ramajax, and check it's working properly, you will need:
         <ol>
-            <li>two tables in the database with the information for the selects (see the example tables in this component)</li>
-            <li>modify the model to include your tables (/site/models/ajax.php).
-                You will need to add two lines to the RamajaxModelAjax->__construct, with the pair fieldName/Table.
-            </li>
             <li>add two fields to your Form (the main field and the slave field). 
                 The main select with type <b>sql</b> 
                 and the slave of type <b>ramajax</b></li>
@@ -97,7 +93,6 @@ $uriRoot =  $uri->root();
 
 <h2>TODO</h2>
     <ul>
-        <li>First time a ramajax field loads, it saves the tables in __ramajax_field_tables</li>
         <li>Error managing for ajax. For example, conflict between ramajax fields access to db.</li>
         <li>Translations</li>
         <li>Check token in controller</li>
@@ -105,10 +100,20 @@ $uriRoot =  $uri->root();
         <li>Check if in the Example's view, puttin $this->setDocument before display, loads the javascript so I can use it in the 
             ramajax field
         </li>
+        <li>Add new ramajax field example with an alternative select player more restrictive</li>
+        <li>Add new ramajax field example the fourth chained one for wage</li>
+
+    </ul>
+
+    <h2>DONE</h2>
+    <ul>
+        <li>First time a ramajax field loads, it saves the tables in __ramajax_field_tables</li>
+        <li>error managing for ramajax field auto-provision</li>
         <li>BUG: When using the pagination links with league selected, the team select doesn't fill values.
             Si el master field presenta un valor, deben cargarse las opciones correspondientes en el slave.
             Reproducir: Selecciona una liga, y submit. Luego pica en link de paginación. El select de team no tiene valores,
             aunque hay una liga elegida.
         </li>
     </ul>
+
 </div>
