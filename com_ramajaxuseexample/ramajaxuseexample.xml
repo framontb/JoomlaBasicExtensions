@@ -15,7 +15,9 @@
             <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
         </sql>
     </uninstall>
-
+	<languages folder="site/language">
+		<language tag="en-GB">en-GB/en-GB.com_ramajaxuseexample.ini</language>
+	</languages>
     <administration>
         <menu link='index.php?option=com_ramajaxuseexample'>Ramajax Use Example</menu>
         <files folder="admin">
