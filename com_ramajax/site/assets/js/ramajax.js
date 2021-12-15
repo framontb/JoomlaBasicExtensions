@@ -26,10 +26,23 @@ function populateSlaveSelectFromOptions(event)
         data     : dataString,
         dataType : 'JSON',
         cache    : true,
-        success  : function(data) {
-            jQuery(event.data.slaveSelectId).empty().append(data.data);
+        success  : function(result, textStatus, jqXHR) {
+            // RAM DEBUG
+            // console.log("Message from server was " + result.message);
+
+            // MAIN DATA UPDATE
+            jQuery(event.data.slaveSelectId).empty().append(result.data);
+            
+            // display the enqueued messages in the message area
+			Joomla.renderMessages(result.messages);
         },
-        error    : function(){console.log("Ajax failed");}
+        error    : function(jqXHR, textStatus, errorThrown)
+		{
+            console.log('ajax call failed');
+            // RAM DEBUG
+			// console.log('ajax call failed - textStatus: ' + textStatus);
+            // console.log('ajax call failed - errorThrown: ' + errorThrown);
+		}
     });
 
     // Cascade changes

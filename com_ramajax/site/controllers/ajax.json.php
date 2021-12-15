@@ -91,6 +91,13 @@ if (JDEBUG) JLog::add('RamajaxControllerAjax > $this->ramajaxName = '.$this->ram
                 $this->ramajaxName,
                 $this->masterFieldValue);
 
+            // SEND MESSAGES to page by Ajax: 
+            // Doc: https://docs.joomla.org/JSON_Responses_with_JResponseJson
+            // $app = JFactory::getApplication();      
+            // $app->enqueueMessage("Enqueued notice", "notice");
+            // $app->enqueueMessage("Enqueued warning", "warning");
+            //$response = new JsonResponse($slaveOptions, "It worked!");
+
             $response = new JsonResponse($slaveOptions);
             echo $response;
         }
