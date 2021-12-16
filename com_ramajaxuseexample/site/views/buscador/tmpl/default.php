@@ -26,7 +26,7 @@ defined('_JEXEC') or die('Restricted Access');
                 <?php echo JText::_('LEAGUE') ;?>
             </th>
             <th width="30%">
-                <?php echo JText::_('TEAM') ;?>
+                <?php echo JText::_('COM_RAMAJAXUSEEXAMPLE_TEAM') ;?>
             </th>
             <th width="30%">
                 <?php echo JText::_('PLAYER') ;?>
@@ -51,10 +51,10 @@ defined('_JEXEC') or die('Restricted Access');
 
                     <tr>
                         <td>
-                            <?php echo $row->league; ?>
+                            <?php echo JText::_($row->league); ?>
                         </td>
                         <td>
-                            <?php echo $row->team; ?>
+                            <?php echo JText::_($row->team); ?>
                         </td>
                         <td>
                             <?php echo $row->player; ?>

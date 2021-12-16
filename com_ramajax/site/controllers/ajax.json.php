@@ -50,14 +50,22 @@ class RamajaxControllerAjax extends JControllerLegacy
         $this->ramajaxName     = JFactory::getApplication()->input->get('ramajaxName','','STRING');
         $this->masterFieldValue = JFactory::getApplication()->input->get('masterFieldValue','','STRING');
 
-// RAM DEBUG
-if (JDEBUG) JLog::add('RamajaxControllerAjax > $this->ramajaxName = '.$this->ramajaxName, JLog::INFO, 'com_ramajax');
+        // RAM DEBUG
+        // if (JDEBUG) JLog::add('RamajaxControllerAjax > $this->ramajaxName = '.$this->ramajaxName, JLog::INFO, 'com_ramajax');
 
         # If empty $masterFieldValue, or $masterFieldValue not in bd => nothing to do
         if (empty($this->masterFieldValue) or (!$this->model->existMasterField($this->ramajaxName, $this->masterFieldValue))) 
         {
             $this->masterFieldValue = "";
         }
+
+        $lang = JFactory::getLanguage();
+        $extension = 'com_ramajaxuseexample';
+        $base_dir = JPATH_SITE;
+        $language_tag = 'en-GB';
+        $reload = true;
+        // $lang->load($extension, JPATH_ADMINISTRATOR, null,          false, true)
+        $lang->load($extension, $base_dir,$language_tag, $reload);
     }
 
     /**

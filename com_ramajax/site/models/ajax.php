@@ -132,6 +132,44 @@ class RamajaxModelAjax extends JModelItem
         return $this->existMasterField;
     }
 
+
+    /**
+     * Method to get the slave message when the primary is empty
+     * 
+     * It will be assigned no value in getSlaveOptions, so it matches for All specialties
+     *
+     * @param       string  $masterField
+     * @return      array   list of Slave Values
+     */
+    public function getSlaveEmptyValue(String $ramajaxName)
+    {
+        // Initialize variables.
+        $ramdef  = $this->getRamajaxDefinition($ramajaxName);
+
+        // DB query
+        $db    = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select($ramdef['slaveFieldName'])
+                ->from($db->quoteName($ramdef['slaveFieldTable']))
+                ->where($db->quoteName($ramdef['masterFieldName']) . " = ''");
+        $db->setQuery($query);
+        try 
+        {
+            $result= $db->loadResult();
+        }
+        catch (Exception $e)
+        {
+            JFactory::getApplication()->enqueueMessage(
+                JText::sprintf('getSlaveEmptyValue error: '.$ramdef['slaveFieldName'], $e->getCode(), $e->getMessage()),
+                'warning');
+            return False;
+        }
+        
+        
+        return $result;
+    }
+
+
     /**
      * Method to get all slave Fields that match for a masterField
      *
@@ -168,42 +206,6 @@ class RamajaxModelAjax extends JModelItem
         }
         
         return $column;
-    }
-
-    /**
-     * Method to get the slave message when the primary is empty
-     * 
-     * It will be assigned no value in getSlaveOptions, so it matches for All specialties
-     *
-     * @param       string  $masterField
-     * @return      array   list of Slave Values
-     */
-    public function getSlaveEmptyValue(String $ramajaxName)
-    {
-        // Initialize variables.
-        $ramdef  = $this->getRamajaxDefinition($ramajaxName);
-
-        // DB query
-        $db    = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select($ramdef['slaveFieldName'])
-                ->from($db->quoteName($ramdef['slaveFieldTable']))
-                ->where($db->quoteName($ramdef['masterFieldName']) . " = ''");
-        $db->setQuery($query);
-        try 
-        {
-            $result= $db->loadResult();
-        }
-        catch (Exception $e)
-        {
-            JFactory::getApplication()->enqueueMessage(
-                JText::sprintf('getSlaveEmptyValue error: '.$ramdef['slaveFieldName'], $e->getCode(), $e->getMessage()),
-                'warning');
-            return False;
-        }
-        
-        
-        return $result;
     }
 
     /**

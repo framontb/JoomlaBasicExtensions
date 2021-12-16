@@ -19,6 +19,7 @@ function populateSlaveSelectFromOptions(event)
     var masterFieldValue = jQuery(this).find(':selected').val();
     dataString = 'ramajaxName='+event.data.ramajaxName
     dataString += '&masterFieldValue=' + masterFieldValue;
+    // dataString += '&lang=en';
 
     jQuery.ajax({
         type     : 'GET',
