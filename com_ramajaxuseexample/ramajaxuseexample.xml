@@ -19,6 +19,7 @@
 
 	<languages folder="site/language">
 		<language tag="en-GB">en-GB/en-GB.com_ramajaxuseexample.ini</language>
+        <language tag="es-ES">es-ES/es-ES.com_ramajaxuseexample.ini</language>
 	</languages>
 
     <administration>

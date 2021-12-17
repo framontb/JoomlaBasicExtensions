@@ -95,6 +95,9 @@ $uriRoot =  $uri->root();
     <ul>
         <li>Error managing for ajax. For example, conflict between ramajax fields access to db.</li>
         <li>Translations</li>
+        <li>Translations: field sql type origin</li>
+        <li>Translations: Translate to language different from english</li>
+        <li>Translations: what is a multilanguage page for joomla</li>
         <li>Check token in controller</li>
         <li>Repasar notas de copyright</li>
         <li>Check if in the Example's view, puttin $this->setDocument before display, loads the javascript so I can use it in the 
