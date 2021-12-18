@@ -67,6 +67,8 @@ defined('_JEXEC') or die('Restricted Access');
             <?php endif; ?>
         </tbody>
     </table>
+    <p><?php echo $this->langTag; ?></p>
+    <input type="hidden" name="langTag" id="langTag" value="<?php echo $this->langTag; ?>" />
     <input type="hidden" name="task" />
 	<?php echo JHtml::_('form.token'); ?>
 </form>

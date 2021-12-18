@@ -34,7 +34,7 @@ class RamajaxControllerAjax extends JControllerLegacy
     // Properties
     private String $ramajaxName;
     private String $masterFieldValue;
-    private String $lang;
+    private String $langTag;
     private $model;
 
     /**
@@ -50,7 +50,10 @@ class RamajaxControllerAjax extends JControllerLegacy
         # master/slave field Variables      
         $this->ramajaxName     = JFactory::getApplication()->input->get('ramajaxName','','STRING');
         $this->masterFieldValue = JFactory::getApplication()->input->get('masterFieldValue','','STRING');
-        $this->lang = JFactory::getApplication()->input->get('lang','','es-ES');
+        $this->langTag = JFactory::getApplication()->input->get('langTag','es-ES','STRING');
+
+// RAM DEBUG
+if (JDEBUG) JLog::add('$this->langTag  -->'.$this->langTag.'<--', JLog::INFO, 'com_ramajax');
 
         // RAM DEBUG
         // if (JDEBUG) JLog::add('RamajaxControllerAjax > $this->ramajaxName = '.$this->ramajaxName, JLog::INFO, 'com_ramajax');
@@ -64,7 +67,7 @@ class RamajaxControllerAjax extends JControllerLegacy
         $lang = JFactory::getLanguage();
         $extension = 'com_ramajaxuseexample';
         $base_dir = JPATH_SITE;
-        $language_tag = $this->lang;
+        $language_tag = $this->langTag;
         $reload = true;
         // $lang->load($extension, JPATH_ADMINISTRATOR, null,          false, true)
         $lang->load($extension, $base_dir,'en-GB', $reload);

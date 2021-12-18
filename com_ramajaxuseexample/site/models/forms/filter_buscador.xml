@@ -2,7 +2,6 @@
 <form>
     <fields name="filter" 
         addfieldpath="components/com_ramajax/models/fields">
-
         <field
             name="league"
             header="Please select a league"

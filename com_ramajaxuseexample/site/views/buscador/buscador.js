@@ -4,11 +4,15 @@
 // }
 
 jQuery(document).ready(function() {
+    
+    langTagVal = jQuery("#langTag").val();
+
     // ajax request for team
     jQuery('#filter_league').change(
         {
             ramajaxName:"team",
-            slaveSelectId:"#filter_team"
+            slaveSelectId:"#filter_team",
+            langTag:langTagVal
         }, 
         populateSlaveSelectFromOptions);
 
@@ -16,7 +20,8 @@ jQuery(document).ready(function() {
     jQuery('#filter_team').change(
         {
             ramajaxName:"player",
-            slaveSelectId:"#filter_player"
+            slaveSelectId:"#filter_player",
+            langTag:langTagVal
         }, 
         populateSlaveSelectFromOptions);
 

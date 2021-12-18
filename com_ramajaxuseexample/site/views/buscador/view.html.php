@@ -33,6 +33,9 @@ class RamajaxuseexampleViewBuscador extends JViewLegacy
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
 
+        $language =& JFactory::getLanguage();
+        $this->langTag = $language->getTag();
+
         // Check for errors.
         if (count($errors = $this->get('Errors')))
         {
