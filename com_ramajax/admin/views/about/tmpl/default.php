@@ -93,11 +93,8 @@ $uriRoot =  $uri->root();
 
 <h2>TODO</h2>
     <ul>
-        <li>Error managing for ajax. For example, conflict between ramajax fields access to db.</li>
         <li>Translations</li>
         <li>Translations: field sql type origin</li>
-        <li>Translations: Translate to language different from english</li>
-        <li>Translations: what is a multilanguage page for joomla</li>
         <li>Check token in controller</li>
         <li>Repasar notas de copyright</li>
         <li>Check if in the Example's view, puttin $this->setDocument before display, loads the javascript so I can use it in the 
@@ -105,7 +102,14 @@ $uriRoot =  $uri->root();
         </li>
         <li>Add new ramajax field example with an alternative select player more restrictive</li>
         <li>Add new ramajax field example the fourth chained one for wage</li>
-
+        <li>Menu item RamajaxUseExample > Buscador: without field</li>
+        <li>El aviso de que ya existe una entrada para MasterField es incorrecto. 
+            Debería aparecer solo cuando no existe la combinación master/slave.
+        </li>
+        <li>MODEL: ajaxgetSlaveEmptyValue: cómo definir fichero de constantes en un componente.
+            Aplicar a "ALL" en los selectores (cambiar por RAMAJAX_ALL).
+        </li>
+        <li>Opción en field ramajax para meter o no el "RAMAJAX_ALL", que en realidad deja el option sin value</li>
     </ul>
 
     <h2>DONE</h2>
@@ -117,6 +121,10 @@ $uriRoot =  $uri->root();
             Reproducir: Selecciona una liga, y submit. Luego pica en link de paginación. El select de team no tiene valores,
             aunque hay una liga elegida.
         </li>
+        <li>17/12/21 - Error managing for ajax. For example, conflict between ramajax fields access to db.</li>
+        <li>Translations</li>
+        <li>18/12/21 - Translations: Translate to language different from english</li>
+        <li>18/12/21 - Translations: what is a multilanguage page for joomla</li>
     </ul>
 
 </div>

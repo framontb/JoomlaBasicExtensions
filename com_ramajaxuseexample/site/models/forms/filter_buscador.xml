@@ -2,14 +2,16 @@
 <form>
     <fields name="filter" 
         addfieldpath="components/com_ramajax/models/fields">
-        <field
-            name="league"
-            header="Please select a league"
-            type="sql"
-            default="" 
-            label="Select a league"
-            query="SELECT league AS value, league AS text FROM #__ramajax_league_list"
-        />
+
+        <field 
+            name="league" 
+            type="ramajax" 
+            label="Select a team"
+            masterFieldName="null"
+            masterFieldTable="null"
+            slaveFieldName="league"
+            slaveFieldTable="#__ramajax_league_list"
+	    />
 
         <field 
             name="team" 

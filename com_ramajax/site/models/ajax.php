@@ -104,6 +104,12 @@ class RamajaxModelAjax extends JModelItem
             // Initialize variables.
             $ramdef  = $this->getRamajaxDefinition($ramajaxName);
 
+            // FEATURE: RAMAJAX ALONE
+            if ($ramdef['masterFieldName'] == 'null') {
+                $this->existMasterField = True;
+                return True;
+            };
+
             // Create the base select statement.
             $db    = JFactory::getDbo();
             $query = $db->getQuery(true);
@@ -143,30 +149,35 @@ class RamajaxModelAjax extends JModelItem
      */
     public function getSlaveEmptyValue(String $ramajaxName)
     {
-        // Initialize variables.
-        $ramdef  = $this->getRamajaxDefinition($ramajaxName);
+        // // Initialize variables.
+        // $ramdef  = $this->getRamajaxDefinition($ramajaxName);
 
-        // DB query
-        $db    = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select($ramdef['slaveFieldName'])
-                ->from($db->quoteName($ramdef['slaveFieldTable']))
-                ->where($db->quoteName($ramdef['masterFieldName']) . " = ''");
-        $db->setQuery($query);
-        try 
-        {
-            $result= $db->loadResult();
-        }
-        catch (Exception $e)
-        {
-            JFactory::getApplication()->enqueueMessage(
-                JText::sprintf('getSlaveEmptyValue error: '.$ramdef['slaveFieldName'], $e->getCode(), $e->getMessage()),
-                'warning');
-            return False;
-        }
+        // // DB query
+        // $db    = JFactory::getDbo();
+        // $query = $db->getQuery(true);
+        // $query->select($ramdef['slaveFieldName'])
+        //         ->from($db->quoteName($ramdef['slaveFieldTable']));
+
+        // // FEATURE: RAMAJAX ALONE
+        // if ($ramdef['masterFieldName'] != 'null') {
+        //     $query->where($db->quoteName($ramdef['masterFieldName']) . " = ''");
+        // }
+
+        // $db->setQuery($query);
+        // try 
+        // {
+        //     $result= $db->loadResult();
+        // }
+        // catch (Exception $e)
+        // {
+        //     JFactory::getApplication()->enqueueMessage(
+        //         JText::sprintf('getSlaveEmptyValue error: '.$ramdef['slaveFieldName'], $e->getCode(), $e->getMessage()),
+        //         'warning');
+        //     return False;
+        // }
         
         
-        return $result;
+        return 'ALL';
     }
 
 
@@ -188,8 +199,13 @@ class RamajaxModelAjax extends JModelItem
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
         $query->select($ramdef['slaveFieldName'])
-                ->from($db->quoteName($ramdef['slaveFieldTable']))
-                ->where($db->quoteName($ramdef['masterFieldName']) . " = " . $db->quote($masterFieldValue));
+                ->from($db->quoteName($ramdef['slaveFieldTable']));
+
+        // FEATURE: RAMAJAX ALONE
+        if ($ramdef['masterFieldName'] != 'null') {
+            $query->where($db->quoteName($ramdef['masterFieldName']) . " = " . $db->quote($masterFieldValue));
+        }
+        
 
         // Reset the query using our newly populated query object.
         $db->setQuery($query);
@@ -223,6 +239,7 @@ class RamajaxModelAjax extends JModelItem
         $ramdef  = $this->getRamajaxDefinition($ramajaxName);
 
         // Get default Option
+        // FEATURE: RAMAJAX ALONE
         $slaveEmpty   = $this->getSlaveEmptyValue($ramajaxName);
         $options  = '<option value>'.JText::_($slaveEmpty).'</option>';
 
