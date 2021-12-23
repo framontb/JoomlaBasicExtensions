@@ -50,7 +50,6 @@ INSERT INTO `#__ramajax_league_list` (`league`) VALUES
 
 -- INSERT VALUES --
 INSERT INTO `#__ramajax_league_team_map` (`league`,`team`) VALUES
-('','All'),
 ('NBA','Phoenix Suns'),
 ('NBA','Los Angeles Lakers'),
 ('NBA','Golden State Warriors'),
@@ -66,7 +65,6 @@ INSERT INTO `#__ramajax_league_team_map` (`league`,`team`) VALUES
 
 -- INSERT VALUES --
 INSERT INTO `#__ramajax_use_example` (`league`,`team`,`player`,`wage`) VALUES
-('','','All', 0),
 ('NBA','Phoenix Suns','Charles Barkley', 1.5),
 ('NBA','Phoenix Suns','Jerry Colangelo', 3),
 ('NBA','Los Angeles Lakers','Russell Westbrook', 44),
