@@ -143,43 +143,32 @@ class RamajaxModelAjax extends JModelItem
      * Method to get the slave message when the primary is empty
      * 
      * It will be assigned no value in getSlaveOptions, so it matches for All specialties
+     * 
+     * Take empty text from Ramajax field definition or 'RAMAJAX_ALL' by default
      *
      * @param       string  $masterField
      * @return      array   list of Slave Values
      */
-    public function getSlaveEmptyValue(String $ramajaxName)
+    public function getSelectEmptyText(String $ramajaxName)
     {
-        // // Initialize variables.
-        // $ramdef  = $this->getRamajaxDefinition($ramajaxName);
-
-        // // DB query
-        // $db    = JFactory::getDbo();
-        // $query = $db->getQuery(true);
-        // $query->select($ramdef['slaveFieldName'])
-        //         ->from($db->quoteName($ramdef['slaveFieldTable']));
-
-        // // FEATURE: RAMAJAX ALONE
-        // if ($ramdef['masterFieldName'] != 'null') {
-        //     $query->where($db->quoteName($ramdef['masterFieldName']) . " = ''");
-        // }
-
-        // $db->setQuery($query);
-        // try 
-        // {
-        //     $result= $db->loadResult();
-        // }
-        // catch (Exception $e)
-        // {
-        //     JFactory::getApplication()->enqueueMessage(
-        //         JText::sprintf('getSlaveEmptyValue error: '.$ramdef['slaveFieldName'], $e->getCode(), $e->getMessage()),
-        //         'warning');
-        //     return False;
-        // }
+        // @TODO : get empty text from Ramajax definition
+        $default = 'RAMAJAX_ALL';
         
-        
-        return 'ALL';
+        return $default;
     }
 
+    /**
+     * Method to get the slave message when the primary is empty
+     * 
+     * It will be assigned no value in getSlaveOptions, so it matches for All specialties
+     *
+     * @param       string  $masterField
+     * @return      array   list of Slave Values
+     */
+    public function getSelectEmptyOption(String $ramajaxName)
+    {
+        return '<option value>'.$this->getSelectEmptyText($ramajaxName).'</option>';
+    }
 
     /**
      * Method to get all slave Fields that match for a masterField
@@ -240,8 +229,7 @@ class RamajaxModelAjax extends JModelItem
 
         // Get default Option
         // FEATURE: RAMAJAX ALONE
-        $slaveEmpty   = $this->getSlaveEmptyValue($ramajaxName);
-        $options  = '<option value>'.JText::_($slaveEmpty).'</option>';
+        $options   = $this->getSelectEmptyOption($ramajaxName);
 
         // Get the other Options
         if ($this->existMasterField($ramajaxName,$masterFieldValue)){
