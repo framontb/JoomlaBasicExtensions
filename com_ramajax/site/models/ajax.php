@@ -221,7 +221,7 @@ class RamajaxModelAjax extends JModelItem
     public function getSelectEmptyText(String $ramajaxName)
     {
         // @TODO : get empty text from Ramajax definition
-        $default = 'RAMAJAX_ALL';
+        $default = JText::_('RAMAJAX_ALL');
         
         return $default;
     }

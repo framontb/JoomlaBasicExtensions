@@ -6,7 +6,7 @@
         <field 
             name="league" 
             type="ramajaxselectalone" 
-            label="Select a league"
+            label="RAMAJAX_FIELD_SELECT_LABEL_LEAGUE"
             slaveFieldName="league"
             slaveFieldTable="#__ramajax_league_list"
 	    />
