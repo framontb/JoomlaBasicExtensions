@@ -70,14 +70,14 @@ class JFormFieldRamajaxSelectAlone extends JFormField {
         $this->ramDef = array();
         $this->ramDef['ramajaxName']    = (string) $this->element['name'];
         $this->ramDef['type']           = (string) $this->element['type'];
+        $this->ramDef['emptyValueText']  = (string) $this->element['emptyValueText'];
 
         // Get the name and table of the slave field from the Form,
         // and the value selected by the user from the Request
         $this->ramDef['slaveFieldName']  = (string) $this->element['slaveFieldName'];
         $this->ramDef['slaveFieldValue'] = $filters[$this->ramDef['slaveFieldName']];
         $this->ramDef['slaveFieldTable'] = (string) $this->element['slaveFieldTable'];
-
-
+        
         /**
          * Get the ramajax field state in db:
          *      -1 conflict detected
@@ -95,7 +95,11 @@ class JFormFieldRamajaxSelectAlone extends JFormField {
         // conflict detected
         elseif ($ramajaxState == -1)
         {
+            // @TODO: DEBUG  error
+            // update en lugar de store
+            //$this->ajaxModel->storeRamajaxInDb($this->ramDef);
             //raise error
+            JLog::add('====> ramajax field: conflict detected: '.$this->ramDef['ramajaxName'], JLog::INFO, 'com_ramajax');
         }
 
         // Get field values or empty strings

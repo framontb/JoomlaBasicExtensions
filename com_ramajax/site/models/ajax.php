@@ -76,11 +76,20 @@ class RamajaxModelAjax extends JModelItem
         $query = $db->getQuery(true);
 
         // Insert columns.
-        $columns = array('name', 'type', 'masterFieldName', 'masterFieldTable','slaveFieldName','slaveFieldTable');
+        $columns = array(
+            'name',
+            'type',
+            'masterFieldName',
+            'masterFieldTable',
+            'slaveFieldName',
+            'slaveFieldTable',
+            'emptyValueText'
+        );
 
         // Values that could be NULL
         $masterFieldName  = !empty($ramDefForm['masterFieldName']) ? $db->quote($ramDefForm['masterFieldName']) : "NULL";
         $masterFieldTable = !empty($ramDefForm['masterFieldTable']) ? $db->quote($ramDefForm['masterFieldTable']) : "NULL";
+        $emptyValueText   = !empty($ramDefForm['emptyValueText']) ? $db->quote($ramDefForm['emptyValueText']) : "NULL";
 
         // Insert values.
         $values = array(
@@ -89,7 +98,8 @@ class RamajaxModelAjax extends JModelItem
             $masterFieldName, 
             $masterFieldTable, 
             $db->quote($ramDefForm['slaveFieldName']), 
-            $db->quote($ramDefForm['slaveFieldTable'])
+            $db->quote($ramDefForm['slaveFieldTable']),
+            $emptyValueText
         );
 
         // Prepare the insert query.
@@ -149,10 +159,12 @@ class RamajaxModelAjax extends JModelItem
         
         // Detect Conflict
         if (
+            $ramDefForm['type']             != $ramDefDb['type']     ||
             $ramDefForm['masterFieldName']  != $ramDefDb['masterFieldName']     ||
             $ramDefForm['masterFieldTable'] != $ramDefDb['masterFieldTable']    ||
             $ramDefForm['slaveFieldName']   != $ramDefDb['slaveFieldName']      ||
-            $ramDefForm['slaveFieldTable']  != $ramDefDb['slaveFieldTable']
+            $ramDefForm['slaveFieldTable']  != $ramDefDb['slaveFieldTable']     ||
+            $ramDefForm['emptyValueText']   != $ramDefDb['emptyValueText']
         )
         {return -1;}
 
@@ -220,10 +232,15 @@ class RamajaxModelAjax extends JModelItem
      */
     public function getSelectEmptyText(String $ramajaxName)
     {
-        // @TODO : get empty text from Ramajax definition
-        $default = JText::_('RAMAJAX_ALL');
+        // @TODO: Fichero con definición de constantes
+        $emptyValueText = 'RAMAJAX_ALL';
+        $ramdef  = $this->getRamajaxDefinition($ramajaxName);
+
+        if (!empty($ramdef['emptyValueText'])) {
+            $emptyValueText = $ramdef['emptyValueText'];
+        }
         
-        return $default;
+        return JText::_($emptyValueText);
     }
 
     /**

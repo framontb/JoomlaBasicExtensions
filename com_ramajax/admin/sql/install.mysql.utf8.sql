@@ -11,6 +11,7 @@ CREATE TABLE `#__ramajax_definition_tables` (
     `masterFieldTable`  VARCHAR(120)    DEFAULT NULL,
     `slaveFieldName`    VARCHAR(120)    NOT NULL DEFAULT '',
     `slaveFieldTable`   VARCHAR(120)    NOT NULL DEFAULT '',
+    `emptyValueText`    VARCHAR(120)    DEFAULT NULL,
     PRIMARY KEY (`name`)
 )
 	ENGINE =InnoDB

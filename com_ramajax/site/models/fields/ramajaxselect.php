@@ -71,25 +71,19 @@ class JFormFieldRamajaxSelect extends JFormField {
         $this->ramDef = array();
         $this->ramDef['ramajaxName']    = (string) $this->element['name'];
         $this->ramDef['type']           = (string) $this->element['type'];
-        $this->ramDef['slaveAlone']     = (bool)   $this->element['slaveAlone'];
+        $this->ramDef['emptyValueText']  = (string) $this->element['emptyValueText'];
 
         // Get the name and table of the master field from the Form,
         // and the value selected by the user from the Request
-        if ($this->ramDef['slaveAlone']) {
-            $this->ramDef['masterFieldValue'] = 'NULL';
-        }
-        else {
-            $this->ramDef['masterFieldName']  = (string) $this->element['masterFieldName'];
-            $this->ramDef['masterFieldValue'] = $filters[$this->ramDef['masterFieldName']];
-            $this->ramDef['masterFieldTable'] = (string) $this->element['masterFieldTable'];
-        }
+        $this->ramDef['masterFieldName']  = (string) $this->element['masterFieldName'];
+        $this->ramDef['masterFieldValue'] = $filters[$this->ramDef['masterFieldName']];
+        $this->ramDef['masterFieldTable'] = (string) $this->element['masterFieldTable'];
 
         // Get the name and table of the slave field from the Form,
         // and the value selected by the user from the Request
         $this->ramDef['slaveFieldName']  = (string) $this->element['slaveFieldName'];
         $this->ramDef['slaveFieldValue'] = $filters[$this->ramDef['slaveFieldName']];
         $this->ramDef['slaveFieldTable'] = (string) $this->element['slaveFieldTable'];
-
 
         /**
          * Get the ramajax field state in db:
@@ -110,13 +104,16 @@ class JFormFieldRamajaxSelect extends JFormField {
         // conflict detected
         elseif ($ramajaxState == -1)
         {
-            //raise error
+            // @TODO: update field:
+            // $ajaxModel->updateRamajaxInDb($this->ramDef);
+            JLog::add('====> ramajax field: conflict detected: '.$this->ramDef['ramajaxName'], JLog::INFO, 'com_ramajax');
         }
 
         // Get field values or empty strings
         $slaveOptions = "";
         if (empty($this->ramDef['masterFieldValue'] )) {$this->ramDef['masterFieldValue']="";}
         if (empty($this->ramDef['slaveFieldValue'])) {$this->ramDef['slaveFieldValue']="";}
+        
 
         
         if (!$ajaxModel->existMasterField(
