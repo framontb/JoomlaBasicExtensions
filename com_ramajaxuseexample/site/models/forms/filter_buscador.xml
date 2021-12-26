@@ -5,7 +5,7 @@
 
         <field 
             name="league" 
-            type="ramajax" 
+            type="ramajaxselect" 
             label="Select a team"
             masterFieldName="null"
             masterFieldTable="null"
@@ -15,7 +15,7 @@
 
         <field 
             name="team" 
-            type="ramajax" 
+            type="ramajaxselect" 
             label="Select a team"
             masterFieldName="league"
             masterFieldTable="#__ramajax_league_list"
@@ -25,7 +25,7 @@
 
         <field 
             name="player" 
-            type="ramajax" 
+            type="ramajaxselect" 
             label="Select a player"
             masterFieldName="team"
             masterFieldTable="#__ramajax_league_team_map"

@@ -43,9 +43,9 @@ if (JDEBUG) {
  *
  * @since  0.0.1
  */
-class JFormFieldRamajax extends JFormField {
+class JFormFieldRamajaxSelect extends JFormField {
     
-    protected $type = 'Ramajax';
+    protected $type = 'ramajaxselect';
 
     public array $ramDef; // Ramajax Definition
 
@@ -69,8 +69,8 @@ class JFormFieldRamajax extends JFormField {
 
         // Ramajax Field
         $this->ramDef = array();
-        $this->ramDef['ramajaxName'] = (string) $this->element['name'];
-        $this->ramDef['type'] = 'ramajax';
+        $this->ramDef['ramajaxName']    = (string) $this->element['name'];
+        $this->ramDef['type']           = (string) $this->element['type'];
 
         // Get the name and table of the master field from the Form,
         // and the value selected by the user from the Request
@@ -107,10 +107,12 @@ class JFormFieldRamajax extends JFormField {
             //raise error
         }
 
-        // Get field values
+        // Get field values or empty strings
         $slaveOptions = "";
         if (empty($this->ramDef['masterFieldValue'] )) {$this->ramDef['masterFieldValue']="";}
         if (empty($this->ramDef['slaveFieldValue'])) {$this->ramDef['slaveFieldValue']="";}
+
+        
         if (!$ajaxModel->existMasterField(
             $this->ramDef['ramajaxName'],
             $this->ramDef['masterFieldValue'])) 

@@ -17,12 +17,6 @@ CREATE TABLE `#__ramajax_definition_tables` (
 	AUTO_INCREMENT =0
 	DEFAULT CHARSET =utf8;
 
--- INSERT VALUES --
-INSERT INTO `#__ramajax_definition_tables` 
-(`name`,`type`,`masterFieldName`,`masterFieldTable`,`slaveFieldName`,`slaveFieldTable`) VALUES
-('team','ramajax','league','#__ramajax_league_list','team','#__ramajax_league_team_map'),
-('player','ramajax','team','#__ramajax_league_team_map','player','#__ramajax_use_example');
-
 -- ************************ EXAMPLES *************************** --
 
 -- DROP TABLES --
@@ -77,7 +71,6 @@ INSERT INTO `#__ramajax_league_list` (`league`) VALUES
 
 -- INSERT VALUES --
 INSERT INTO `#__ramajax_league_team_map` (`league`,`team`) VALUES
-('','All'),
 ('NBA','Phoenix Suns'),
 ('NBA','Los Angeles Lakers'),
 ('NBA','Golden State Warriors'),
@@ -93,7 +86,6 @@ INSERT INTO `#__ramajax_league_team_map` (`league`,`team`) VALUES
 
 -- INSERT VALUES --
 INSERT INTO `#__ramajax_use_example` (`league`,`team`,`player`,`wage`) VALUES
-('','','All', 0),
 ('NBA','Phoenix Suns','Charles Barkley', 1.5),
 ('NBA','Phoenix Suns','Jerry Colangelo', 3),
 ('NBA','Los Angeles Lakers','Russell Westbrook', 44),
