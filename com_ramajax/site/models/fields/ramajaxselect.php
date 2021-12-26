@@ -126,7 +126,7 @@ class JFormFieldRamajaxSelect extends JFormField {
             $this->ramDef['masterFieldValue'] ='';
         }  
 
-        $slaveOptions = $ajaxModel->getSlaveOptions(
+        $slaveOptions = $ajaxModel->getRamajaxSelectOptions(
             $this->ramDef['ramajaxName'],
             $this->ramDef['masterFieldValue'],
             $this->ramDef['slaveFieldValue']);

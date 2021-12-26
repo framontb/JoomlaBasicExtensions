@@ -14,7 +14,7 @@ jQuery(document).ready(function() {
             slaveSelectId:"#filter_team",
             langTag:langTagVal
         }, 
-        populateSlaveSelectFromOptions);
+        populateRamajaxSelectOptions);
 
     // ajax request for player
     jQuery('#filter_team').change(
@@ -23,7 +23,7 @@ jQuery(document).ready(function() {
             slaveSelectId:"#filter_player",
             langTag:langTagVal
         }, 
-        populateSlaveSelectFromOptions);
+        populateRamajaxSelectOptions);
 
     // reset button
     jQuery('#filter_clear').click(filter_clear);

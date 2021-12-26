@@ -10,7 +10,7 @@
 // Populates the indicated slave select (see slaveSelectId in the event)
 // with options directly received from ajax request
 // Observe here task=ajax.getSlaveOptions
-function populateSlaveSelectFromOptions(event)
+function populateRamajaxSelectOptions(event)
 {
     // Empty slave field before filling it
     jQuery(event.data.slaveSelectId).empty();
@@ -23,7 +23,7 @@ function populateSlaveSelectFromOptions(event)
 
     jQuery.ajax({
         type     : 'GET',
-        url      : 'index.php?option=com_ramajax&task=ajax.getSlaveOptions&format=json',
+        url      : 'index.php?option=com_ramajax&task=ajax.getRamajaxSelectOptions&format=json',
         data     : dataString,
         dataType : 'JSON',
         cache    : true,
@@ -57,7 +57,7 @@ function populateSlaveSelectFromOptions(event)
 // to the JavaScript.
 // Note that there is no translate for options created from scratch,
 // Like "All" example
-function populateSlaveSelectFromValues(event)
+function populateRamajaxSelectValues(event)
 {
     // Empty slave field before filling it
     jQuery(event.data.slaveSelectId).empty();
@@ -70,7 +70,7 @@ function populateSlaveSelectFromValues(event)
 
     jQuery.ajax({
         type     : 'GET',
-        url      : 'index.php?option=com_ramajax&task=ajax.getSlaveValues&format=json',
+        url      : 'index.php?option=com_ramajax&task=ajax.getRamajaxSelectValues&format=json',
         data     : dataString,
         dataType : 'JSON',
         cache    : true,

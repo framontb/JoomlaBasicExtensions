@@ -35,8 +35,6 @@ if (JDEBUG) {
  *          name="player" 
  *          type="ramajax" 
  *          label="Select a player"
- *          masterFieldName="team"
- *          masterFieldTable="#__ramajax_league_team_map"
  *          slaveFieldName="player"
  *          slaveFieldTable="#__ramajax_use_example"
  *       />
@@ -87,15 +85,13 @@ class JFormFieldRamajaxSelectAlone extends JFormField {
          *       1 ramajax field not provisined jet
          */
         $ramajaxState = $this->ajaxModel->getRamajaxStateDb($this->ramDef);
+
         // all good
-        if (!$ramajaxState) {
-            // good
-        } 
+        if (!$ramajaxState) {}
+
         // provision needed
-        elseif ($ramajaxState == 1)
-        {
-            $this->ajaxModel->storeRamajaxInDb($this->ramDef);
-        } 
+        elseif ($ramajaxState == 1) { $this->ajaxModel->storeRamajaxInDb($this->ramDef);} 
+        
         // conflict detected
         elseif ($ramajaxState == -1)
         {
@@ -103,54 +99,13 @@ class JFormFieldRamajaxSelectAlone extends JFormField {
         }
 
         // Get field values or empty strings
-        $slaveOptions = "";
         if (empty($this->ramDef['slaveFieldValue'])) {$this->ramDef['slaveFieldValue']="";}
 
-        $slaveOptions = $this->getSelectAloneOptions(
+        $slaveOptions = $this->ajaxModel->getSelectAloneOptions(
             $this->ramDef['ramajaxName'],
             $this->ramDef['slaveFieldValue']);
 
         // Build select
         return '<select id="'.$this->id.'" name="'.$this->name.'">'.$slaveOptions.'</select>';
-    }
-
-    /**
-     * Get the options from the DB
-     */
-    public function getSelectAloneOptions(String $ramajaxName, String $slaveFieldValue) 
-    {
-        // Get Ramajax definition
-        $ramdef  = $this->ajaxModel->getRamajaxDefinition($ramajaxName);
-
-        // Create the base select statement.
-        // https://docs.joomla.org/Selecting_data_using_JDatabase/es#loadColumn.28.29
-        $db    = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select($ramdef['slaveFieldName'])
-                ->from($db->quoteName($ramdef['slaveFieldTable']));
-
-        // Reset the query using our newly populated query object.
-        $db->setQuery($query);
-        try 
-        {
-            $slaves = $db->loadColumn();
-        }
-        catch (Exception $e)
-        {
-            JFactory::getApplication()->enqueueMessage(
-                JText::sprintf('getSelectAloneOptions error: '.$ramdef['slaveFieldName'], $e->getCode(), $e->getMessage()),
-                'warning');
-            return array();
-        }
-        
-        $options = $this->ajaxModel->getSelectEmptyOption($ramajaxName);
-        foreach ($slaves as $slaveDb) 
-        {
-            $selected = ($slaveFieldValue ==  $slaveDb)?'selected="selected"':'';
-            $slaveDbTranslated = JText::_($slaveDb);
-            $options .= "<option value='$slaveDb' $selected>$slaveDbTranslated</option>";
-        }
-
-        return $options;
     }
 }

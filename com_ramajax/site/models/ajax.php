@@ -59,6 +59,50 @@ class RamajaxModelAjax extends JModelItem
         parent::__construct($properties);
     }
 
+    // ********************************************************************************
+    // ********     RAMAJAX MODEL: SHARED METHODS TO MANAGE FIELDS IN BD     **********
+    // ********************************************************************************
+
+   /**
+     * Store a ramajax Field in the DB
+     * 
+     */
+    public function storeRamajaxInDb(array $ramDefForm)
+    {
+        // Get a db connection.
+        $db = JFactory::getDbo();
+
+        // Create a new query object.
+        $query = $db->getQuery(true);
+
+        // Insert columns.
+        $columns = array('name', 'type', 'masterFieldName', 'masterFieldTable','slaveFieldName','slaveFieldTable');
+
+        // Values that could be NULL
+        $masterFieldName  = !empty($ramDefForm['masterFieldName']) ? $db->quote($ramDefForm['masterFieldName']) : "NULL";
+        $masterFieldTable = !empty($ramDefForm['masterFieldTable']) ? $db->quote($ramDefForm['masterFieldTable']) : "NULL";
+
+        // Insert values.
+        $values = array(
+            $db->quote($ramDefForm['ramajaxName']), 
+            $db->quote($ramDefForm['type']), 
+            $masterFieldName, 
+            $masterFieldTable, 
+            $db->quote($ramDefForm['slaveFieldName']), 
+            $db->quote($ramDefForm['slaveFieldTable'])
+        );
+
+        // Prepare the insert query.
+        $query
+            ->insert($db->quoteName('#__ramajax_definition_tables'))
+            ->columns($db->quoteName($columns))
+            ->values(implode(',', $values));
+
+        // Set the query using our newly populated query object and execute it.
+        $db->setQuery($query);
+        $db->execute();
+    }
+
     /**
      * Gets the Ramajax definition from DB or Buffer Property
      * 
@@ -86,6 +130,34 @@ class RamajaxModelAjax extends JModelItem
         }
 
         return $this->ramajaxDefinition ;
+    }
+
+    /**
+     * Get the ramajax field state in db:
+     * 
+     * Used in model > fields > ramajax.php
+     *      -1 conflict detected
+     *       0 all is OK, ramajax field provisioned
+     *       1 ramajax field not provisined jet
+     */
+    public function getRamajaxStateDb(array $ramDefForm)
+    {
+        $ramDefDb = $this->getRamajaxDefinition($ramDefForm['ramajaxName']);
+
+        // No such field ramajax in DB => need provision
+        if (empty($ramDefDb)) {return 1;}
+        
+        // Detect Conflict
+        if (
+            $ramDefForm['masterFieldName']  != $ramDefDb['masterFieldName']     ||
+            $ramDefForm['masterFieldTable'] != $ramDefDb['masterFieldTable']    ||
+            $ramDefForm['slaveFieldName']   != $ramDefDb['slaveFieldName']      ||
+            $ramDefForm['slaveFieldTable']  != $ramDefDb['slaveFieldTable']
+        )
+        {return -1;}
+
+        // Else
+        return 0;
     }
 
     /**
@@ -132,6 +204,9 @@ class RamajaxModelAjax extends JModelItem
         return $this->existMasterField;
     }
 
+    // ********************************************************************************
+    // ********     RAMAJAX MODEL: SHARED METHODS FOR SELECT FIELDS     **********
+    // ********************************************************************************
 
     /**
      * Method to get the slave message when the primary is empty
@@ -164,13 +239,17 @@ class RamajaxModelAjax extends JModelItem
         return '<option value>'.$this->getSelectEmptyText($ramajaxName).'</option>';
     }
 
+    // ***************************************************************************************
+    // ********     RAMAJAX MODEL: SPECIFIC METHODS FOR JFormFieldRamajaxSelect     **********
+    // ***************************************************************************************
+
     /**
      * Method to get all slave Fields that match for a masterField
      *
      * @param       string  $masterField
      * @return      array   list of Slave Values
      */
-    public function getSlaveValues(
+    public function getRamajaxSelectValues(
         String $ramajaxName,
         String $masterFieldValue)
     {
@@ -193,6 +272,8 @@ class RamajaxModelAjax extends JModelItem
         }
         catch (Exception $e)
         {
+            // @TODO: users only need to know that there was a problem loading the options
+            // All the rest must be dumped in log
             JFactory::getApplication()->enqueueMessage(
                 JText::sprintf('getSlaveValues error: '.$ramdef['slaveFieldName'], $e->getCode(), $e->getMessage()),
                 'warning');
@@ -208,7 +289,7 @@ class RamajaxModelAjax extends JModelItem
      * @param       string  $masterField
      * @return      array   list of Slave Values
      */
-    public function getSlaveOptions(
+    public function getRamajaxSelectOptions(
         String $ramajaxName,
         String $masterFieldValue,
         String $slaveFieldValue='')
@@ -222,7 +303,7 @@ class RamajaxModelAjax extends JModelItem
 
         // Get the other Options
         if ($this->existMasterField($ramajaxName,$masterFieldValue)){
-            $slavesFromDb = $this->getSlaveValues($ramajaxName,$masterFieldValue);
+            $slavesFromDb = $this->getRamajaxSelectValues($ramajaxName,$masterFieldValue);
             foreach ($slavesFromDb as $slaveDb) 
             {
                 $selected = ($slaveFieldValue ==  $slaveDb)?'selected="selected"':'';
@@ -234,71 +315,47 @@ class RamajaxModelAjax extends JModelItem
         return $options;
     }
 
-    /**
-     * Get the ramajax field state in db:
-     * 
-     * Used in model > fields > ramajax.php
-     *      -1 conflict detected
-     *       0 all is OK, ramajax field provisioned
-     *       1 ramajax field not provisined jet
-     */
-    public function getRamajaxStateDb(array $ramDefForm)
-    {
-        $ramDefDb = $this->getRamajaxDefinition($ramDefForm['ramajaxName']);
-
-        // No such field ramajax in DB => need provision
-        if (empty($ramDefDb)) {return 1;}
-        
-        // Detect Conflict
-        if (
-            $ramDefForm['masterFieldName']  != $ramDefDb['masterFieldName']     ||
-            $ramDefForm['masterFieldTable'] != $ramDefDb['masterFieldTable']    ||
-            $ramDefForm['slaveFieldName']   != $ramDefDb['slaveFieldName']      ||
-            $ramDefForm['slaveFieldTable']  != $ramDefDb['slaveFieldTable']
-        )
-        {return -1;}
-
-        // Else
-        return 0;
-    }
+    // ********************************************************************************************
+    // ********     RAMAJAX MODEL: SPECIFIC METHODS FOR JFormFieldRamajaxSelectAlone     **********
+    // ********************************************************************************************
 
     /**
-     * Store a ramajax Field in the DB
-     * 
+     * Get the options from the DB
      */
-    public function storeRamajaxInDb(array $ramDefForm)
+    public function getSelectAloneOptions(String $ramajaxName, String $slaveFieldValue) 
     {
-        // Get a db connection.
-        $db = JFactory::getDbo();
+        // Get Ramajax definition
+        $ramdef  = $this->getRamajaxDefinition($ramajaxName);
 
-        // Create a new query object.
+        // Create the base select statement.
+        // https://docs.joomla.org/Selecting_data_using_JDatabase/es#loadColumn.28.29
+        $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
+        $query->select($ramdef['slaveFieldName'])
+                ->from($db->quoteName($ramdef['slaveFieldTable']));
 
-        // Insert columns.
-        $columns = array('name', 'type', 'masterFieldName', 'masterFieldTable','slaveFieldName','slaveFieldTable');
-
-        // Values that could be NULL
-        $masterFieldName  = !empty($ramDefForm['masterFieldName']) ? $db->quote($ramDefForm['masterFieldName']) : "NULL";
-        $masterFieldTable = !empty($ramDefForm['masterFieldTable']) ? $db->quote($ramDefForm['masterFieldTable']) : "NULL";
-
-        // Insert values.
-        $values = array(
-            $db->quote($ramDefForm['ramajaxName']), 
-            $db->quote($ramDefForm['type']), 
-            $masterFieldName, 
-            $masterFieldTable, 
-            $db->quote($ramDefForm['slaveFieldName']), 
-            $db->quote($ramDefForm['slaveFieldTable'])
-        );
-
-        // Prepare the insert query.
-        $query
-            ->insert($db->quoteName('#__ramajax_definition_tables'))
-            ->columns($db->quoteName($columns))
-            ->values(implode(',', $values));
-
-        // Set the query using our newly populated query object and execute it.
+        // Reset the query using our newly populated query object.
         $db->setQuery($query);
-        $db->execute();
+        try 
+        {
+            $slaves = $db->loadColumn();
+        }
+        catch (Exception $e)
+        {
+            JFactory::getApplication()->enqueueMessage(
+                JText::sprintf('getSelectAloneOptions error: '.$ramdef['slaveFieldName'], $e->getCode(), $e->getMessage()),
+                'warning');
+            return array();
+        }
+        
+        $options = $this->getSelectEmptyOption($ramajaxName);
+        foreach ($slaves as $slaveDb) 
+        {
+            $selected = ($slaveFieldValue ==  $slaveDb)?'selected="selected"':'';
+            $slaveDbTranslated = JText::_($slaveDb);
+            $options .= "<option value='$slaveDb' $selected>$slaveDbTranslated</option>";
+        }
+
+        return $options;
     }
 }

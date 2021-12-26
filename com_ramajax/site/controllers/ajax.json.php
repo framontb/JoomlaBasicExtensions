@@ -77,11 +77,11 @@ if (JDEBUG) JLog::add('$this->langTag  -->'.$this->langTag.'<--', JLog::INFO, 'c
     /**
      * Get the slave raw values from the database
      */
-    public function getSlaveValues()
+    public function getRamajaxSelectValues()
     {
         try
         {
-            $slaveValues = $this->model->getSlaveValues(
+            $slaveValues = $this->model->getRamajaxSelectValues(
                 $this->ramajaxName,
                 $this->masterFieldValue);
 
@@ -97,11 +97,11 @@ if (JDEBUG) JLog::add('$this->langTag  -->'.$this->langTag.'<--', JLog::INFO, 'c
     /**
      * Get the slave Options from the database
      */
-    public function getSlaveOptions()
+    public function getRamajaxSelectOptions()
     {
         try
         {
-            $slaveOptions = $this->model->getSlaveOptions(
+            $slaveOptions = $this->model->getRamajaxSelectOptions(
                 $this->ramajaxName,
                 $this->masterFieldValue);
 
