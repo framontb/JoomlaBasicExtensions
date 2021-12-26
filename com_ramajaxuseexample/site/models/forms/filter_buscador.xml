@@ -5,10 +5,8 @@
 
         <field 
             name="league" 
-            type="ramajaxselect" 
-            label="Select a team"
-            masterFieldName="null"
-            masterFieldTable="null"
+            type="ramajaxselectalone" 
+            label="Select a league"
             slaveFieldName="league"
             slaveFieldTable="#__ramajax_league_list"
 	    />

@@ -7,8 +7,8 @@ DROP TABLE IF EXISTS `#__ramajax_definition_tables`;
 CREATE TABLE `#__ramajax_definition_tables` (
     `name`              VARCHAR(120)    NOT NULL DEFAULT '',
     `type`              VARCHAR(120)    NOT NULL DEFAULT '',
-    `masterFieldName`   VARCHAR(120)    NOT NULL DEFAULT '',
-    `masterFieldTable`  VARCHAR(120)    NOT NULL DEFAULT '',
+    `masterFieldName`   VARCHAR(120)    DEFAULT NULL,
+    `masterFieldTable`  VARCHAR(120)    DEFAULT NULL,
     `slaveFieldName`    VARCHAR(120)    NOT NULL DEFAULT '',
     `slaveFieldTable`   VARCHAR(120)    NOT NULL DEFAULT '',
     PRIMARY KEY (`name`)

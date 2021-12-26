@@ -43,26 +43,27 @@ if (JDEBUG) {
  *
  * @since  0.0.1
  */
-class JFormFieldRamajaxSelect extends JFormField {
+class JFormFieldRamajaxSelectAlone extends JFormField {
     
-    protected $type = 'ramajaxselect';
+    protected $type = 'ramajaxselectalone';
 
     public array $ramDef; // Ramajax Definition
+    public $ajaxModel;
 
     // Constructor
     public function __construct(\Joomla\CMS\Form\Form $form = null) 
     {
         parent::__construct($form);
+
+        // Get Model
+        JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_ramajax/models');
+        $this->ajaxModel = JModelLegacy::getInstance('Ajax', 'RamajaxModel');
     }
 
     // getLabel() left out
 
     public function getInput() 
     {
-        // Get Model
-        JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_ramajax/models');
-        $ajaxModel = JModelLegacy::getInstance('Ajax', 'RamajaxModel');
-
         // Get State
         $app        = JFactory::getApplication();
         $filters    = $app->getUserStateFromRequest('filter', 'filter', array(), 'array');
@@ -71,18 +72,6 @@ class JFormFieldRamajaxSelect extends JFormField {
         $this->ramDef = array();
         $this->ramDef['ramajaxName']    = (string) $this->element['name'];
         $this->ramDef['type']           = (string) $this->element['type'];
-        $this->ramDef['slaveAlone']     = (bool)   $this->element['slaveAlone'];
-
-        // Get the name and table of the master field from the Form,
-        // and the value selected by the user from the Request
-        if ($this->ramDef['slaveAlone']) {
-            $this->ramDef['masterFieldValue'] = 'NULL';
-        }
-        else {
-            $this->ramDef['masterFieldName']  = (string) $this->element['masterFieldName'];
-            $this->ramDef['masterFieldValue'] = $filters[$this->ramDef['masterFieldName']];
-            $this->ramDef['masterFieldTable'] = (string) $this->element['masterFieldTable'];
-        }
 
         // Get the name and table of the slave field from the Form,
         // and the value selected by the user from the Request
@@ -97,7 +86,7 @@ class JFormFieldRamajaxSelect extends JFormField {
          *       0 all is OK, ramajax field provisioned
          *       1 ramajax field not provisined jet
          */
-        $ramajaxState = $ajaxModel->getRamajaxStateDb($this->ramDef);
+        $ramajaxState = $this->ajaxModel->getRamajaxStateDb($this->ramDef);
         // all good
         if (!$ramajaxState) {
             // good
@@ -105,7 +94,7 @@ class JFormFieldRamajaxSelect extends JFormField {
         // provision needed
         elseif ($ramajaxState == 1)
         {
-            $ajaxModel->storeRamajaxInDb($this->ramDef);
+            $this->ajaxModel->storeRamajaxInDb($this->ramDef);
         } 
         // conflict detected
         elseif ($ramajaxState == -1)
@@ -115,23 +104,53 @@ class JFormFieldRamajaxSelect extends JFormField {
 
         // Get field values or empty strings
         $slaveOptions = "";
-        if (empty($this->ramDef['masterFieldValue'] )) {$this->ramDef['masterFieldValue']="";}
         if (empty($this->ramDef['slaveFieldValue'])) {$this->ramDef['slaveFieldValue']="";}
 
-        
-        if (!$ajaxModel->existMasterField(
+        $slaveOptions = $this->getSelectAloneOptions(
             $this->ramDef['ramajaxName'],
-            $this->ramDef['masterFieldValue'])) 
-        {
-            $this->ramDef['masterFieldValue'] ='';
-        }  
-
-        $slaveOptions = $ajaxModel->getSlaveOptions(
-            $this->ramDef['ramajaxName'],
-            $this->ramDef['masterFieldValue'],
             $this->ramDef['slaveFieldValue']);
 
         // Build select
         return '<select id="'.$this->id.'" name="'.$this->name.'">'.$slaveOptions.'</select>';
+    }
+
+    /**
+     * Get the options from the DB
+     */
+    public function getSelectAloneOptions(String $ramajaxName, String $slaveFieldValue) 
+    {
+        // Get Ramajax definition
+        $ramdef  = $this->ajaxModel->getRamajaxDefinition($ramajaxName);
+
+        // Create the base select statement.
+        // https://docs.joomla.org/Selecting_data_using_JDatabase/es#loadColumn.28.29
+        $db    = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select($ramdef['slaveFieldName'])
+                ->from($db->quoteName($ramdef['slaveFieldTable']));
+
+        // Reset the query using our newly populated query object.
+        $db->setQuery($query);
+        try 
+        {
+            $slaves = $db->loadColumn();
+        }
+        catch (Exception $e)
+        {
+            JFactory::getApplication()->enqueueMessage(
+                JText::sprintf('getSelectAloneOptions error: '.$ramdef['slaveFieldName'], $e->getCode(), $e->getMessage()),
+                'warning');
+            return array();
+        }
+        
+        $options = $this->ajaxModel->getSelectEmptyOption($ramajaxName);
+        foreach ($slaves as $slaveDb) 
+        {
+            $selected = ($slaveFieldValue ==  $slaveDb)?'selected="selected"':'';
+            $slaveDbTranslated = JText::_($slaveDb);
+            $options .= "<option value='$slaveDb' $selected>$slaveDbTranslated</option>";
+        }
+
+        return $options;
     }
 }

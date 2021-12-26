@@ -104,12 +104,6 @@ class RamajaxModelAjax extends JModelItem
             // Initialize variables.
             $ramdef  = $this->getRamajaxDefinition($ramajaxName);
 
-            // FEATURE: RAMAJAX ALONE
-            if ($ramdef['masterFieldName'] == 'null') {
-                $this->existMasterField = True;
-                return True;
-            };
-
             // Create the base select statement.
             $db    = JFactory::getDbo();
             $query = $db->getQuery(true);
@@ -188,14 +182,9 @@ class RamajaxModelAjax extends JModelItem
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
         $query->select($ramdef['slaveFieldName'])
-                ->from($db->quoteName($ramdef['slaveFieldTable']));
-
-        // FEATURE: RAMAJAX ALONE
-        if ($ramdef['masterFieldName'] != 'null') {
-            $query->where($db->quoteName($ramdef['masterFieldName']) . " = " . $db->quote($masterFieldValue));
-        }
+                ->from($db->quoteName($ramdef['slaveFieldTable']))
+                ->where($db->quoteName($ramdef['masterFieldName']) . " = " . $db->quote($masterFieldValue));
         
-
         // Reset the query using our newly populated query object.
         $db->setQuery($query);
         try 
@@ -288,12 +277,16 @@ class RamajaxModelAjax extends JModelItem
         // Insert columns.
         $columns = array('name', 'type', 'masterFieldName', 'masterFieldTable','slaveFieldName','slaveFieldTable');
 
+        // Values that could be NULL
+        $masterFieldName  = !empty($ramDefForm['masterFieldName']) ? $db->quote($ramDefForm['masterFieldName']) : "NULL";
+        $masterFieldTable = !empty($ramDefForm['masterFieldTable']) ? $db->quote($ramDefForm['masterFieldTable']) : "NULL";
+
         // Insert values.
         $values = array(
             $db->quote($ramDefForm['ramajaxName']), 
             $db->quote($ramDefForm['type']), 
-            $db->quote($ramDefForm['masterFieldName']), 
-            $db->quote($ramDefForm['masterFieldTable']), 
+            $masterFieldName, 
+            $masterFieldTable, 
             $db->quote($ramDefForm['slaveFieldName']), 
             $db->quote($ramDefForm['slaveFieldTable'])
         );
