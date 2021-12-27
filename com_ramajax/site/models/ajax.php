@@ -64,6 +64,30 @@ class RamajaxModelAjax extends JModelItem
     // ********************************************************************************
 
    /**
+     * Update a ramajax row in the DB
+     * 
+     */
+    public function updateRamajaxInDb(object $ramajaxField)
+    {
+        $updateNulls = true;
+
+        // Add name for object
+        $ramajaxField->name = $ramajaxField->ramajaxName;
+
+        // Delete properties not to store in db
+        unset($ramajaxField->ramajaxName);
+        unset($ramajaxField->masterFieldValue);
+        unset($ramajaxField->slaveFieldValue);
+
+        // Actual update
+        $result = JFactory::getDbo()->updateObject(
+                    '#__ramajax_definition_tables', 
+                    $ramajaxField, 
+                    'name', 
+                    $updateNulls);
+    }
+
+   /**
      * Store a ramajax Field in the DB
      * 
      */
@@ -158,15 +182,17 @@ class RamajaxModelAjax extends JModelItem
         if (empty($ramDefDb)) {return 1;}
         
         // Detect Conflict
-        if (
-            $ramDefForm['type']             != $ramDefDb['type']     ||
+        if ( 
+            $ramDefForm['type']             != $ramDefDb['type']                ||
             $ramDefForm['masterFieldName']  != $ramDefDb['masterFieldName']     ||
             $ramDefForm['masterFieldTable'] != $ramDefDb['masterFieldTable']    ||
             $ramDefForm['slaveFieldName']   != $ramDefDb['slaveFieldName']      ||
             $ramDefForm['slaveFieldTable']  != $ramDefDb['slaveFieldTable']     ||
             $ramDefForm['emptyValueText']   != $ramDefDb['emptyValueText']
         )
-        {return -1;}
+        {
+            return -1;
+        }
 
         // Else
         return 0;

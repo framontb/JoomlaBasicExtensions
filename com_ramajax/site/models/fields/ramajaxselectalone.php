@@ -26,7 +26,7 @@ if (JDEBUG) {
         // We still need to put it inside an array.
         array('com_ramajax')
     );
-    JLog::add('************** JFormFieldRamajax *****************', JLog::INFO, 'com_ramajax');
+    // JLog::add('************** JFormFieldRamajax *****************', JLog::INFO, 'com_ramajax');
 }
 
 /**
@@ -95,11 +95,9 @@ class JFormFieldRamajaxSelectAlone extends JFormField {
         // conflict detected
         elseif ($ramajaxState == -1)
         {
-            // @TODO: DEBUG  error
-            // update en lugar de store
-            //$this->ajaxModel->storeRamajaxInDb($this->ramDef);
-            //raise error
-            JLog::add('====> ramajax field: conflict detected: '.$this->ramDef['ramajaxName'], JLog::INFO, 'com_ramajax');
+            $this->ajaxModel->updateRamajaxInDb((object)$this->ramDef);
+            if (JDEBUG) JLog::add('************** JFormFieldRamajax *****************', JLog::INFO, 'com_ramajax');
+            if (JDEBUG) JLog::add('====> ramajax field: conflict detected: '.$this->ramDef['ramajaxName'], JLog::INFO, 'com_ramajax');
         }
 
         // Get field values or empty strings

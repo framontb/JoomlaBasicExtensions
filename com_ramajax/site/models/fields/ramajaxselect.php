@@ -26,7 +26,7 @@ if (JDEBUG) {
         // We still need to put it inside an array.
         array('com_ramajax')
     );
-    JLog::add('************** JFormFieldRamajax *****************', JLog::INFO, 'com_ramajax');
+    // JLog::add('************** JFormFieldRamajax *****************', JLog::INFO, 'com_ramajax');
 }
 
 /**
@@ -46,23 +46,23 @@ if (JDEBUG) {
 class JFormFieldRamajaxSelect extends JFormField {
     
     protected $type = 'ramajaxselect';
-
     public array $ramDef; // Ramajax Definition
+    public $ajaxModel;
 
     // Constructor
     public function __construct(\Joomla\CMS\Form\Form $form = null) 
     {
         parent::__construct($form);
+
+        // Get Model
+        JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_ramajax/models');
+        $this->ajaxModel = JModelLegacy::getInstance('Ajax', 'RamajaxModel');
     }
 
     // getLabel() left out
 
     public function getInput() 
     {
-        // Get Model
-        JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_ramajax/models');
-        $ajaxModel = JModelLegacy::getInstance('Ajax', 'RamajaxModel');
-
         // Get State
         $app        = JFactory::getApplication();
         $filters    = $app->getUserStateFromRequest('filter', 'filter', array(), 'array');
@@ -91,7 +91,7 @@ class JFormFieldRamajaxSelect extends JFormField {
          *       0 all is OK, ramajax field provisioned
          *       1 ramajax field not provisined jet
          */
-        $ramajaxState = $ajaxModel->getRamajaxStateDb($this->ramDef);
+        $ramajaxState = $this->ajaxModel->getRamajaxStateDb($this->ramDef);
         // all good
         if (!$ramajaxState) {
             // good
@@ -99,14 +99,14 @@ class JFormFieldRamajaxSelect extends JFormField {
         // provision needed
         elseif ($ramajaxState == 1)
         {
-            $ajaxModel->storeRamajaxInDb($this->ramDef);
+            $this->ajaxModel->storeRamajaxInDb($this->ramDef);
         } 
-        // conflict detected
+        // conflict detected => update field
         elseif ($ramajaxState == -1)
         {
-            // @TODO: update field:
-            // $ajaxModel->updateRamajaxInDb($this->ramDef);
-            JLog::add('====> ramajax field: conflict detected: '.$this->ramDef['ramajaxName'], JLog::INFO, 'com_ramajax');
+            $this->ajaxModel->updateRamajaxInDb((object)$this->ramDef);
+            if (JDEBUG) JLog::add('************** JFormFieldRamajax *****************', JLog::INFO, 'com_ramajax');
+            if (JDEBUG) JLog::add('====> ramajax field: conflict detected: '.$this->ramDef['ramajaxName'], JLog::INFO, 'com_ramajax');
         }
 
         // Get field values or empty strings
@@ -116,14 +116,14 @@ class JFormFieldRamajaxSelect extends JFormField {
         
 
         
-        if (!$ajaxModel->existMasterField(
+        if (!$this->ajaxModel->existMasterField(
             $this->ramDef['ramajaxName'],
             $this->ramDef['masterFieldValue'])) 
         {
             $this->ramDef['masterFieldValue'] ='';
         }  
 
-        $slaveOptions = $ajaxModel->getRamajaxSelectOptions(
+        $slaveOptions = $this->ajaxModel->getRamajaxSelectOptions(
             $this->ramDef['ramajaxName'],
             $this->ramDef['masterFieldValue'],
             $this->ramDef['slaveFieldValue']);
