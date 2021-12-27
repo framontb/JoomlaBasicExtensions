@@ -12,6 +12,7 @@ CREATE TABLE `#__ramajax_definition_tables` (
     `slaveFieldName`    VARCHAR(120)    NOT NULL DEFAULT '',
     `slaveFieldTable`   VARCHAR(120)    NOT NULL DEFAULT '',
     `emptyValueText`    VARCHAR(120)    DEFAULT NULL,
+    `datetime`          DATETIME        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`name`)
 )
 	ENGINE =InnoDB

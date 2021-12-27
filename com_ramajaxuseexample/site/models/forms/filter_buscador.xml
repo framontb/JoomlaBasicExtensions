@@ -7,7 +7,7 @@
             name="league" 
             type="ramajaxselectalone" 
             label="RAMAJAX_FIELD_SELECT_LABEL_LEAGUE"
-            emptyValueText="RAMAJAX_FIELD_SELECT_EMPTY_VALUE_TEXT"
+            emptyValueText="RAMAJAX_FIELD_SELECT_EMPTY_VALUE_TEXT_LEAGUE"
             slaveFieldName="league"
             slaveFieldTable="#__ramajax_league_list"
 	    />
@@ -27,6 +27,7 @@
             name="player" 
             type="ramajaxselect" 
             label="Select a player"
+            emptyValueText="RAMAJAX_FIELD_SELECT_EMPTY_VALUE_TEXT_PLAYER"
             masterFieldName="team"
             masterFieldTable="#__ramajax_league_team_map"
             slaveFieldName="player"

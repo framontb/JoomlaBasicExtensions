@@ -12,6 +12,8 @@ defined('_JEXEC') or die('Restricted Access');
 ?>
 
 <form action="index.php?option=com_ramajaxuseexample&view=buscador" method="post" id="adminForm" name="adminForm">
+    <hr>
+    <h1><?php echo JText::_('RAMAJAX_SEARCH') ?></h1>
     <button  id="filter_clear" class="btn waves-effect waves-light red"  type="Button"> Reset </button>
     <input type="submit" value="Submit">
     <?php 
@@ -19,6 +21,8 @@ defined('_JEXEC') or die('Restricted Access');
         echo $this->filterForm->renderField('team', 'filter'); 
         echo $this->filterForm->renderField('player', 'filter'); 
     ?>
+    <hr>
+    <h1><?php echo JText::_('RAMAJAX_RESULTS') ?></h1>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
@@ -39,7 +43,6 @@ defined('_JEXEC') or die('Restricted Access');
         <tfoot>
             <tr>
                 <td colspan="5">
-                    <p>Footer</p>
                     <?php echo $this->pagination->getListFooter(); ?>
                     <?php echo $this->filterForm->renderField('limit', 'list');  ?>
                 </td>
@@ -67,7 +70,6 @@ defined('_JEXEC') or die('Restricted Access');
             <?php endif; ?>
         </tbody>
     </table>
-    <p><?php echo $this->langTag; ?></p>
     <input type="hidden" name="langTag" id="langTag" value="<?php echo $this->langTag; ?>" />
     <input type="hidden" name="task" />
 	<?php echo JHtml::_('form.token'); ?>
