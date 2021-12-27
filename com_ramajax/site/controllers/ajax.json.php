@@ -27,7 +27,7 @@ if (JDEBUG) {
     );
 }
 // RAM DEBUG
-if (JDEBUG) JLog::add('******** COM_RAMAJAX > RamajaxControllerAjax **********', JLog::INFO, 'com_ramajax');
+// if (JDEBUG) JLog::add('******** COM_RAMAJAX > RamajaxControllerAjax **********', JLog::INFO, 'com_ramajax');
 
 class RamajaxControllerAjax extends JControllerLegacy
 {
@@ -36,6 +36,7 @@ class RamajaxControllerAjax extends JControllerLegacy
     private String $masterFieldValue;
     private String $langTag;
     private $model;
+    private $extension;
 
     /**
      * Constructor class
@@ -48,12 +49,13 @@ class RamajaxControllerAjax extends JControllerLegacy
         $this->model = $this->getModel('ajax');
 
         # master/slave field Variables      
-        $this->ramajaxName     = JFactory::getApplication()->input->get('ramajaxName','','STRING');
+        $this->ramajaxName      = JFactory::getApplication()->input->get('ramajaxName','','STRING');
         $this->masterFieldValue = JFactory::getApplication()->input->get('masterFieldValue','','STRING');
-        $this->langTag = JFactory::getApplication()->input->get('langTag','es-ES','STRING');
+        $this->langTag          = JFactory::getApplication()->input->get('langTag','es-ES','STRING');
+        $this->extension        = JFactory::getApplication()->input->get('option','','STRING');
 
-// RAM DEBUG
-if (JDEBUG) JLog::add('$this->langTag  -->'.$this->langTag.'<--', JLog::INFO, 'com_ramajax');
+        // RAM DEBUG
+        // if (JDEBUG) JLog::add('$this->langTag  -->'.$this->langTag.'<--', JLog::INFO, 'com_ramajax');
 
         // RAM DEBUG
         // if (JDEBUG) JLog::add('RamajaxControllerAjax > $this->ramajaxName = '.$this->ramajaxName, JLog::INFO, 'com_ramajax');
@@ -65,13 +67,12 @@ if (JDEBUG) JLog::add('$this->langTag  -->'.$this->langTag.'<--', JLog::INFO, 'c
         }
 
         $lang = JFactory::getLanguage();
-        $extension = 'com_ramajaxuseexample';
         $base_dir = JPATH_SITE;
         $language_tag = $this->langTag;
         $reload = true;
         // $lang->load($extension, JPATH_ADMINISTRATOR, null,          false, true)
-        $lang->load($extension, $base_dir,'en-GB', $reload);
-        $lang->load($extension, $base_dir,$language_tag, $reload);
+        $lang->load($this->extension, $base_dir,'en-GB', $reload);
+        $lang->load($this->extension, $base_dir,$language_tag, $reload);
     }
 
     /**
