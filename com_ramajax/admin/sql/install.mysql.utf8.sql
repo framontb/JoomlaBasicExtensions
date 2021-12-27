@@ -5,13 +5,14 @@ DROP TABLE IF EXISTS `#__ramajax_definition_tables`;
 
 -- CREATE TABLE --
 CREATE TABLE `#__ramajax_definition_tables` (
-    `name`              VARCHAR(120)    NOT NULL DEFAULT '',
-    `type`              VARCHAR(120)    NOT NULL DEFAULT '',
-    `masterFieldName`   VARCHAR(120)    DEFAULT NULL,
-    `masterFieldTable`  VARCHAR(120)    DEFAULT NULL,
-    `slaveFieldName`    VARCHAR(120)    NOT NULL DEFAULT '',
-    `slaveFieldTable`   VARCHAR(120)    NOT NULL DEFAULT '',
-    `emptyValueText`    VARCHAR(120)    DEFAULT NULL,
+    `name`              VARCHAR(100)    NOT NULL,
+    `extensionName`     VARCHAR(100)    NOT NULL,
+    `type`              VARCHAR(100)    NOT NULL,
+    `masterFieldName`   VARCHAR(100)    DEFAULT NULL,
+    `masterFieldTable`  VARCHAR(100)    DEFAULT NULL,
+    `slaveFieldName`    VARCHAR(100)    NOT NULL DEFAULT '',
+    `slaveFieldTable`   VARCHAR(100)    NOT NULL DEFAULT '',
+    `emptyValueText`    VARCHAR(100)    DEFAULT NULL,
     `datetime`          DATETIME        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`name`)
 )

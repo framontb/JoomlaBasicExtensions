@@ -70,8 +70,9 @@ class JFormFieldRamajaxSelect extends JFormField {
         // Ramajax Field
         $this->ramDef = array();
         $this->ramDef['ramajaxName']    = (string) $this->element['name'];
+        $this->ramDef['extensionName']  = JFactory::getApplication()->input->get('option','','WORD');
         $this->ramDef['type']           = (string) $this->element['type'];
-        $this->ramDef['emptyValueText']  = (string) $this->element['emptyValueText'];
+        $this->ramDef['emptyValueText'] = (string) $this->element['emptyValueText'];
 
         // Get the name and table of the master field from the Form,
         // and the value selected by the user from the Request

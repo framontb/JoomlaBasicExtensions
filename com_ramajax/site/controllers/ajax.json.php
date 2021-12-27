@@ -49,10 +49,9 @@ class RamajaxControllerAjax extends JControllerLegacy
         $this->model = $this->getModel('ajax');
 
         # master/slave field Variables      
-        $this->ramajaxName      = JFactory::getApplication()->input->get('ramajaxName','','STRING');
+        $this->ramajaxName      = JFactory::getApplication()->input->get('ramajaxName','','WORD');
         $this->masterFieldValue = JFactory::getApplication()->input->get('masterFieldValue','','STRING');
         $this->langTag          = JFactory::getApplication()->input->get('langTag','es-ES','STRING');
-        $this->extension        = JFactory::getApplication()->input->get('option','','STRING');
 
         // RAM DEBUG
         // if (JDEBUG) JLog::add('$this->langTag  -->'.$this->langTag.'<--', JLog::INFO, 'com_ramajax');
@@ -65,6 +64,10 @@ class RamajaxControllerAjax extends JControllerLegacy
         {
             $this->masterFieldValue = "";
         }
+
+        // Get extension for loading the translations file
+        $ramDef = $this->model->getRamajaxDefinition($this->ramajaxName);
+        $this->extension = $ramDef['extensionName'];
 
         $lang = JFactory::getLanguage();
         $base_dir = JPATH_SITE;

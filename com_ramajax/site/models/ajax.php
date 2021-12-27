@@ -102,6 +102,7 @@ class RamajaxModelAjax extends JModelItem
         // Insert columns.
         $columns = array(
             'name',
+            'extensionName',
             'type',
             'masterFieldName',
             'masterFieldTable',
@@ -118,6 +119,7 @@ class RamajaxModelAjax extends JModelItem
         // Insert values.
         $values = array(
             $db->quote($ramDefForm['ramajaxName']), 
+            $db->quote($ramDefForm['extensionName']),
             $db->quote($ramDefForm['type']), 
             $masterFieldName, 
             $masterFieldTable, 

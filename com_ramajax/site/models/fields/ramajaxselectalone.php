@@ -69,6 +69,7 @@ class JFormFieldRamajaxSelectAlone extends JFormField {
         // Ramajax Field
         $this->ramDef = array();
         $this->ramDef['ramajaxName']    = (string) $this->element['name'];
+        $this->ramDef['extensionName']  = JFactory::getApplication()->input->get('option','','WORD');
         $this->ramDef['type']           = (string) $this->element['type'];
         $this->ramDef['emptyValueText']  = (string) $this->element['emptyValueText'];
 
