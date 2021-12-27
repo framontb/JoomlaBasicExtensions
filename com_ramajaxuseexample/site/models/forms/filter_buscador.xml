@@ -15,7 +15,7 @@
         <field 
             name="team" 
             type="ramajaxselect" 
-            label="Select a team"
+            label="RAMAJAX_FIELD_SELECT_LABEL_TEAM"
             emptyValueText="RAMAJAX_FIELD_SELECT_EMPTY_VALUE_TEXT_TEAM"
             masterFieldName="league"
             masterFieldTable="#__ramajax_league_list"
@@ -26,7 +26,7 @@
         <field 
             name="player" 
             type="ramajaxselect" 
-            label="Select a player"
+            label="RAMAJAX_FIELD_SELECT_LABEL_PLAYER"
             emptyValueText="RAMAJAX_FIELD_SELECT_EMPTY_VALUE_TEXT_PLAYER"
             masterFieldName="team"
             masterFieldTable="#__ramajax_league_team_map"
