@@ -110,6 +110,7 @@ $uriRoot =  $uri->root();
             Aplicar a "ALL" en los selectores (cambiar por RAMAJAX_ALL).
         </li>
         <li>Opción en field ramajax para meter o no el "RAMAJAX_ALL", que en realidad deja el option sin value</li>
+        <li>Add the index.html files to COM_RAMAJAX and COM_RAMAJAXUSEEXAMPLE</li>
     </ul>
 
     <h2>DONE</h2>

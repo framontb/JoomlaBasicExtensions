@@ -11,21 +11,21 @@
 use \Joomla\CMS\Response\JsonResponse;
 
 // RAM DEBUG
-use Joomla\CMS\Log\Log;
-if (JDEBUG) {
-    JLog::addLogger(
-        array(
-            // Sets file name
-            'text_file' => 'com_ramajax.log.php'
-        ),
-        // Sets messages of all log levels to be sent to the file.
-        JLog::ALL,
-        // The log category/categories which should be recorded in this file.
-        // In this case, it's just the one category from our extension.
-        // We still need to put it inside an array.
-        array('com_ramajax')
-    );
-}
+// use Joomla\CMS\Log\Log;
+// if (JDEBUG) {
+//     JLog::addLogger(
+//         array(
+//             // Sets file name
+//             'text_file' => 'com_ramajax.log.php'
+//         ),
+//         // Sets messages of all log levels to be sent to the file.
+//         JLog::ALL,
+//         // The log category/categories which should be recorded in this file.
+//         // In this case, it's just the one category from our extension.
+//         // We still need to put it inside an array.
+//         array('com_ramajax')
+//     );
+// }
 // RAM DEBUG
 // if (JDEBUG) JLog::add('******** COM_RAMAJAX > RamajaxControllerAjax **********', JLog::INFO, 'com_ramajax');
 
