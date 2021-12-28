@@ -11,6 +11,8 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
+JLoader::register('JFormFieldRamajax', JPATH_BASE.'/components/com_ramajax/models/fields/ramajax.php');
+
 // Add Logger - RAM DEBUG
 use Joomla\CMS\Log\Log;
 if (JDEBUG) {
@@ -41,65 +43,15 @@ if (JDEBUG) {
  *
  * @since  0.0.1
  */
-class JFormFieldRamajaxSelectAlone extends JFormField {
+class JFormFieldRamajaxSelectAlone extends JFormFieldRamajax {
     
     protected $type = 'ramajaxselectalone';
-
-    public array $ramDef; // Ramajax Definition
-    public $ajaxModel;
-
-    // Constructor
-    public function __construct(\Joomla\CMS\Form\Form $form = null) 
-    {
-        parent::__construct($form);
-
-        // Get Model
-        JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_ramajax/models');
-        $this->ajaxModel = JModelLegacy::getInstance('Ajax', 'RamajaxModel');
-    }
 
     // getLabel() left out
 
     public function getInput() 
     {
-        // Get State
-        $app        = JFactory::getApplication();
-        $filters    = $app->getUserStateFromRequest('filter', 'filter', array(), 'array');
-
-        // Ramajax Field
-        $this->ramDef = array();
-        $this->ramDef['ramajaxName']    = (string) $this->element['name'];
-        $this->ramDef['extensionName']  = JFactory::getApplication()->input->get('option','','WORD');
-        $this->ramDef['type']           = (string) $this->element['type'];
-        $this->ramDef['emptyValueText']  = (string) $this->element['emptyValueText'];
-
-        // Get the name and table of the slave field from the Form,
-        // and the value selected by the user from the Request
-        $this->ramDef['slaveFieldName']  = (string) $this->element['slaveFieldName'];
-        $this->ramDef['slaveFieldValue'] = $filters[$this->ramDef['slaveFieldName']];
-        $this->ramDef['slaveFieldTable'] = (string) $this->element['slaveFieldTable'];
-        
-        /**
-         * Get the ramajax field state in db:
-         *      -1 conflict detected
-         *       0 all is OK, ramajax field provisioned
-         *       1 ramajax field not provisined jet
-         */
-        $ramajaxState = $this->ajaxModel->getRamajaxStateDb($this->ramDef);
-
-        // all good
-        if (!$ramajaxState) {}
-
-        // provision needed
-        elseif ($ramajaxState == 1) { $this->ajaxModel->storeRamajaxInDb($this->ramDef);} 
-        
-        // conflict detected
-        elseif ($ramajaxState == -1)
-        {
-            $this->ajaxModel->updateRamajaxInDb((object)$this->ramDef);
-            if (JDEBUG) JLog::add('************** JFormFieldRamajax *****************', JLog::INFO, 'com_ramajax');
-            if (JDEBUG) JLog::add('====> ramajax field: conflict detected: '.$this->ramDef['ramajaxName'], JLog::INFO, 'com_ramajax');
-        }
+        $this->ramajaxStaff();
 
         // Get field values or empty strings
         if (empty($this->ramDef['slaveFieldValue'])) {$this->ramDef['slaveFieldValue']="";}

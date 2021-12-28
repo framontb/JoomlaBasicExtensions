@@ -43,7 +43,7 @@ $uriRoot =  $uri->root();
     <p>
     Ramajax component comes with some data configured, so you can check if it is working.
     </br>You can access this URL to check if the ajax server is working: 
-    <a target="_blank" href="<?php echo $uriRoot ?>index.php?option=com_ramajax&task=ajax.getSlaveValues&format=json&ramajaxName=team&masterFieldValue=NBA">CHECK AJAX</a>
+    <a target="_blank" href="<?php echo $uriRoot ?>index.php?option=com_ramajax&task=ajax.getRamajaxSelectValues&format=json&ramajaxName=team&masterFieldValue=NBA&lang=es">CHECK AJAX</a>
     </p>
 
     <p> You should see a text like this in your browser:
@@ -125,6 +125,9 @@ $uriRoot =  $uri->root();
         <li>Translations</li>
         <li>18/12/21 - Translations: Translate to language different from english</li>
         <li>18/12/21 - Translations: what is a multilanguage page for joomla</li>
+        <li>27/12/21 - Added new field "extensionName" to table #_ramajax_definition_tables.
+            So, the languaje files are loaded automatically in the Ramajax controller "ajax.json.php".
+        </li>
     </ul>
 
 </div>

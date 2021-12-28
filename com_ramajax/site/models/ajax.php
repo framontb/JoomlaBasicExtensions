@@ -147,7 +147,7 @@ class RamajaxModelAjax extends JModelItem
     public function getRamajaxDefinition(String $ramajaxName)
     {
         // RAM DEBUG
-        if (JDEBUG) JLog::add('getRamajaxDefinition > $ramajaxName = '.$ramajaxName, JLog::INFO, 'com_ramajax');
+        // if (JDEBUG) JLog::add('getRamajaxDefinition > $ramajaxName = '.$ramajaxName, JLog::INFO, 'com_ramajax');
 
         if (empty($this->ramajaxDefinition))
         {  
@@ -209,7 +209,7 @@ class RamajaxModelAjax extends JModelItem
     public function existMasterField(String $ramajaxName, String $masterFieldValue)
     {
         // RAM DEBUG
-        if (JDEBUG) JLog::add('existMasterField > $ramajaxName = '.$ramajaxName, JLog::INFO, 'com_ramajax');
+        // if (JDEBUG) JLog::add('existMasterField > $ramajaxName = '.$ramajaxName, JLog::INFO, 'com_ramajax');
 
         if (is_null($this->existMasterField))
         {
