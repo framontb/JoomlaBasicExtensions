@@ -14,8 +14,8 @@ defined('_JEXEC') or die('Restricted Access');
 <form action="index.php?option=com_ramajaxuseexample&view=buscador" method="post" id="adminForm" name="adminForm">
     <hr>
     <h1><?php echo JText::_('RAMAJAX_SEARCH') ?></h1>
-    <button  id="filter_clear" class="btn waves-effect waves-light red"  type="Button"> Reset </button>
-    <input type="submit" value="Submit">
+    <button  id="filter_clear" class="btn waves-effect waves-light red"  type="Button"> <?php echo JText::_('RAMAJAX_BUTTON_RESET') ?> </button>
+    <input type="submit" value="<?php echo JText::_('RAMAJAX_BUTTON_SUBMIT') ?>">
     <?php 
         echo $this->filterForm->renderField('league', 'filter'); 
         echo $this->filterForm->renderField('team', 'filter'); 
