@@ -3,14 +3,4 @@
     <layout title="COM_RAMAJAXUSEEXAMPLE_BUSCADOR_VIEW_DEFAULT_TITLE">
         <message>COM_RAMCLASIFICADO_RAMCLASIFICADO_VIEW_DEFAULT_DESC</message>
     </layout>
-    <fields name="request" addfieldpath="/administrator/components/com_ramclasificado/models/fields">
-        <fieldset name="request">
-                <field
-                    name="id"
-                    type="buscador" 
-                    label="COM_RAMAJAXUSEEXAMPLE_BUSCADOR_FIELD_NAME_LABEL"
-                    description="COM_RAMAJAXUSEEXAMPLE_BUSCADOR_FIELD_NAME_DESC"
-                    />
-        </fieldset>
-    </fields>
 </metadata>
