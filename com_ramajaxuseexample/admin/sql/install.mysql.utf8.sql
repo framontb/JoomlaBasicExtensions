@@ -11,9 +11,9 @@ CREATE TABLE `#__ramajax_league_list` (
     `league`    VARCHAR(120)    NOT NULL DEFAULT '',
     PRIMARY KEY (`id`)
 )
-	ENGINE =InnoDB
-	AUTO_INCREMENT =0
-	DEFAULT CHARSET =utf8;
+    ENGINE =InnoDB
+    AUTO_INCREMENT =0
+    DEFAULT CHARSET =utf8;
 
 -- CREATE TABLE -- Filter field 2
 CREATE TABLE `#__ramajax_league_team_map` (
@@ -22,22 +22,25 @@ CREATE TABLE `#__ramajax_league_team_map` (
     `team`      VARCHAR(120)    NOT NULL DEFAULT '',
     PRIMARY KEY (`id`)
 )
-	ENGINE =InnoDB
-	AUTO_INCREMENT =0
-	DEFAULT CHARSET =utf8;
+    ENGINE =InnoDB
+    AUTO_INCREMENT =0
+    DEFAULT CHARSET =utf8;
 
 -- CREATE TABLE -- Final Data for the example
 CREATE TABLE `#__ramajax_use_example` (
-    `id`       		INT(11)         NOT NULL AUTO_INCREMENT,
-    `league`        VARCHAR(120)    NOT NULL DEFAULT '',
-    `team`          VARCHAR(120)    NOT NULL DEFAULT '',
-    `player`        VARCHAR(120)    NOT NULL DEFAULT '',
-    `wage`          FLOAT             NOT NULL DEFAULT 0,
+    `id`       		    INT(11)         NOT NULL AUTO_INCREMENT,
+    `league`            VARCHAR(120)    NOT NULL DEFAULT '',
+    `team`              VARCHAR(120)    NOT NULL DEFAULT '',
+    `player`            VARCHAR(120)    NOT NULL DEFAULT '',
+    `player_country`    VARCHAR(120)    NOT NULL DEFAULT '',
+    `player_state`      VARCHAR(120)    NOT NULL DEFAULT '',
+    `player_city`       VARCHAR(120)    NOT NULL DEFAULT '',
+    `wage`              FLOAT           NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`)
 )
-	ENGINE =InnoDB
-	AUTO_INCREMENT =0
-	DEFAULT CHARSET =utf8;
+    ENGINE =InnoDB
+    AUTO_INCREMENT =0
+    DEFAULT CHARSET =utf8;
 
 -- ************************* INSERT VALUES ************************
 
@@ -64,29 +67,29 @@ INSERT INTO `#__ramajax_league_team_map` (`league`,`team`) VALUES
 ('Premier','Arsenal');
 
 -- INSERT VALUES --
-INSERT INTO `#__ramajax_use_example` (`league`,`team`,`player`,`wage`) VALUES
-('NBA','Phoenix Suns','Charles Barkley', 1.5),
-('NBA','Phoenix Suns','Jerry Colangelo', 3),
-('NBA','Los Angeles Lakers','Russell Westbrook', 44),
-('NBA','Los Angeles Lakers','LeBron James',41),
-('NBA','Golden State Warriors','Stephen Curry',45),
-('NBA','Golden State Warriors','Klay Thompson',37),
-('LaLiga','Real Madrid','Gareth Bale',30),
-('LaLiga','Real Madrid','Eden Hazard',20),
-('LaLiga','Barcelona','Frenkie de Jong',20),
-('LaLiga','Barcelona','Sergio Busquets',15),
-('LaLiga','Celta','Denis Suárez',6),
-('LaLiga','Celta','Iago Aspas',3),
-('Serie A','Juventus','Ramsey',7),
-('Serie A','Juventus','Rabiot',7),
-('Serie A','Roma','Lorenzo Pellegrini',7),
-('Serie A','Roma','Tammy Abraham',7),
-('Serie A','Fiorentina','Álvaro Odriozola',6),
-('Serie A','Fiorentina','Lucas Torreira',4.5),
-('Premier','Manchester United','Cristiano Ronaldo',30),
-('Premier','Manchester United','David De Gea',21),
-('Premier','Chelsea','Romelu Lukaku',21),
-('Premier','Chelsea','Timo Werner',16),
-('Premier','Arsenal','Pierre-Emerick Aubameyang',15),
-('Premier','Arsenal','Alexandre Lacazette',11);
+INSERT INTO `#__ramajax_use_example` (`league`,`team`,`player`,`player_country`,`player_state`,`player_city`,`wage`) VALUES
+('NBA','Phoenix Suns','Charles Barkley','USA','Alabama','Leeds', 1.5),
+('NBA','Phoenix Suns','Jerry Colangelo','USA','Illinois','Chicago Heights', 3),
+('NBA','Los Angeles Lakers','Russell Westbrook', 'USA','California','Long Beach', 44),
+('NBA','Los Angeles Lakers','LeBron James','USA','Ohio','Akron', 41),
+('NBA','Golden State Warriors','Stephen Curry','USA','Ohio','Akron', 45),
+('NBA','Golden State Warriors','Klay Thompson','USA','California','Los Ángeles', 37),
+('LaLiga','Real Madrid','Gareth Bale','UK','Wales','Cardiff', 30),
+('LaLiga','Real Madrid','Eden Hazard','Belgium','Wallonia','La Louvière', 20),
+('LaLiga','Barcelona','Frenkie de Jong','Netherlands','South Holland','Gorinchem', 20),
+('LaLiga','Barcelona','Sergio Busquets','Spain','Catalonia','Sabadell', 15),
+('LaLiga','Celta','Denis Suárez','Spain','Galicia','Salceda de Caselas', 6),
+('LaLiga','Celta','Iago Aspas','Spain','Galica','Moaña', 3),
+('Serie A','Juventus','Ramsey','Spain','Wales','Caerphilly', 7),
+('Serie A','Juventus','Rabiot','France','Île-de-France','Saint-Maurice', 7),
+('Serie A','Roma','Lorenzo Pellegrini','Italy','Lazio','Rome', 7),
+('Serie A','Roma','Tammy Abraham','UK','London','Camberwell', 7),
+('Serie A','Fiorentina','Álvaro Odriozola','Spain','Basque Country','San Sebastián', 6),
+('Serie A','Fiorentina','Lucas Torreira','Uruguay','Río Negro','Fray Bentos', 4.5),
+('Premier','Manchester United','Cristiano Ronaldo','Portugal','Madeira','Funchal', 30),
+('Premier','Manchester United','David De Gea','Spain','Madrid','Madrid', 21),
+('Premier','Chelsea','Romelu Lukaku','Belgium','Flemish Region','Antwerp', 21),
+('Premier','Chelsea','Timo Werner','Germany','Baden-Württemberg','Stuttgart', 16),
+('Premier','Arsenal','Pierre-Emerick Aubameyang','France','Pays de la Loire','Laval', 15),
+('Premier','Arsenal','Alexandre Lacazette','France','Auvergne-Rhône-Alpes','Lyon', 11);
 

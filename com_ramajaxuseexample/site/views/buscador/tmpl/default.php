@@ -26,14 +26,23 @@ defined('_JEXEC') or die('Restricted Access');
     <table class="table table-striped table-hover">
         <thead>
         <tr>
-            <th width="30%">
+            <th width="10%">
                 <?php echo JText::_('LEAGUE') ;?>
             </th>
-            <th width="30%">
+            <th width="20%">
                 <?php echo JText::_('COM_RAMAJAXUSEEXAMPLE_TEAM') ;?>
             </th>
-            <th width="30%">
+            <th width="20%">
                 <?php echo JText::_('PLAYER') ;?>
+            </th>
+            <th width="20%">
+                <?php echo JText::_('PLAYER_COUNTRY') ;?>
+            </th>
+            <th width="10%">
+                <?php echo JText::_('PLAYER_STATE') ;?>
+            </th>
+            <th width="20%">
+                <?php echo JText::_('PLAYER_CITY') ;?>
             </th>
             <th width="10%">
                 <?php echo JText::_('WAGE') ;?>
@@ -61,6 +70,15 @@ defined('_JEXEC') or die('Restricted Access');
                         </td>
                         <td>
                             <?php echo $row->player; ?>
+                        </td>
+                        <td>
+                            <?php echo JText::_($row->player_country); ?>
+                        </td>
+                        <td>
+                            <?php echo JText::_($row->player_state); ?>
+                        </td>
+                        <td>
+                            <?php echo JText::_($row->player_city); ?>
                         </td>
                         <td>
                             <?php echo $row->wage; ?>
