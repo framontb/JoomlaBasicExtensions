@@ -20,6 +20,7 @@ defined('_JEXEC') or die('Restricted Access');
         echo $this->filterForm->renderField('league', 'filter'); 
         echo $this->filterForm->renderField('team', 'filter'); 
         echo $this->filterForm->renderField('player', 'filter'); 
+        echo $this->filterForm->renderField('player_country', 'filter'); 
     ?>
     <hr>
     <h1><?php echo JText::_('RAMAJAX_RESULTS') ?></h1>

@@ -39,8 +39,8 @@
             type="ramajaxselectalone" 
             label="RAMAJAX_FIELD_SELECT_LABEL_PLAYER_COUNTRY"
             emptyValueText="RAMAJAX_FIELD_SELECT_EMPTY_VALUE_PLAYER_COUNTRY"
-            slaveFieldName="league"
-            slaveFieldTable="#__ramajax_league_list"
+            slaveFieldName="player_country"
+            slaveFieldTable="#__ramajax_use_example"
 	    />
     </fields>
     <fields name="list">

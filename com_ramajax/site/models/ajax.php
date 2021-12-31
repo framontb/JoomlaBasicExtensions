@@ -305,9 +305,10 @@ class RamajaxModelAjax extends JModelItem
         // https://docs.joomla.org/Selecting_data_using_JDatabase/es#loadColumn.28.29
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
-        $query->select($ramdef['slaveFieldName'])
+        $query->select('DISTINCT ' . $ramdef['slaveFieldName'])
                 ->from($db->quoteName($ramdef['slaveFieldTable']))
-                ->where($db->quoteName($ramdef['masterFieldName']) . " = " . $db->quote($masterFieldValue));
+                ->where($db->quoteName($ramdef['masterFieldName']) . " = " . $db->quote($masterFieldValue))
+                ->order($ramdef['slaveFieldName'] . ' ASC');
         
         // Reset the query using our newly populated query object.
         $db->setQuery($query);
@@ -376,9 +377,9 @@ class RamajaxModelAjax extends JModelItem
         // https://docs.joomla.org/Selecting_data_using_JDatabase/es#loadColumn.28.29
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
-        $query->select($ramdef['slaveFieldName'])
-                ->from($db->quoteName($ramdef['slaveFieldTable']));
-
+        $query->select('DISTINCT ' . $ramdef['slaveFieldName'])
+                ->from($db->quoteName($ramdef['slaveFieldTable']))
+                ->order($ramdef['slaveFieldName'] . ' ASC');
         // Reset the query using our newly populated query object.
         $db->setQuery($query);
         try 

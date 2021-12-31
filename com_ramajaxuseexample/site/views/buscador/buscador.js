@@ -33,5 +33,6 @@ jQuery(document).ready(function() {
     function filter_clear() 
     {
         jQuery('#filter_league').val("").change();
+        jQuery('#filter_player_country').val("").change();
     }
 });

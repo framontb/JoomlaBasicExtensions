@@ -62,12 +62,20 @@ class RamajaxuseexampleModelBuscador extends JModelList
             $query->where('bs.team LIKE ' . $like_team);
         }
 
-        // Filter: team
+        // Filter: player
         $player= $this->getState('filter.player');
         if (!empty($player))
         {
             $like_player = $db->quote($player);
             $query->where('bs.player LIKE ' . $like_player);
+        }
+
+        // Filter: player_country
+        $player_country= $this->getState('filter.player_country');
+        if (!empty($player_country))
+        {
+            $like_player_country = $db->quote($player_country);
+            $query->where('bs.player_country LIKE ' . $like_player_country);
         }
 
 		return $query;
