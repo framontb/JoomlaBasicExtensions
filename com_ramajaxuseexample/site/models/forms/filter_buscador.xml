@@ -42,7 +42,6 @@
             slaveFieldName="player_country"
             slaveFieldTable="#__ramajax_use_example"
 	    />
-
         <field 
             name="player_state" 
             type="ramajaxselect" 
@@ -53,6 +52,17 @@
             slaveFieldName="player_state"
             slaveFieldTable="#__ramajax_use_example"
 	    />
+        <field 
+            name="player_city" 
+            type="ramajaxselect" 
+            label="RAMAJAX_FIELD_SELECT_LABEL_PLAYER_CITY"
+            emptyValueText="RAMAJAX_FIELD_SELECT_EMPTY_VALUE_TEXT_PLAYER_CITY"
+            masterFieldName="player_state"
+            masterFieldTable="#__ramajax_use_example"
+            slaveFieldName="player_city"
+            slaveFieldTable="#__ramajax_use_example"
+	    />
+
     </fields>
 
     <fields name="list">

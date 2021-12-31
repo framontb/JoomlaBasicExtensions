@@ -34,6 +34,15 @@ jQuery(document).ready(function() {
         }, 
         populateRamajaxSelectOptions);
 
+    // ajax request for player
+    jQuery('#filter_player_state').change(
+        {
+            ramajaxName:"player_city",
+            slaveSelectId:"#filter_player_city",
+            langTag:langTagVal
+        }, 
+        populateRamajaxSelectOptions);
+
     // reset button
     jQuery('#filter_clear').click(filter_clear);
 

@@ -27,7 +27,7 @@ $uriRoot =  $uri->root();
 <h2>Features</h2>
     <p>
         This utility makes life easy for developers 
-        who wants to set up dynamic combo selects in his views.
+        who wants to set up dynamic selects, ajax filled, in his views.
 
         This component creates ajax responses to update the options of select html elements.
 
@@ -63,16 +63,61 @@ $uriRoot =  $uri->root();
 
 <h2>How to use it</h2>
     <p>
-        After install com_ramajax, and check it's working properly, you will need:
+        After install com_ramajax, and check it's working properly, you will need add a master filter field:
+
         <ol>
-            <li>add two fields to your Form (the main field and the slave field). 
-                The main select with type <b>sql</b> 
-                and the slave of type <b>ramajax</b></li>
-            <li>be sure <b>jQuery</b> is in your view</li>
-            <li>declare the javascript <b>/assets/js/ramajax.js</b> in your view</li>
-            <li>add a tiny <b>js</b> script to your view to invoque the ajax call 
-            on change event of main field</li>
+            <li>Add a master field "ramajaxselectalone" to the form.
+                In the example (com_ramajaxauseexample) the file is filter_buscador.xml,
+                and there are two examples: league and player_country
+            </li>
+            <li>
+                Add the master field to the template.
+                In the example (com_ramajaxauseexample), see the file site/views/buscador/tmpl/defalult.php
+                Check that you can see the select element in the view.
+            </li>
+            <li>
+                Add the search condition to the model.
+                In the example (com_ramajaxauseexample), see the file site/models/buscador.php
+                Check that you can filter by the field.
+            </li>
+            <li>
+                Add the line to the javascript filter_clear function.
+                In the example (com_ramajaxauseexample), see the file site/views/buscador/buscador.js
+                Check that Reset button cleans the select.
+            </li>
         </ol>
+
+        Now you will want to add a slave filter (filled by ajax):
+
+        <ol>
+            <li>Add a slave field "ramajaxselect" to the form.
+                In the example (com_ramajaxauseexample) the file is filter_buscador.xml,
+                and there are several examples there.
+            </li>
+            <li>
+                Add the slave field to the template.
+                In the example (com_ramajaxauseexample), see the file site/views/buscador/tmpl/defalult.php
+                Check that you can see the select element in the view.
+            </li>
+            <li>
+                Add the ajax javascript function to the field, linked to changes in the master field.
+                In the example (com_ramajaxauseexample), see the file site/views/buscador/buscador.js
+                For example for the field player_state. Note how it is linked to the master field.
+                Check that changing the master field, the slave field is filled right.
+            </li>
+            <li>
+                Add the search condition to the model.
+                In the example (com_ramajaxauseexample), see the file site/models/buscador.php
+                Check that you can filter by the field.
+            </li>
+            <li>
+                Add the line to the javascript filter_clear function.
+                In the example (com_ramajaxauseexample), see the file site/views/buscador/buscador.js
+                Check that Reset button cleans the select.
+            </li>
+        </ol>
+
+        Now chain as many slaves as you wish following the same method.
     </p>
 
 <h2>See it in the component example</h2>
@@ -80,7 +125,7 @@ $uriRoot =  $uri->root();
 
 <h2>How to improve the component</h2>
     <ul>
-        <li>Add an Options Form to add new pairs of master-slave combo selects (ramajax field)</li>
+        <li>Add a view to add new pairs of master-slave combo selects automatically (ramajax field)</li>
         <li>Add more javascript and FormFields for new html elements (check boxes)</li>
         <li>Add translations<li>
     </ul>
@@ -95,7 +140,7 @@ $uriRoot =  $uri->root();
     <ul>
         <li>Translations</li>
         <li>Translations: field sql type origin</li>
-        <li>Check token in controller</li>
+        <li>Avoid CSRF: Check token in controller</li>
         <li>Repasar notas de copyright</li>
         <li>Check if in the Example's view, puttin $this->setDocument before display, loads the javascript so I can use it in the 
             ramajax field
@@ -129,6 +174,9 @@ $uriRoot =  $uri->root();
         <li>27/12/21 - Added new field "extensionName" to table #_ramajax_definition_tables.
             So, the languaje files are loaded automatically in the Ramajax controller "ajax.json.php".
         </li>
+        <li>28/12/21 - COVID Vacine: leaves me like shit</li>
+        <li>30/12/21 - Added Galician and Portuguese translations</li>
+        <li>31/12/21 - Added new search Ramajax filters to the use example: player_country, player_state, player_city</li>
     </ul>
 
 </div>

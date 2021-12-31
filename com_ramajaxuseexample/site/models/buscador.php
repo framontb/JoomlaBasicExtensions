@@ -86,6 +86,14 @@ class RamajaxuseexampleModelBuscador extends JModelList
             $query->where('bs.player_state LIKE ' . $like_player_state);
         }
 
+        // Filter: player_state
+        $player_city= $this->getState('filter.player_city');
+        if (!empty($player_city))
+        {
+            $like_player_city = $db->quote($player_city);
+            $query->where('bs.player_city LIKE ' . $like_player_city);
+        }
+
 		return $query;
 	}
 }
