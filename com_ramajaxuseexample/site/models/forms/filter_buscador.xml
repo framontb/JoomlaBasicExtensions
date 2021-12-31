@@ -33,16 +33,28 @@
             slaveFieldName="player"
             slaveFieldTable="#__ramajax_use_example"
 	    />
-
+    
         <field 
             name="player_country" 
             type="ramajaxselectalone" 
             label="RAMAJAX_FIELD_SELECT_LABEL_PLAYER_COUNTRY"
-            emptyValueText="RAMAJAX_FIELD_SELECT_EMPTY_VALUE_PLAYER_COUNTRY"
+            emptyValueText="RAMAJAX_FIELD_SELECT_EMPTY_VALUE_TEXT_PLAYER_COUNTRY"
             slaveFieldName="player_country"
             slaveFieldTable="#__ramajax_use_example"
 	    />
+
+        <field 
+            name="player_state" 
+            type="ramajaxselect" 
+            label="RAMAJAX_FIELD_SELECT_LABEL_PLAYER_STATE"
+            emptyValueText="RAMAJAX_FIELD_SELECT_EMPTY_VALUE_TEXT_PLAYER_STATE"
+            masterFieldName="player_country"
+            masterFieldTable="#__ramajax_use_example"
+            slaveFieldName="player_state"
+            slaveFieldTable="#__ramajax_use_example"
+	    />
     </fields>
+
     <fields name="list">
         <field
             name="limit"

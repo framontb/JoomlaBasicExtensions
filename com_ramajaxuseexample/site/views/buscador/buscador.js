@@ -25,12 +25,21 @@ jQuery(document).ready(function() {
         }, 
         populateRamajaxSelectOptions);
 
+    // ajax request for player
+    jQuery('#filter_player_country').change(
+        {
+            ramajaxName:"player_state",
+            slaveSelectId:"#filter_player_state",
+            langTag:langTagVal
+        }, 
+        populateRamajaxSelectOptions);
+
     // reset button
     jQuery('#filter_clear').click(filter_clear);
 
     // Reset function
     // Because changes cascade, we only need to reset the first element of the chain
-    function filter_clear() 
+    function filter_clear()
     {
         jQuery('#filter_league').val("").change();
         jQuery('#filter_player_country').val("").change();
