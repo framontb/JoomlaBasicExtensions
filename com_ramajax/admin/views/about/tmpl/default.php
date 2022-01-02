@@ -63,17 +63,17 @@ $uriRoot =  $uri->root();
 
 <h2>How to use it</h2>
     <p>
-        After install com_ramajax, and check it's working properly, you will need add a master filter field:
+        After install com_ramajax, and check it's working properly, you will need to <b>add a master filter field</b>:
 
         <ol>
-            <li>Add a master field "ramajaxselectalone" to the form.
-                In the example (com_ramajaxauseexample) the file is filter_buscador.xml,
+            <li>Add a master field type "ramajaxselectalone" to the form.
+                In the example component com_ramajaxauseexample, the file is site/models/forms/filter_buscador.xml,
                 and there are two examples: league and player_country
             </li>
             <li>
                 Add the master field to the template.
                 In the example (com_ramajaxauseexample), see the file site/views/buscador/tmpl/defalult.php
-                Check that you can see the select element in the view.
+                Check that you can see the select element in the view (buscador).
             </li>
             <li>
                 Add the search condition to the model.
@@ -87,7 +87,7 @@ $uriRoot =  $uri->root();
             </li>
         </ol>
 
-        Now you will want to add a slave filter (filled by ajax):
+        Next, you will want to <b>add a slave filter</b> (filled by ajax):
 
         <ol>
             <li>Add a slave field "ramajaxselect" to the form.
@@ -117,7 +117,7 @@ $uriRoot =  $uri->root();
             </li>
         </ol>
 
-        Now chain as many slaves as you wish following the same method.
+        Now <b>chain as many slaves</b> as you wish following the same method.
     </p>
 
 <h2>See it in the component example</h2>

@@ -11,19 +11,30 @@
 defined('_JEXEC') or die('Restricted Access');
 ?>
 
+<!-- Title -->
+<hr>
+<h1><?php echo JText::_('RAMAJAX_SEARCH') ?></h1>
+
 <form action="index.php?option=com_ramajaxuseexample&view=buscador" method="post" id="adminForm" name="adminForm">
-    <hr>
-    <h1><?php echo JText::_('RAMAJAX_SEARCH') ?></h1>
+
+    <!-- ************************ SEARCH **************************** -->
     <button  id="filter_clear" class="btn waves-effect waves-light red"  type="Button"> <?php echo JText::_('RAMAJAX_BUTTON_RESET') ?> </button>
     <input type="submit" value="<?php echo JText::_('RAMAJAX_BUTTON_SUBMIT') ?>">
-    <?php
-        echo $this->filterForm->renderField('league',           'filter');
-        echo $this->filterForm->renderField('team',             'filter');
-        echo $this->filterForm->renderField('player',           'filter');
-        echo $this->filterForm->renderField('player_country',   'filter');
-        echo $this->filterForm->renderField('player_state',     'filter');
-        echo $this->filterForm->renderField('player_city',      'filter');
-    ?>
+
+    <!-- filters -->
+    <div class="row-fluid">
+        <div class="span6">
+            <?php echo $this->filterForm->renderField('league','filter'); ?>
+            <?php echo $this->filterForm->renderField('team',  'filter'); ?>
+            <?php echo $this->filterForm->renderField('player','filter'); ?>
+        </div>
+        <div class="span6">
+            <?php echo $this->filterForm->renderField('player_country','filter'); ?>
+            <?php echo $this->filterForm->renderField('player_state',  'filter'); ?>
+            <?php echo $this->filterForm->renderField('player_city',   'filter'); ?>
+        </div>
+    </div>
+    <!-- ************************ RESULTS **************************** -->
     <hr>
     <h1><?php echo JText::_('RAMAJAX_RESULTS') ?></h1>
     <table class="table table-striped table-hover">
