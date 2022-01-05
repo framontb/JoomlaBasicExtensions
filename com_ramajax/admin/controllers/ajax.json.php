@@ -70,7 +70,7 @@ class RamajaxControllerAjax extends JControllerLegacy
         $this->extension = $ramDef['extensionName'];
 
         $lang = JFactory::getLanguage();
-        $base_dir = JPATH_BASE;
+        $base_dir = JPATH_SITE;
         $language_tag = $this->langTag;
         $reload = true;
         // $lang->load($extension, JPATH_ADMINISTRATOR, null,          false, true)
