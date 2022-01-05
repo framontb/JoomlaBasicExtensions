@@ -59,7 +59,7 @@ class RamajaxuseexampleViewBuscador extends JViewLegacy
     protected function setDocument() 
     {
         $document = JFactory::getDocument();
-        JHtml::_('jquery.framework');
+        JHtml::_('bootstrap.framework');
         $document->addScript(JURI::root() . $this->script);
         $document->addScript(JURI::root() . "/components/com_ramajax/assets/js/ramajax.js");
         # User touch
