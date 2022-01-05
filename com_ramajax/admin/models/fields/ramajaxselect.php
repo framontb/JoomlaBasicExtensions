@@ -34,19 +34,32 @@ JLoader::register('JFormFieldRamajax', JPATH_BASE.'/components/com_ramajax/model
 /**
  * Ramajax Form Field class for dynamic ajax combo select
  *       <field 
- *           name="league" 
- *           type="ramajaxselectalone" 
- *           label="RAMAJAX_FIELD_SELECT_LABEL_LEAGUE"
- *           emptyValueText="RAMAJAX_FIELD_SELECT_EMPTY_VALUE_TEXT_LEAGUE"
- *           slaveFieldName="league"
- *           slaveFieldTable="#__ramajax_league_list"
+ *          name="player" 
+ *          type="ramajax" 
+ *          label="Select a player"
+ *          masterFieldName="team"
+ *          masterFieldTable="#__ramajax_league_team_map"
+ *          slaveFieldName="player"
+ *          slaveFieldTable="#__ramajax_use_example"
  *       />
  *
  * @since  0.0.1
  */
-class JFormFieldRamajaxSelectAlone extends JFormFieldRamajax {
+class JFormFieldRamajaxSelect extends JFormFieldRamajax {
     
-    protected $type = 'ramajaxselectalone';
+    protected $type = 'ramajaxselect';
+    public array $ramDef; // Ramajax Definition
+    public $ajaxModel;
+
+    // Constructor
+    public function __construct(\Joomla\CMS\Form\Form $form = null) 
+    {
+        parent::__construct($form);
+
+        // Get Model
+        JModelLegacy::addIncludePath(JPATH_BASE . '/components/com_ramajax/models');
+        $this->ajaxModel = JModelLegacy::getInstance('Ajax', 'RamajaxModel');
+    }
 
     // getLabel() left out
 
@@ -56,10 +69,20 @@ class JFormFieldRamajaxSelectAlone extends JFormFieldRamajax {
         $this->ramajaxStaff();
 
         // Get field values or empty strings
+        $slaveOptions = "";
+        if (empty($this->ramDef['masterFieldValue'] )) {$this->ramDef['masterFieldValue']="";}
         if (empty($this->ramDef['slaveFieldValue'])) {$this->ramDef['slaveFieldValue']="";}
-
-        $slaveOptions = $this->ajaxModel->getSelectAloneOptions(
+        
+        if (!$this->ajaxModel->existMasterField(
             $this->ramDef['ramajaxName'],
+            $this->ramDef['masterFieldValue'])) 
+        {
+            $this->ramDef['masterFieldValue'] ='';
+        }  
+
+        $slaveOptions = $this->ajaxModel->getRamajaxSelectOptions(
+            $this->ramDef['ramajaxName'],
+            $this->ramDef['masterFieldValue'],
             $this->ramDef['slaveFieldValue']);
 
         // Build select
