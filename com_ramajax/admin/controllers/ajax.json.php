@@ -53,10 +53,6 @@ class RamajaxControllerAjax extends JControllerLegacy
         $this->masterFieldValue = JFactory::getApplication()->input->get('masterFieldValue','','STRING');
         $this->langTag          = JFactory::getApplication()->input->get('langTag','es-ES','STRING');
 
-        var_dump('$this->ramajaxName='.$this->ramajaxName) ;
-        var_dump('$this->masterFieldValue='.$this->masterFieldValue) ;
-        var_dump('$this->langTag='.$this->langTag) ;
-
         // RAM DEBUG
         // if (JDEBUG) JLog::add('$this->langTag  -->'.$this->langTag.'<--', JLog::INFO, 'com_ramajax');
 
@@ -87,8 +83,6 @@ class RamajaxControllerAjax extends JControllerLegacy
      */
     public function getRamajaxSelectValues()
     {
-        echo "getRamajaxSelectValues";
-        return true;
         try
         {
             $slaveValues = $this->model->getRamajaxSelectValues(

@@ -63,7 +63,7 @@ class RamajaxuseexampleViewBuscador extends JViewLegacy
         $document->addScript(JURI::root() . $this->script);
         $document->addScript(JURI::root() . "/administrator/components/com_ramajax/assets/js/ramajax.js");
         # User touch
-        $document->addScript(JURI::root() . "/administrator/components/com_ramajaxuseexample"
+        $document->addScript(JURI::root() . "/components/com_ramajaxuseexample"
                                           . "/views/buscador/buscador.js");
     }
 }
