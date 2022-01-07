@@ -138,16 +138,8 @@ $uriRoot =  $uri->root();
 
 <h2>TODO</h2>
     <ul>
-        <li>Translations</li>
-        <li>Translations: field sql type origin</li>
         <li>Avoid CSRF: Check token in controller</li>
-        <li>Repasar notas de copyright</li>
-        <li>Check if in the Example's view, puttin $this->setDocument before display, loads the javascript so I can use it in the 
-            ramajax field
-        </li>
-        <li>Add new ramajax field example with an alternative select player more restrictive</li>
-        <li>Add new ramajax field example the fourth chained one for wage</li>
-        <li>Menu item RamajaxUseExample > Buscador: without field</li>
+        <li>Review Copyright notes</li>
         <li>El aviso de que ya existe una entrada para MasterField es incorrecto. 
             Debería aparecer solo cuando no existe la combinación master/slave.
         </li>
@@ -177,6 +169,7 @@ $uriRoot =  $uri->root();
         <li>28/12/21 - COVID Vacine: leaves me like shit</li>
         <li>30/12/21 - Added Galician and Portuguese translations</li>
         <li>31/12/21 - Added new search Ramajax filters to the use example: player_country, player_state, player_city</li>
+        <li>7/1/22 - Moved all funtionality to backend</li>
     </ul>
 
 </div>
