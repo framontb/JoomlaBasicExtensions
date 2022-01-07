@@ -66,6 +66,10 @@ CREATE TABLE `#__ramajax_use_example` (
 -- ************************* INSERT VALUES ************************
 
 -- INSERT VALUES --
+INSERT INTO `jumer_ramajax_definition_tables` (`name`, `extensionName`, `type`, `masterFieldName`, `masterFieldTable`, `slaveFieldName`, `slaveFieldTable`, `emptyValueText`) VALUES
+('team', 'com_ramajaxuseexample', 'ramajaxselect', 'league', '#__ramajax_league_list', 'team', '#__ramajax_league_team_map', 'RAMAJAX_FIELD_SELECT_EMPTY_VALUE_TEXT_TEAM');
+
+-- INSERT VALUES --
 INSERT INTO `#__ramajax_league_list` (`league`) VALUES
 ('NBA'),
 ('LaLiga'),
