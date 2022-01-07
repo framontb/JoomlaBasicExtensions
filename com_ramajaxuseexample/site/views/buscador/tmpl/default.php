@@ -23,10 +23,10 @@ defined('_JEXEC') or die('Restricted Access');
     <hr>
 
     <!-- filters -->
-    <h2><?php echo JText::_('Filtros') ?></h2>
+    <h2><?php echo JText::_('RAMAJAX_FILTERS') ?></h2>
     <div class="row-fluid">
         <div class="span6 center bg-info" style="background-color: lightblue;">
-            <h2><?php echo JText::_('Deporte') ?></h2>
+            <h2><?php echo JText::_('RAMAJAX_SPORTS') ?></h2>
             <?php echo $this->filterForm->renderField('league','filter'); ?>
             <hr>
             <?php echo $this->filterForm->renderField('team',  'filter'); ?>
@@ -34,7 +34,7 @@ defined('_JEXEC') or die('Restricted Access');
             <?php echo $this->filterForm->renderField('player','filter'); ?>
         </div>
         <div class="span6 center bg-dark"  style="background-color: lightgreen;">
-            <h2><?php echo JText::_('Origen') ?></h2>
+            <h2><?php echo JText::_('RAMAJAX_ORIGIN') ?></h2>
             <?php echo $this->filterForm->renderField('player_country','filter'); ?>
             <hr>
             <?php echo $this->filterForm->renderField('player_state',  'filter'); ?>
