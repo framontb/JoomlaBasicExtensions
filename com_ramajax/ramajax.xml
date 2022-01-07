@@ -23,17 +23,11 @@
             <filename>ramajax.php</filename>
             <filename>controller.php</filename>
             <filename>access.xml</filename>
-            <!-- SQL files section -->
             <folder>sql</folder>
-            <!-- tables files section -->
+            <folder>assets</folder>
+            <folder>models</folder>
             <folder>views</folder>
+            <folder>controllers</folder>
         </files>
     </administration>
-
-    <files folder="site">
-        <filename>ramajax.php</filename>
-        <folder>assets</folder>
-        <folder>models</folder>
-        <folder>controllers</folder>
-    </files>
 </extension>

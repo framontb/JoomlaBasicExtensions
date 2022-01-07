@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
     <fields name="filter" 
-        addfieldpath="components/com_ramajax/models/fields">
+        addfieldpath="administrator/components/com_ramajax/models/fields">
 
         <field 
             name="league" 

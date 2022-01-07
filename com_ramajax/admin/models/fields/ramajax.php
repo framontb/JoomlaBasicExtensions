@@ -55,7 +55,7 @@ class JFormFieldRamajax extends JFormField {
         parent::__construct($form);
 
         // Get Model
-        JModelLegacy::addIncludePath(JPATH_SITE . '/components/com_ramajax/models');
+        JModelLegacy::addIncludePath(JPATH_BASE . '/administrator/components/com_ramajax/models');
         $this->ajaxModel = JModelLegacy::getInstance('Ajax', 'RamajaxModel');
     }
 
