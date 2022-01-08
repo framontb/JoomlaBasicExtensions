@@ -23,7 +23,7 @@ function populateRamajaxSelectOptions(event)
 
     jQuery.ajax({
         type     : 'GET',
-        url      : 'administrator/index.php?option=com_ramajax&task=ajax.getRamajaxSelectOptions&format=json',
+        url      : 'index.php?option=com_ramajax&task=ajax.getRamajaxSelectOptions&format=json',
         data     : dataString,
         dataType : 'JSON',
         cache    : true,
@@ -70,7 +70,7 @@ function populateRamajaxSelectValues(event)
 
     jQuery.ajax({
         type     : 'GET',
-        url      : 'administrator/index.php?option=com_ramajax&task=ajax.getRamajaxSelectValues&format=json',
+        url      : 'index.php?option=com_ramajax&task=ajax.getRamajaxSelectValues&format=json',
         data     : dataString,
         dataType : 'JSON',
         cache    : true,

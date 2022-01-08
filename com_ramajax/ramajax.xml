@@ -18,16 +18,21 @@
 
     <administration>
         <menu link='index.php?option=com_ramajax'>Ramajax</menu>
+        
         <files folder="admin">
             <!-- Admin Main File Copy Section -->
             <filename>ramajax.php</filename>
             <filename>controller.php</filename>
             <filename>access.xml</filename>
             <folder>sql</folder>
-            <folder>assets</folder>
             <folder>models</folder>
             <folder>views</folder>
-            <folder>controllers</folder>
         </files>
     </administration>
+
+    <files folder="site">
+        <filename>ramajax.php</filename>
+        <folder>controllers</folder>
+        <folder>assets</folder>
+    </files>
 </extension>

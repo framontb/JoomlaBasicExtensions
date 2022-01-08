@@ -46,6 +46,7 @@ class RamajaxControllerAjax extends JControllerLegacy
         parent::__construct();
 
         # Get the model
+        $this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.'/models');
         $this->model = $this->getModel('ajax');
 
         # master/slave field Variables      
